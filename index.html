@@ -233,6 +233,15 @@ header{
 .form-card .btn{ width:100%; justify-content:center; margin-top:8px; }
 .form-note{ font-size:12px; color:#999; margin-top:12px; text-align:center; }
 
+/* ---------- CALCULADORA DE HIPOTECA ---------- */
+.mortgage-section{ background:var(--ev-bg); }
+.mortgage-box{
+  max-width:1000px; margin:0 auto; background:var(--ev-white);
+  border:1px solid var(--ev-border); border-radius:var(--radius); padding:40px;
+  display:grid; grid-template-columns:1fr 1fr; gap:44px;
+}
+.mortgage-results{ display:flex; flex-direction:column; gap:14px; }
+
 /* ---------- CALCULATOR ---------- */
 .calc-section{ background:var(--ev-white); color:var(--ev-black); }
 .calc-box{
@@ -356,7 +365,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
 /* ---------- MOBILE ---------- */
 @media (max-width:920px){
   .dual-grid, .forms-grid, .footer-grid{ grid-template-columns:1fr; }
-  .calc-box{ grid-template-columns:1fr; }
+  .calc-box, .mortgage-box{ grid-template-columns:1fr; }
   .testi-grid{ grid-template-columns:1fr; }
   .nav-links{ display:none; }
   .burger{ display:block; }
@@ -376,6 +385,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
     <nav class="nav-links">
       <a href="#vender">Vender</a>
       <a href="#comprar">Comprar / Invertir</a>
+      <a href="#hipoteca">Hipoteca</a>
       <a href="#calculadora">Calculadora</a>
       <a href="#testimonios">Testimonios</a>
       <a href="#contacto">Contacto</a>
@@ -590,6 +600,69 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
           <p class="form-note">Al enviar, se abrirá WhatsApp con tus datos ya redactados.</p>
         </form>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CALCULADORA DE HIPOTECA ============ -->
+<section class="mortgage-section" id="hipoteca">
+  <div class="wrap">
+    <span class="eyebrow">Antes de comprar</span>
+    <h2 class="section-title">¿Cuánto necesitas ahorrado para tu hipoteca?</h2>
+    <p class="section-sub">Los bancos en España suelen financiar hasta un 80% del precio de compra. Calcula cuánto necesitas tener ahorrado para la entrada y los gastos.</p>
+
+    <div class="mortgage-box">
+      <div class="mortgage-inputs">
+        <div class="calc-field">
+          <label>Precio de la vivienda <span class="val" id="mh_v_precio">250.000 €</span></label>
+          <input type="range" id="mh_precio" min="50000" max="1000000" step="1000" value="250000">
+        </div>
+        <div class="calc-field">
+          <label>% que financia el banco <span class="val" id="mh_v_financiacion">80 %</span></label>
+          <input type="range" id="mh_financiacion" min="50" max="100" step="5" value="80">
+        </div>
+        <div class="calc-field">
+          <label>Gastos de compra (impuestos, notaría, registro, gestoría) <span class="val" id="mh_v_gastos">10 %</span></label>
+          <input type="range" id="mh_gastos" min="0" max="20" step="0.5" value="10">
+        </div>
+        <div class="calc-field">
+          <label>Tipo de interés (TIN) <span class="val" id="mh_v_interes">3 %</span></label>
+          <input type="range" id="mh_interes" min="0" max="10" step="0.05" value="3">
+        </div>
+        <div class="calc-field">
+          <label>Plazo <span class="val" id="mh_v_plazo">25 años</span></label>
+          <input type="range" id="mh_plazo" min="5" max="40" step="1" value="25">
+        </div>
+      </div>
+
+      <div class="mortgage-results">
+        <div class="result-card result-highlight">
+          <div class="label">Necesitas ahorrado</div>
+          <div class="value" id="mh_r_total">75.000 €</div>
+          <div class="hint">Entrada + gastos de compra</div>
+        </div>
+        <div class="result-card">
+          <div class="label">Entrada (no financiada)</div>
+          <div class="value small" id="mh_r_entrada">50.000 €</div>
+          <div class="hint">La parte del precio que el banco no cubre</div>
+        </div>
+        <div class="result-card">
+          <div class="label">Gastos de compra</div>
+          <div class="value small" id="mh_r_gastos">25.000 €</div>
+          <div class="hint">Impuestos, notaría, registro, gestoría</div>
+        </div>
+        <div class="result-card">
+          <div class="label">Importe de la hipoteca</div>
+          <div class="value small" id="mh_r_hipoteca">200.000 €</div>
+          <div class="hint">Lo que financiaría el banco</div>
+        </div>
+        <div class="result-card">
+          <div class="label">Cuota mensual estimada</div>
+          <div class="value small" id="mh_r_cuota">948 €</div>
+          <div class="hint">A tipo fijo, sin comisiones ni seguros</div>
+        </div>
+        <a class="btn btn-red" id="mhWaBtn" target="_blank" rel="noopener" style="width:100%; justify-content:center;">Enviar este cálculo a Rosa por WhatsApp</a>
       </div>
     </div>
   </div>
@@ -1037,6 +1110,51 @@ usaHipoteca.addEventListener('change', function(){
 
 recalcular();
 document.getElementById('calcWaBtn').addEventListener('click', () => trackMeta('Lead', { content_name: 'Calculadora de rentabilidad' }));
+
+/* ---------- CALCULADORA DE HIPOTECA ---------- */
+const mhIds = ['mh_precio', 'mh_financiacion', 'mh_gastos', 'mh_interes', 'mh_plazo'];
+const mhEls = {};
+mhIds.forEach(id => mhEls[id] = document.getElementById(id));
+
+function recalcularHipoteca(){
+  const precio = parseFloat(mhEls.mh_precio.value);
+  const financiacionPct = parseFloat(mhEls.mh_financiacion.value);
+  const gastosPct = parseFloat(mhEls.mh_gastos.value);
+  const interesPct = parseFloat(mhEls.mh_interes.value);
+  const plazoAnios = parseFloat(mhEls.mh_plazo.value);
+
+  document.getElementById('mh_v_precio').textContent = fmtEUR(precio);
+  document.getElementById('mh_v_financiacion').textContent = financiacionPct + ' %';
+  document.getElementById('mh_v_gastos').textContent = gastosPct + ' %';
+  document.getElementById('mh_v_interes').textContent = interesPct + ' %';
+  document.getElementById('mh_v_plazo').textContent = plazoAnios + ' años';
+
+  const entrada = precio * (1 - financiacionPct / 100);
+  const gastosCompra = precio * (gastosPct / 100);
+  const totalNecesario = entrada + gastosCompra;
+  const importeHipoteca = precio * (financiacionPct / 100);
+  const cuotaMensual = calcularCuotaHipoteca(importeHipoteca, interesPct, plazoAnios);
+
+  document.getElementById('mh_r_total').textContent = fmtEUR(totalNecesario);
+  document.getElementById('mh_r_entrada').textContent = fmtEUR(entrada);
+  document.getElementById('mh_r_gastos').textContent = fmtEUR(gastosCompra);
+  document.getElementById('mh_r_hipoteca').textContent = fmtEUR(importeHipoteca);
+  document.getElementById('mh_r_cuota').textContent = fmtEUR(Math.round(cuotaMensual));
+
+  const waText = encodeURIComponent(
+    `Hola ${BRAND.agentName}, he calculado cuánto necesito para una hipoteca en tu web:\n`+
+    `Precio de la vivienda: ${fmtEUR(precio)}\n`+
+    `Financiación del banco: ${financiacionPct}% (${fmtEUR(importeHipoteca)})\n`+
+    `Necesito ahorrado: ${fmtEUR(totalNecesario)} (entrada + gastos)\n`+
+    `Cuota mensual estimada: ${fmtEUR(Math.round(cuotaMensual))}\n`+
+    `¿Me ayudas a ver qué opciones tengo?` + utmSuffix()
+  );
+  document.getElementById('mhWaBtn').href = `https://wa.me/${BRAND.whatsapp}?text=${waText}`;
+}
+
+mhIds.forEach(id => mhEls[id].addEventListener('input', recalcularHipoteca));
+recalcularHipoteca();
+document.getElementById('mhWaBtn').addEventListener('click', () => trackMeta('Lead', { content_name: 'Calculadora de hipoteca' }));
 
 /* ---------- QUIZ DE INTERÉS ---------- */
 const quizAnswers = {};
