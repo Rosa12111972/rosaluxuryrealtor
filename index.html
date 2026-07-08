@@ -242,6 +242,29 @@ header{
 }
 .mortgage-results{ display:flex; flex-direction:column; gap:14px; }
 
+.cost-breakdown{ max-width:1000px; margin:56px auto 0; }
+.cost-breakdown h3{ font-size:22px; margin-bottom:10px; }
+.cost-breakdown h4{
+  font-family:var(--font-serif); font-weight:400; font-size:17px; color:var(--ev-black);
+  margin:28px 0 10px; border-left:3px solid var(--ev-red); padding-left:10px;
+}
+.cost-intro{ color:var(--ev-gray); font-size:15px; margin-bottom:20px; }
+.cost-note{ color:#555; font-size:14px; line-height:1.7; margin-top:12px; }
+.cost-table{
+  background:var(--ev-white); border:1px solid var(--ev-border); border-radius:var(--radius);
+  overflow:hidden;
+}
+.cost-row{
+  display:grid; grid-template-columns:2fr 1fr 1.2fr; gap:10px;
+  padding:14px 20px; border-bottom:1px solid var(--ev-border); font-size:14px;
+}
+.cost-row:last-child{ border-bottom:none; }
+.cost-row span:nth-child(2), .cost-row span:nth-child(3){ text-align:right; }
+.cost-row-head{
+  background:var(--ev-bg); text-transform:uppercase; font-size:11.5px; letter-spacing:1px; color:#888;
+}
+.cost-row-total{ background:#fff7f6; font-weight:700; color:var(--ev-red); }
+
 /* ---------- CALCULATOR ---------- */
 .calc-section{ background:var(--ev-white); color:var(--ev-black); }
 .calc-box{
@@ -366,6 +389,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
 @media (max-width:920px){
   .dual-grid, .forms-grid, .footer-grid{ grid-template-columns:1fr; }
   .calc-box, .mortgage-box{ grid-template-columns:1fr; }
+  .cost-row{ grid-template-columns:1.4fr .8fr 1fr; padding:12px 14px; font-size:12.5px; }
   .testi-grid{ grid-template-columns:1fr; }
   .nav-links{ display:none; }
   .burger{ display:block; }
@@ -664,6 +688,53 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
         </div>
         <a class="btn btn-red" id="mhWaBtn" target="_blank" rel="noopener" style="width:100%; justify-content:center;">Enviar este cálculo a Rosa por WhatsApp</a>
       </div>
+    </div>
+
+    <div class="cost-breakdown">
+      <h3>¿En qué se van exactamente esos gastos de compra?</h3>
+      <p class="cost-intro">Para que no haya sorpresas, este es el desglose real en la Comunidad de Madrid para una vivienda de segunda mano (lo más habitual en El Bosque):</p>
+
+      <div class="cost-table">
+        <div class="cost-row cost-row-head">
+          <span>Concepto</span>
+          <span>% aprox.</span>
+          <span>Ejemplo sobre 300.000 €</span>
+        </div>
+        <div class="cost-row">
+          <span>ITP (Impuesto de Transmisiones Patrimoniales)</span>
+          <span>6 %</span>
+          <span>18.000 €</span>
+        </div>
+        <div class="cost-row">
+          <span>Notaría</span>
+          <span>0,2 – 0,5 %</span>
+          <span>600 – 1.500 €</span>
+        </div>
+        <div class="cost-row">
+          <span>Registro de la Propiedad</span>
+          <span>0,1 – 0,25 %</span>
+          <span>300 – 750 €</span>
+        </div>
+        <div class="cost-row">
+          <span>Gestoría (tramitación, opcional)</span>
+          <span>—</span>
+          <span>300 – 500 €</span>
+        </div>
+        <div class="cost-row">
+          <span>Tasación (solo si pides hipoteca)</span>
+          <span>—</span>
+          <span>250 – 600 €</span>
+        </div>
+        <div class="cost-row cost-row-total">
+          <span>Total orientativo</span>
+          <span>≈ 7 – 8 %</span>
+          <span>≈ 21.000 – 24.000 €</span>
+        </div>
+      </div>
+      <p class="cost-note">El ITP es el mayor gasto y es fijo por ley en la Comunidad de Madrid (puede ser menor en casos concretos: familia numerosa, menores de 32 años u otros requisitos). Por eso la calculadora usa un 10% por defecto: es una cifra ligeramente conservadora, para que siempre te sobre en vez de faltarte. Si compras obra nueva en vez de segunda mano, en lugar de ITP se paga IVA (10%) + AJD (0,75% en Madrid).</p>
+
+      <h4>¿Y las arras?</h4>
+      <p class="cost-note">Las arras (o "señal") <strong>no son un gasto adicional</strong>: es un adelanto del propio precio de la vivienda, normalmente entre el 5% y el 10%, que se paga al firmar el contrato de arras y se descuenta del precio final ante notario. Eso sí, es un contrato con consecuencias reales — si el comprador se echa atrás, pierde esa cantidad; si es el vendedor quien se echa atrás, tiene que devolver el doble. Te acompaño en esa firma para que quede todo bien redactado y sin sustos.</p>
     </div>
   </div>
 </section>
