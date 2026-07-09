@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rosa Rodríguez | Compraventa en El Bosque, Villaviciosa de Odón</title>
-<meta name="description" content="Rosa Rodríguez. Especialista en compra y venta en El Bosque, Villaviciosa de Odón, y el sur de Madrid. Calculadora de rentabilidad gratuita.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23234b3a%22 font-family=%22Georgia,serif%22>R</text></svg>">
+<title>Rosa Rodríguez | Compra, venta e inversión inmobiliaria, sin límite de ubicación</title>
+<meta name="description" content="Rosa Rodríguez. Compra, venta e inversión inmobiliaria sin límite de ubicación. Calculadora de rentabilidad gratuita.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23004225%22 font-family=%22Georgia,serif%22>R</text></svg>">
 
 <!-- BRAND: etiquetas para que los anuncios/enlaces compartidos en Meta (Instagram/Facebook) muestren
      título, descripción e imagen correctos. Sustituye og:url por la URL real una vez publicada,
      og-image.png ya incluida en esta carpeta. -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="Rosa Rodríguez | Especialista en El Bosque, Villaviciosa de Odón">
-<meta property="og:description" content="Compra y venta en El Bosque, Villaviciosa de Odón, y el sur de Madrid. Calculadora de rentabilidad gratuita.">
+<meta property="og:title" content="Rosa Rodríguez | Compra, venta e inversión inmobiliaria">
+<meta property="og:description" content="Compra, venta e inversión inmobiliaria sin límite de ubicación. Calculadora de rentabilidad gratuita.">
 <meta property="og:image" content="https://rosa12111972.github.io/rosaluxuryrealtor/og-image.png">
 <meta property="og:url" content="https://rosa12111972.github.io/rosaluxuryrealtor/">
 <meta property="og:locale" content="es_ES">
@@ -46,7 +46,8 @@ src="https://www.facebook.com/tr?id=TU_PIXEL_ID&ev=PageView&noscript=1"
 :root{
   --ev-black:#111111;
   --ev-black-soft:#1c1c1c;
-  --ev-accent:#234b3a;
+  --ev-accent:#004225;
+  --ev-text:#3d3d3d;
   --ev-white:#ffffff;
   --ev-gray:#6b6b6b;
   --ev-bg:#f7f6f4;
@@ -62,7 +63,7 @@ src="https://www.facebook.com/tr?id=TU_PIXEL_ID&ev=PageView&noscript=1"
 html{scroll-behavior:smooth;}
 body{
   font-family:var(--font-sans);
-  color:var(--ev-black);
+  color:var(--ev-text);
   background:var(--ev-bg);
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
@@ -134,7 +135,7 @@ header{
   border:1px solid var(--ev-border);
 }
 .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
-.brand .name{ font-family:var(--font-serif); color:var(--ev-black); font-size:19px; letter-spacing:.5px; }
+.brand .name{ font-family:var(--font-serif); color:var(--ev-text); font-size:19px; letter-spacing:.5px; }
 .brand .parent{ /* BRAND: solo modo afiliado */
   display:flex; align-items:center; gap:3px; width:fit-content;
   color:var(--ev-black); font-weight:600;
@@ -153,7 +154,7 @@ header{
 .hero{
   padding:180px 0 110px;
   background:var(--ev-white);
-  color:var(--ev-black);
+  color:var(--ev-text);
   text-align:center;
   border-bottom:1px solid var(--ev-border);
 }
@@ -220,7 +221,7 @@ header{
 .form-wrap{ display:none; margin-top:24px; }
 .form-wrap.open{ display:block; }
 .form-card h4{
-  font-family:var(--font-serif); font-weight:400; font-size:15px; color:var(--ev-black);
+  font-family:var(--font-serif); font-weight:400; font-size:15px; color:var(--ev-text);
   margin:26px 0 14px; border-left:3px solid var(--ev-accent); padding-left:10px;
 }
 .form-card h4:first-of-type{ margin-top:0; }
@@ -250,7 +251,7 @@ header{
 .cost-breakdown{ max-width:1000px; margin:56px auto 0; }
 .cost-breakdown h3{ font-size:22px; margin-bottom:10px; }
 .cost-breakdown h4{
-  font-family:var(--font-serif); font-weight:400; font-size:17px; color:var(--ev-black);
+  font-family:var(--font-serif); font-weight:400; font-size:17px; color:var(--ev-text);
   margin:28px 0 10px; border-left:3px solid var(--ev-accent); padding-left:10px;
 }
 .cost-intro{ color:var(--ev-gray); font-size:15px; margin-bottom:20px; }
@@ -271,7 +272,7 @@ header{
 .cost-row-total{ background:#eef4f1; font-weight:700; color:var(--ev-accent); }
 
 /* ---------- CALCULATOR ---------- */
-.calc-section{ background:var(--ev-white); color:var(--ev-black); }
+.calc-section{ background:var(--ev-white); color:var(--ev-text); }
 .calc-box{
   background:var(--ev-white);
   border:1px solid var(--ev-border);
@@ -282,7 +283,7 @@ header{
   gap:44px;
 }
 .calc-inputs h4{
-  font-family:var(--font-serif); font-weight:400; font-size:17px; color:var(--ev-black);
+  font-family:var(--font-serif); font-weight:400; font-size:17px; color:var(--ev-text);
   margin:22px 0 14px; border-left:3px solid var(--ev-accent); padding-left:10px;
 }
 .calc-inputs h4:first-child{ margin-top:0; }
@@ -291,7 +292,7 @@ header{
 .calc-field label span.val{ color:var(--ev-accent); font-weight:600; }
 .calc-field input[type="number"]{
   width:100%; padding:10px 12px; border-radius:6px; border:1px solid var(--ev-border);
-  background:#fff; color:var(--ev-black); font-size:14px;
+  background:#fff; color:var(--ev-text); font-size:14px;
 }
 .calc-field input[type="range"]{ width:100%; accent-color:var(--ev-accent); }
 .calc-toggle{ display:flex; align-items:center; gap:10px; margin:18px 0 6px; }
@@ -306,7 +307,7 @@ header{
   padding:18px 20px;
 }
 .result-card .label{ font-size:11.5px; text-transform:uppercase; letter-spacing:1px; color:#888; margin-bottom:6px; }
-.result-card .value{ font-size:28px; font-family:var(--font-serif); color:var(--ev-black); }
+.result-card .value{ font-size:28px; font-family:var(--font-serif); color:var(--ev-text); }
 .result-card .value.small{ font-size:20px; }
 .result-card .hint{ font-size:11.5px; color:#999; margin-top:4px; }
 .result-highlight{ border-color:var(--ev-accent); background:linear-gradient(135deg,#fff,#eef4f1); }
@@ -333,7 +334,7 @@ header{
 /* ---------- SOCIAL ---------- */
 .social-section{
   background:var(--ev-bg);
-  color:var(--ev-black); text-align:center;
+  color:var(--ev-text); text-align:center;
   border-top:1px solid var(--ev-border);
 }
 .social-icons{ display:flex; justify-content:center; gap:22px; margin-top:38px; flex-wrap:wrap; }
@@ -351,7 +352,7 @@ header{
 .quiz-box{ max-width:700px; margin:0 auto; }
 .quiz-question{ margin-bottom:32px; }
 .quiz-question h4{
-  font-family:var(--font-serif); font-weight:400; font-size:17px; color:var(--ev-black);
+  font-family:var(--font-serif); font-weight:400; font-size:17px; color:var(--ev-text);
   margin-bottom:14px; border-left:3px solid var(--ev-accent); padding-left:10px;
 }
 .quiz-options{ display:flex; gap:10px; flex-wrap:wrap; }
@@ -366,12 +367,12 @@ header{
   border-radius:var(--radius); text-align:center; background:var(--ev-bg);
 }
 .quiz-result.open{ display:block; }
-.quiz-result p{ font-size:16px; margin-bottom:20px; color:var(--ev-black); }
+.quiz-result p{ font-size:16px; margin-bottom:20px; color:var(--ev-text); }
 
 /* ---------- FOOTER ---------- */
 footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:1px solid var(--ev-border); }
 .footer-grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:40px; margin-bottom:40px; }
-.footer-grid h4{ color:var(--ev-black); font-family:var(--font-serif); font-weight:400; font-size:17px; margin-bottom:16px; }
+.footer-grid h4{ color:var(--ev-text); font-family:var(--font-serif); font-weight:400; font-size:17px; margin-bottom:16px; }
 .footer-grid p, .footer-grid a{ font-size:13.5px; color:#777; line-height:2; }
 .footer-grid a:hover{ color:var(--ev-accent); }
 .footer-bottom{
@@ -430,13 +431,13 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
 <section class="hero">
   <div class="wrap">
     <img src="rosa.png" alt="Rosa Rodríguez" class="hero-avatar">
-    <span class="eyebrow">El Bosque · Villaviciosa de Odón · Sur de Madrid</span>
-    <h1>Especialista en <em>El Bosque</em>, Villaviciosa de Odón</h1>
-    <p class="lead">Acompaño procesos de compra y venta en El Bosque y el resto de Villaviciosa de Odón, en el sur de Madrid, con un trato cercano y profesional de principio a fin.</p>
+    <span class="eyebrow">Compra · Venta · Inversión</span>
+    <h1>Tu inmobiliaria de confianza, <em>sin límite de ubicación</em></h1>
+    <p class="lead">Acompaño procesos de compra, venta e inversión inmobiliaria estés donde estés, con un trato cercano y profesional de principio a fin.</p>
     <div class="hero-badges">
-      <span>Especialista en la zona</span>
+      <span>Sin límite de ubicación</span>
       <span>Compra y venta</span>
-      <span>Conocimiento local real</span>
+      <span>Asesoría de inversión</span>
       <span>Respuesta en 24h</span>
     </div>
     <div class="hero-cta">
@@ -451,7 +452,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
   <div class="wrap">
     <span class="eyebrow">Dos caminos, un mismo acompañamiento</span>
     <h2 class="section-title">¿Qué necesitas ahora mismo?</h2>
-    <p class="section-sub">Da igual si vendes, compras tu vivienda habitual o buscas tu próxima inversión: conozco El Bosque y Villaviciosa de Odón casa por casa.</p>
+    <p class="section-sub">Da igual si vendes, compras tu vivienda habitual o buscas tu próxima inversión: el proceso se adapta a ti, estés donde estés.</p>
     <div class="dual-grid">
       <div class="dual-card">
         <span class="tag">Vendedores</span>
@@ -470,7 +471,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
         <h3>Compra o invierte con datos, no con intuición</h3>
         <p>Búsqueda activa según tu perfil y objetivo, con análisis de rentabilidad real antes de firmar nada.</p>
         <ul>
-          <li>Búsqueda personalizada en El Bosque y Villaviciosa de Odón</li>
+          <li>Búsqueda personalizada sin límite de zona</li>
           <li>Análisis de rentabilidad para inversión</li>
           <li>Acompañamiento en visitas y negociación</li>
           <li>Red de contactos notarial, fiscal e hipotecaria</li>
@@ -544,7 +545,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
 
     <div class="cost-breakdown">
       <h3>¿En qué se van exactamente esos gastos de compra?</h3>
-      <p class="cost-intro">Para que no haya sorpresas, este es el desglose real en la Comunidad de Madrid para una vivienda de segunda mano (lo más habitual en El Bosque):</p>
+      <p class="cost-intro">Para que no haya sorpresas, este es el desglose orientativo para una vivienda de segunda mano en España (los porcentajes exactos dependen de la comunidad autónoma donde compres):</p>
 
       <div class="cost-table">
         <div class="cost-row cost-row-head">
@@ -554,8 +555,8 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
         </div>
         <div class="cost-row">
           <span>ITP (Impuesto de Transmisiones Patrimoniales)</span>
-          <span>6 %</span>
-          <span>18.000 €</span>
+          <span>6 – 10 %</span>
+          <span>18.000 – 30.000 €</span>
         </div>
         <div class="cost-row">
           <span>Notaría</span>
@@ -579,11 +580,11 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
         </div>
         <div class="cost-row cost-row-total">
           <span>Total orientativo</span>
-          <span>≈ 7 – 8 %</span>
-          <span>≈ 21.000 – 24.000 €</span>
+          <span>≈ 7 – 11 %</span>
+          <span>≈ 21.000 – 33.000 €</span>
         </div>
       </div>
-      <p class="cost-note">El ITP es el mayor gasto y es fijo por ley en la Comunidad de Madrid (puede ser menor en casos concretos: familia numerosa, menores de 32 años u otros requisitos). Por eso la calculadora usa un 10% por defecto: es una cifra ligeramente conservadora, para que siempre te sobre en vez de faltarte. Si compras obra nueva en vez de segunda mano, en lugar de ITP se paga IVA (10%) + AJD (0,75% en Madrid).</p>
+      <p class="cost-note">El ITP es el mayor gasto y lo fija cada comunidad autónoma, así que conviene confirmar el porcentaje exacto de la zona donde compres (puede ser menor en casos concretos: familia numerosa, menores de 32 años u otros requisitos). Por eso la calculadora usa un 10% por defecto: es una cifra conservadora, para que siempre te sobre en vez de faltarte. Si compras obra nueva en vez de segunda mano, en lugar de ITP se paga IVA (10%) + AJD (entre 0,75% y 1,5% según la comunidad autónoma).</p>
 
       <h4>¿Y las arras?</h4>
       <p class="cost-note">Las arras (o "señal") <strong>no son un gasto adicional</strong>: es un adelanto del propio precio de la vivienda, normalmente entre el 5% y el 10%, que se paga al firmar el contrato de arras y se descuenta del precio final ante notario. Eso sí, es un contrato con consecuencias reales — si el comprador se echa atrás, pierde esa cantidad; si es el vendedor quien se echa atrás, tiene que devolver el doble. Te acompaño en esa firma para que quede todo bien redactado y sin sustos.</p>
@@ -720,7 +721,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
           </div>
 
           <h4>Datos del inmueble</h4>
-          <div class="field"><label>Dirección o zona exacta</label><input type="text" name="direccion" placeholder="Ej. Calle Encina, El Bosque, Villaviciosa de Odón" required></div>
+          <div class="field"><label>Dirección o zona exacta</label><input type="text" name="direccion" placeholder="Ej. Calle, número, ciudad" required></div>
           <div class="field-row">
             <div class="field">
               <label>Tipo de inmueble</label>
@@ -831,7 +832,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
             </div>
             <div class="field"><label>Presupuesto aprox.</label><input type="text" name="presupuesto" placeholder="Ej. 200.000 €"></div>
           </div>
-          <div class="field"><label>Zona(s) de interés</label><input type="text" name="zona" placeholder="Ej. El Bosque, Villaviciosa de Odón" value="El Bosque, Villaviciosa de Odón"></div>
+          <div class="field"><label>Zona(s) de interés</label><input type="text" name="zona" placeholder="¿Dónde te gustaría comprar o invertir?"></div>
           <div class="field"><label>Comentarios</label><textarea name="comentarios" rows="3"></textarea></div>
           <button type="submit" class="btn btn-primary">Escribir por WhatsApp</button>
           <p class="form-note">Al enviar, se abrirá WhatsApp con tus datos ya redactados.</p>
@@ -925,12 +926,12 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
         </div>
       </div>
 
-      <div class="quiz-question" data-q="zona">
-        <h4>3. ¿Tu zona es El Bosque o Villaviciosa de Odón?</h4>
+      <div class="quiz-question" data-q="presupuesto">
+        <h4>3. ¿Cuál es tu presupuesto orientativo?</h4>
         <div class="quiz-options">
-          <button type="button" class="quiz-chip" data-value="Sí, es mi zona">Sí, es mi zona</button>
-          <button type="button" class="quiz-chip" data-value="Cerca, en el sur de Madrid">Cerca, en el sur de Madrid</button>
-          <button type="button" class="quiz-chip" data-value="Es otra zona">Es otra zona</button>
+          <button type="button" class="quiz-chip" data-value="Menos de 200.000 €">Menos de 200.000 €</button>
+          <button type="button" class="quiz-chip" data-value="200.000 € - 500.000 €">200.000 € - 500.000 €</button>
+          <button type="button" class="quiz-chip" data-value="Más de 500.000 €">Más de 500.000 €</button>
         </div>
       </div>
 
@@ -948,7 +949,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
     <div class="footer-grid">
       <div>
         <h4>Rosa Rodríguez</h4>
-        <p>Compra y venta en El Bosque, Villaviciosa de Odón, y el resto del sur de Madrid.</p>
+        <p>Compra, venta e inversión inmobiliaria, sin límite de ubicación.</p>
       </div>
       <div>
         <h4>Contacto</h4>
@@ -1233,7 +1234,7 @@ document.querySelectorAll('.quiz-question').forEach(q => {
       q.querySelectorAll('.quiz-chip').forEach(c => c.classList.remove('selected'));
       chip.classList.add('selected');
       quizAnswers[key] = chip.dataset.value;
-      if(quizAnswers.interes && quizAnswers.plazo && quizAnswers.zona){
+      if(quizAnswers.interes && quizAnswers.plazo && quizAnswers.presupuesto){
         mostrarResultadoQuiz();
       }
     });
@@ -1243,15 +1244,12 @@ document.querySelectorAll('.quiz-question').forEach(q => {
 function mostrarResultadoQuiz(){
   const soloMirando = quizAnswers.interes === 'Solo estoy mirando';
   const urgente = quizAnswers.plazo === 'Ya mismo o en el próximo mes';
-  const zonaBuena = quizAnswers.zona !== 'Es otra zona';
 
   let mensaje;
-  if(!soloMirando && zonaBuena && urgente){
-    mensaje = 'Genial — es justo el tipo de caso que llevo a diario en la zona. Hablemos ahora mismo.';
-  } else if(!soloMirando && zonaBuena){
-    mensaje = 'Encajas muy bien con lo que hago en la zona. Cuéntame tu caso con calma.';
-  } else if(!zonaBuena){
-    mensaje = 'Ahora mismo estoy centrada en El Bosque y Villaviciosa de Odón, pero cuéntame tu caso y te oriento igualmente.';
+  if(!soloMirando && urgente){
+    mensaje = 'Genial — es justo el tipo de caso que llevo a diario. Hablemos ahora mismo.';
+  } else if(!soloMirando){
+    mensaje = 'Encaja muy bien con lo que hago. Cuéntame tu caso con calma.';
   } else {
     mensaje = 'Sin compromiso: aquí tienes mi WhatsApp por si más adelante quieres dar el paso.';
   }
@@ -1265,7 +1263,7 @@ function mostrarResultadoQuiz(){
     `Hola ${BRAND.agentName}, he hecho tu test rápido de interés desde la web:\n`+
     `- Interés: ${quizAnswers.interes}\n`+
     `- Plazo: ${quizAnswers.plazo}\n`+
-    `- Zona: ${quizAnswers.zona}\n`+
+    `- Presupuesto: ${quizAnswers.presupuesto}\n`+
     `¿Hablamos?` + utmSuffix()
   );
   document.getElementById('quizWaBtn').href = `https://wa.me/${BRAND.whatsapp}?text=${waText}`;
