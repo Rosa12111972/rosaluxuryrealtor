@@ -30,25 +30,34 @@ window.LEGAL = {
 
 /* Rellena los elementos <span data-legal="campo"></span> y los recuadros
    <div data-rgpd></div> de información básica sobre protección de datos
-   (primera capa informativa, art. 11 LOPDGDD) en todas las páginas. */
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('[data-rgpd]').forEach(el => {
+   (primera capa informativa, art. 11 LOPDGDD) en todas las páginas.
+   Con data-rgpd="empleo" se muestra la versión para candidaturas.
+   Las páginas que crean formularios después de cargar llaman a rellenarLegal(elemento). */
+const FINALIDADES_RGPD = {
+  '': 'Atender tu solicitud y, si lo autorizas, enviarte comunicaciones comerciales.',
+  empleo: 'Gestionar tu candidatura y valorar tu perfil para procesos de selección de The Brokery España. Conservaremos tu candidatura un máximo de 12 meses.'
+};
+window.rellenarLegal = function(raiz){
+  raiz = raiz || document;
+  raiz.querySelectorAll('[data-rgpd]').forEach(el => {
+    const finalidad = FINALIDADES_RGPD[el.dataset.rgpd || ''] || FINALIDADES_RGPD[''];
     el.innerHTML = `<strong>Información básica sobre protección de datos</strong>
     <table>
       <tr><th>Responsable</th><td><span data-legal="titular"></span> (<span data-legal="nombreComercial"></span>)</td></tr>
-      <tr><th>Finalidad</th><td>Atender tu solicitud y, si lo autorizas, enviarte comunicaciones comerciales.</td></tr>
+      <tr><th>Finalidad</th><td>${finalidad}</td></tr>
       <tr><th>Legitimación</th><td>Tu consentimiento y la aplicación de medidas precontractuales.</td></tr>
       <tr><th>Destinatarios</th><td>No se ceden datos a terceros, salvo obligación legal. Si envías por WhatsApp, Meta actúa como proveedor del servicio de mensajería.</td></tr>
       <tr><th>Derechos</th><td>Acceso, rectificación, supresión, oposición, limitación y portabilidad, además de reclamar ante la AEPD.</td></tr>
       <tr><th>Más info</th><td><a href="privacidad.html" target="_blank">Política de Privacidad</a></td></tr>
     </table>`;
   });
-  document.querySelectorAll('[data-legal]').forEach(el => {
+  raiz.querySelectorAll('[data-legal]').forEach(el => {
     const v = window.LEGAL[el.dataset.legal] || '';
     el.textContent = v || '—';
     if(!v || v.startsWith('[COMPLETAR')) el.classList.add('todo');
   });
-  document.querySelectorAll('[data-legal-if]').forEach(el => {
+  raiz.querySelectorAll('[data-legal-if]').forEach(el => {
     if(window.LEGAL[el.dataset.legalIf] === '') el.remove();
   });
-});
+};
+document.addEventListener('DOMContentLoaded', () => window.rellenarLegal(document));
