@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Brokery España | Inmobiliaria boutique de lujo</title>
-<meta name="description" content="Inmobiliaria boutique especializada en propiedades residenciales de alto standing. Venta, compra, inversión y cartera off-market con atención personalizada.">
+<meta name="description" content="Inmobiliaria boutique en la Comunidad de Madrid, especializada en propiedades residenciales de alto standing. Venta, compra, inversión y cartera off-market con atención personalizada.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23231f20%22/><text x=%2250%22 y=%2266%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22%23ffffff%22 font-family=%22Arial,sans-serif%22 letter-spacing=%222%22>TB</text></svg>">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Brokery España | Inmobiliaria boutique de lujo">
@@ -311,7 +311,7 @@ footer a:hover{color:#fff;}
 <!-- ================= HERO ================= -->
 <section class="hero">
   <div class="wrap">
-    <span class="eyebrow">Inmobiliaria boutique · Propiedades de alto standing</span>
+    <span class="eyebrow">Inmobiliaria boutique · Comunidad de Madrid</span>
     <h1>Hogares <em>excepcionales</em>, un servicio a la altura</h1>
     <p class="lead">Asesoramiento personal y discreto en la compra, venta e inversión de viviendas exclusivas. Conocimiento del mercado, red de compradores cualificados y acceso a propiedades fuera de mercado.</p>
 
@@ -447,7 +447,7 @@ footer a:hover{color:#fff;}
     <div class="collections">
       <a class="col tall" style="--bgc:linear-gradient(160deg,#5b5b5b,#231f20);" data-wa="Hola, me interesan villas y chalets exclusivos."><span><h3>Villas y chalets</h3><small>Privacidad y espacio</small></span></a>
       <a class="col" style="--bgc:linear-gradient(160deg,#5a4a36,#1c160f);" data-wa="Hola, me interesan áticos con terraza."><span><h3>Áticos</h3><small>Terrazas y vistas</small></span></a>
-      <a class="col" style="--bgc:linear-gradient(160deg,#2f6474,#14262d);" data-wa="Hola, me interesan propiedades en primera línea."><span><h3>Primera línea</h3><small>Mar, golf y lago</small></span></a>
+      <a class="col" style="--bgc:linear-gradient(160deg,#2f6474,#14262d);" data-wa="Hola, me interesan propiedades junto a un campo de golf."><span><h3>Golf</h3><small>Junto a campos de golf</small></span></a>
       <a class="col" style="--bgc:linear-gradient(160deg,#6b6049,#2a251b);" data-wa="Hola, me interesan fincas y casas de campo."><span><h3>Fincas</h3><small>Campo y naturaleza</small></span></a>
       <a class="col" style="--bgc:linear-gradient(160deg,#3d3d3d,#111);" data-wa="Hola, me interesa obra nueva de alto standing."><span><h3>Obra nueva</h3><small>Diseño contemporáneo</small></span></a>
     </div>
@@ -459,8 +459,8 @@ footer a:hover{color:#fff;}
   <div class="wrap">
     <div class="center" style="margin-bottom:56px;">
       <span class="eyebrow">Nuestras zonas</span>
-      <h2 class="title">Dónde trabajamos</h2>
-      <p class="sub">Conocemos en profundidad cada zona en la que operamos: su entorno, su oferta educativa, sus servicios y la evolución real de sus precios.</p>
+      <h2 class="title">Comunidad de Madrid</h2>
+      <p class="sub">Trabajamos en toda la Comunidad de Madrid, con especial presencia en la zona noroeste. Conocemos en profundidad cada zona: su entorno, su oferta educativa, sus servicios y la evolución real de sus precios.</p>
     </div>
     <div class="barrios" id="barriosGrid"></div>
   </div>
@@ -629,7 +629,7 @@ footer a:hover{color:#fff;}
     <div class="foot-grid">
       <div>
         <div class="foot-logo" id="footLogo" role="img" aria-label="The Brokery"></div>
-        <p>Inmobiliaria boutique especializada en propiedades residenciales de alto standing.</p>
+        <p>Inmobiliaria boutique especializada en propiedades residenciales de alto standing en toda la Comunidad de Madrid.</p>
       </div>
       <div>
         <h4>Explorar</h4>
@@ -696,7 +696,17 @@ const PROPIEDADES = [];
 /* ZONAS — zonas donde trabaja The Brokery España. La sección y el
    enlace del menú permanecen ocultos hasta que añadas al menos una.
    Ejemplo: { nombre:'Boadilla del Monte', texto:'Urbanizaciones tranquilas…', foto:'boadilla.jpg' } */
-const BARRIOS = [];
+const BARRIOS = [
+  { nombre:'Madrid capital', texto:'Salamanca, Chamberí, Retiro, Chamartín y los barrios más exclusivos de la ciudad.' },
+  { nombre:'Aravaca y El Plantío', texto:'Chalets y urbanizaciones dentro del municipio de Madrid, junto a la zona noroeste.' },
+  { nombre:'La Moraleja y zona norte', texto:'Alcobendas, San Sebastián de los Reyes, La Moraleja y El Soto de La Moraleja.' },
+  { nombre:'Boadilla del Monte', texto:'Nuestra sede. Urbanizaciones con parcela, amplias zonas verdes y colegios de prestigio.' },
+  { nombre:'Pozuelo de Alarcón', texto:'Residencial de alto standing, con urbanizaciones como Somosaguas y La Finca y colegios internacionales.' },
+  { nombre:'Majadahonda', texto:'Una ciudad completa: amplia oferta comercial, servicios sanitarios de referencia y buena conexión con Madrid.' },
+  { nombre:'Las Rozas', texto:'Urbanizaciones consolidadas, campos de golf y una gran oferta comercial y deportiva.' },
+  { nombre:'Villanueva de la Cañada', texto:'Entorno tranquilo y familiar, con vivienda unifamiliar y oferta universitaria.' },
+  { nombre:'Torrelodones', texto:'A las puertas de la sierra: chalets en un entorno natural a pocos minutos de Madrid.' }
+];
 
 /* TESTIMONIOS — solo reseñas reales de clientes. Publicar reseñas
    falsas o no verificadas es una práctica comercial desleal
