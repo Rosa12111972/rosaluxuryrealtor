@@ -6,8 +6,11 @@
    y cookies.html.
    ============================================================ */
 window.LEGAL = {
-  // Denominación social exacta, como figura en las escrituras (p. ej. 'Rosa Rodríguez Inmobiliaria, S.L.').
+  // Denominación social exacta, como figura en las escrituras (p. ej. 'Ejemplo Inmobiliaria, S.L.').
   titular: 'ROCOBORT, S.L.',
+  // Nombre comercial con el que opera la agencia.
+  nombreComercial: 'The Brokery',
+  web: 'thebrokery.es',
   // NIF de la sociedad (antiguo CIF). En una S.L. empieza por B.
   nif: 'B88790894',
   // Datos de inscripción en el Registro Mercantil (art. 10.1.b LSSI-CE).
@@ -31,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-rgpd]').forEach(el => {
     el.innerHTML = `<strong>Información básica sobre protección de datos</strong>
     <table>
-      <tr><th>Responsable</th><td data-legal="titular"></td></tr>
+      <tr><th>Responsable</th><td><span data-legal="titular"></span> (<span data-legal="nombreComercial"></span>)</td></tr>
       <tr><th>Finalidad</th><td>Atender tu solicitud y, si lo autorizas, enviarte comunicaciones comerciales.</td></tr>
       <tr><th>Legitimación</th><td>Tu consentimiento y la aplicación de medidas precontractuales.</td></tr>
       <tr><th>Destinatarios</th><td>No se ceden datos a terceros, salvo obligación legal. Si envías por WhatsApp, Meta actúa como proveedor del servicio de mensajería.</td></tr>
