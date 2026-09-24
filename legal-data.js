@@ -12,15 +12,16 @@ window.LEGAL = {
   nif: 'B88790894',
   // Datos de inscripción en el Registro Mercantil (art. 10.1.b LSSI-CE).
   // Formato habitual: 'Registro Mercantil de Madrid, tomo X, folio Y, hoja M-Z'.
-  registroMercantil: '[COMPLETAR Registro Mercantil de …, tomo …, folio …, hoja …]',
-  domicilio: '[COMPLETAR domicilio social]',
+  registroMercantil: '[COMPLETAR Registro Mercantil de Madrid, tomo …, folio …, hoja M-…]',
+  domicilio: 'Calle Tomás y Valiente, 5, 6.º 3 C, 28660 Boadilla del Monte (Madrid)',
   email: '[COMPLETAR email]',
   telefono: '+34 698 222 520',
   // Registro de agentes inmobiliarios: obligatorio en Cataluña (AICAT, Decreto 12/2010)
   // y en la Comunitat Valenciana (Ley 2/2017). En otras comunidades es voluntario: déjalo vacío si no aplica.
-  registroAgentes: '[COMPLETAR nº de inscripción en el Registro de Agentes Inmobiliarios, si aplica]',
+  // En la Comunidad de Madrid no es obligatorio, por eso está vacío.
+  registroAgentes: '',
   // Seguro de responsabilidad civil y garantía/caución (obligatorios donde el registro lo es).
-  seguroRC: '[COMPLETAR aseguradora y nº de póliza de RC profesional, si aplica]'
+  seguroRC: ''
 };
 
 /* Rellena los elementos <span data-legal="campo"></span> y los recuadros
