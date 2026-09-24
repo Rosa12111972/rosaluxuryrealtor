@@ -13,20 +13,26 @@ jobs:
           ls -la demo.xml
           file demo.xml
           head -c 1500 demo.xml; echo
-      - name: Estructura
+      - name: Fotos y campos extra
         run: |
           python3 - <<'PY'
           import xml.etree.ElementTree as ET, collections
-          t = ET.parse('demo.xml'); r = t.getroot()
-          print('ROOT', r.tag, r.attrib, 'children', len(r))
-          kids = collections.Counter(c.tag for c in r)
-          print('CHILD TAGS', kids.most_common(10))
-          first = r[0] if len(r) else None
-          if first is not None:
-              print('--- PRIMER ELEMENTO ---')
-              for c in first:
-                  txt = (c.text or '').strip().replace('\n',' ')
-                  print(f'{c.tag} = {txt[:120]!r}', c.attrib if c.attrib else '', f'({len(c)} hijos)' if len(c) else '')
-                  for g in list(c)[:5]:
-                      print('    ', g.tag, (g.text or '').strip()[:100], g.attrib)
+          r = ET.parse('demo.xml').getroot()
+          first_tags = [c.tag for c in r[0]]
+          extra = collections.Counter()
+          for p in r:
+              for c in p:
+                  if c.tag not in first_tags: extra[c.tag]+=1
+          print('TAGS NO PRESENTES EN LA PRIMERA:', extra.most_common(60))
+          con = [p for p in r if (p.findtext('numfotos') or '0') not in ('0','')]
+          print('Con fotos:', len(con))
+          if con:
+              p = con[0]
+              for c in p:
+                  t=(c.text or '').strip()
+                  if 'foto' in c.tag.lower() or 'http' in t or c.tag in ('ref','numfotos','accion','precioinmo','precioalq','tipo_ofer','ciudad','zona','energialetra','estadoficha','keyacci'):
+                      print(c.tag,'=',t[:160])
+          print('accion:', collections.Counter(p.findtext('accion') for p in r).most_common())
+          print('energialetra:', collections.Counter(p.findtext('energialetra') for p in r).most_common())
+          print('tipo_ofer:', collections.Counter(p.findtext('tipo_ofer') for p in r).most_common(15))
           PY
