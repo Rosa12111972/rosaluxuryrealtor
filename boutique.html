@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rosa Rodríguez | Inmobiliaria boutique de lujo</title>
+<title>The Brokery España | Inmobiliaria boutique de lujo</title>
 <meta name="description" content="Inmobiliaria boutique especializada en propiedades residenciales de alto standing. Venta, compra, inversión y cartera off-market con atención personalizada.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23004225%22 font-family=%22Georgia,serif%22>R</text></svg>">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Rosa Rodríguez | Inmobiliaria boutique de lujo">
+<meta property="og:title" content="The Brokery España | Inmobiliaria boutique de lujo">
 <meta property="og:description" content="Propiedades residenciales de alto standing. Venta, compra, inversión y cartera off-market.">
 <meta property="og:image" content="https://rosa12111972.github.io/rosaluxuryrealtor/og-image.png">
 <meta property="og:url" content="https://rosa12111972.github.io/rosaluxuryrealtor/boutique.html">
@@ -263,7 +263,7 @@ footer a:hover{color:#fff;}
 <!-- ================= HEADER ================= -->
 <header id="top">
   <div class="nav">
-    <a href="#top" class="logo">Rosa Rodríguez<small>Inmobiliaria boutique</small></a>
+    <a href="#top" class="logo">The Brokery<small>España · Inmobiliaria boutique</small></a>
     <nav class="nav-links" id="navLinks" aria-label="Principal">
       <a href="#propiedades">Propiedades</a>
       <a href="#servicios">Servicios</a>
@@ -430,7 +430,7 @@ footer a:hover{color:#fff;}
       <div>
         <span class="eyebrow">Nuestro equipo</span>
         <h3>Rosa Rodríguez</h3>
-        <span class="team-role">Fundadora · Agente inmobiliaria</span>
+        <span class="team-role">Agente inmobiliaria · The Brokery España</span>
         <p>Acompaño a propietarios, compradores e inversores en operaciones residenciales de alto standing, con un enfoque cercano, transparente y basado en datos.</p>
         <p>Mi compromiso es sencillo: decirte la verdad sobre el mercado, defender tus intereses en cada negociación y cuidar cada detalle para que la operación llegue a buen puerto.</p>
         <div class="team-contact">
@@ -573,7 +573,7 @@ footer a:hover{color:#fff;}
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <div class="foot-logo">Rosa Rodríguez</div>
+        <div class="foot-logo">The Brokery</div>
         <p>Inmobiliaria boutique especializada en propiedades residenciales de alto standing.</p>
       </div>
       <div>
@@ -608,7 +608,7 @@ footer a:hover{color:#fff;}
         <a href="cookies.html">Política de cookies</a>
         <button type="button" data-cookie-settings>Configurar cookies</button>
       </div>
-      <p>© <span id="year"></span> Rosa Rodríguez. Todos los derechos reservados.</p>
+      <p>© <span id="year"></span> The Brokery España · ROCOBORT, S.L. Todos los derechos reservados.</p>
     </div>
   </div>
 </footer>
@@ -670,7 +670,7 @@ $('#burger').addEventListener('click', () => {
 document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => { $('#navLinks').classList.remove('open'); onScroll(); }));
 
 /* ---------- datos legales en el pie ---------- */
-$('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} · NIF: ${show(LEGAL.nif)} · Domicilio social: ${show(LEGAL.domicilio)} · ${show(LEGAL.registroMercantil)} · Email: ${show(LEGAL.email)} · Tel.: ${show(LEGAL.telefono)}`;
+$('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} (${show(LEGAL.nombreComercial)}) · NIF: ${show(LEGAL.nif)} · Domicilio social: ${show(LEGAL.domicilio)} · ${show(LEGAL.registroMercantil)} · Email: ${show(LEGAL.email)} · Tel.: ${show(LEGAL.telefono)}`;
 $('#legalRegistro').innerHTML = LEGAL.registroAgentes === '' ? '' : `Registro de Agentes Inmobiliarios: ${show(LEGAL.registroAgentes)} · Seguro de responsabilidad civil: ${show(LEGAL.seguroRC)}`;
 if(!pending(LEGAL.domicilio)) $('#footAddress').textContent = LEGAL.domicilio;
 if(!pending(LEGAL.email)) $('#contactEmail').innerHTML = `<a href="mailto:${esc(LEGAL.email)}">${esc(LEGAL.email)}</a>`;
