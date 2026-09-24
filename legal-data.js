@@ -18,8 +18,21 @@ window.LEGAL = {
   seguroRC: '[COMPLETAR aseguradora y nº de póliza de RC profesional, si aplica]'
 };
 
-/* Rellena los elementos <span data-legal="campo"></span> de las páginas legales. */
+/* Rellena los elementos <span data-legal="campo"></span> y los recuadros
+   <div data-rgpd></div> de información básica sobre protección de datos
+   (primera capa informativa, art. 11 LOPDGDD) en todas las páginas. */
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-rgpd]').forEach(el => {
+    el.innerHTML = `<strong>Información básica sobre protección de datos</strong>
+    <table>
+      <tr><th>Responsable</th><td data-legal="titular"></td></tr>
+      <tr><th>Finalidad</th><td>Atender tu solicitud y, si lo autorizas, enviarte comunicaciones comerciales.</td></tr>
+      <tr><th>Legitimación</th><td>Tu consentimiento y la aplicación de medidas precontractuales.</td></tr>
+      <tr><th>Destinatarios</th><td>No se ceden datos a terceros, salvo obligación legal. Si envías por WhatsApp, Meta actúa como proveedor del servicio de mensajería.</td></tr>
+      <tr><th>Derechos</th><td>Acceso, rectificación, supresión, oposición, limitación y portabilidad, además de reclamar ante la AEPD.</td></tr>
+      <tr><th>Más info</th><td><a href="privacidad.html" target="_blank">Política de Privacidad</a></td></tr>
+    </table>`;
+  });
   document.querySelectorAll('[data-legal]').forEach(el => {
     const v = window.LEGAL[el.dataset.legal] || '';
     el.textContent = v || '—';

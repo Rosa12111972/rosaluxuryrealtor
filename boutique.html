@@ -675,19 +675,6 @@ $('#legalRegistro').innerHTML = LEGAL.registroAgentes === '' ? '' : `Registro de
 if(!pending(LEGAL.domicilio)) $('#footAddress').textContent = LEGAL.domicilio;
 if(!pending(LEGAL.email)) $('#contactEmail').innerHTML = `<a href="mailto:${esc(LEGAL.email)}">${esc(LEGAL.email)}</a>`;
 
-/* ---------- información básica de protección de datos (1ª capa, art. 11 LOPDGDD) ---------- */
-document.querySelectorAll('[data-rgpd]').forEach(el => {
-  el.innerHTML = `<strong>Información básica sobre protección de datos</strong>
-  <table>
-    <tr><th>Responsable</th><td>${show(LEGAL.titular)}</td></tr>
-    <tr><th>Finalidad</th><td>Atender tu solicitud y, si lo autorizas, enviarte comunicaciones comerciales.</td></tr>
-    <tr><th>Legitimación</th><td>Tu consentimiento y la aplicación de medidas precontractuales.</td></tr>
-    <tr><th>Destinatarios</th><td>No se ceden datos a terceros, salvo obligación legal. Si envías por WhatsApp, Meta actúa como proveedor del servicio de mensajería.</td></tr>
-    <tr><th>Derechos</th><td>Acceso, rectificación, supresión, oposición, limitación y portabilidad, además de reclamar ante la AEPD.</td></tr>
-    <tr><th>Más info</th><td><a href="privacidad.html" target="_blank">Política de Privacidad</a></td></tr>
-  </table>`;
-});
-
 /* ---------- propiedades ---------- */
 function renderProps(){
   const grid = $('#propsGrid');
