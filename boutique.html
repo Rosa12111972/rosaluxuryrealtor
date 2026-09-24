@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rosa Rodríguez | Inmobiliaria boutique de lujo</title>
+<meta name="description" content="Inmobiliaria boutique especializada en propiedades residenciales de alto standing. Venta, compra, inversión y cartera off-market con atención personalizada.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23004225%22 font-family=%22Georgia,serif%22>R</text></svg>">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rosa Rodríguez | Inmobiliaria boutique de lujo">
+<meta property="og:description" content="Propiedades residenciales de alto standing. Venta, compra, inversión y cartera off-market.">
+<meta property="og:image" content="https://rosa12111972.github.io/rosaluxuryrealtor/og-image.png">
+<meta property="og:url" content="https://rosa12111972.github.io/rosaluxuryrealtor/boutique.html">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- NORMATIVA: el Meta Pixel NO se carga aquí. Lo carga cookie-consent.js solo si el
+     visitante acepta las cookies de marketing (art. 22.2 LSSI-CE). El ID del píxel se
+     configura en cookie-consent.js. -->
+
+<style>
+:root{
+  --black:#111111;
+  --ink:#1c1c1c;
+  --accent:#004225;
+  --accent-soft:#0b5a36;
+  --gold:#b8a07a;
+  --text:#3d3d3d;
+  --muted:#6b6b6b;
+  --white:#ffffff;
+  --bg:#ffffff;
+  --bg-alt:#f7f6f4;
+  --border:#e5e1d8;
+  --maxw:1240px;
+  --serif:'Georgia','Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+section{padding:110px 0;}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:400;color:var(--ink);letter-spacing:.3px;}
+.eyebrow{display:block;text-transform:uppercase;letter-spacing:4px;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:14px;}
+.title{font-size:clamp(30px,4.2vw,48px);line-height:1.15;margin-bottom:18px;}
+.sub{color:var(--muted);font-size:17px;max-width:620px;}
+.center{text-align:center;}
+.center .sub{margin:0 auto;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 34px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600;border:1px solid transparent;cursor:pointer;transition:all .25s ease;font-family:var(--sans);border-radius:0;}
+.btn-dark{background:var(--black);color:#fff;}
+.btn-dark:hover{background:var(--accent);}
+.btn-accent{background:var(--accent);color:#fff;}
+.btn-accent:hover{background:var(--black);}
+.btn-line{background:transparent;border-color:currentColor;}
+.btn-line:hover{background:var(--black);color:#fff;border-color:var(--black);}
+.btn-line-light{background:transparent;border-color:#fff;color:#fff;}
+.btn-line-light:hover{background:#fff;color:var(--black);}
+
+/* ---------- HEADER ---------- */
+header{position:fixed;inset:0 0 auto 0;z-index:1000;transition:background .3s,border-color .3s;border-bottom:1px solid transparent;}
+header.solid{background:rgba(255,255,255,.97);border-color:var(--border);backdrop-filter:blur(6px);}
+.nav{max-width:var(--maxw);margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.logo{font-family:var(--serif);font-size:22px;letter-spacing:3px;text-transform:uppercase;color:#fff;line-height:1;}
+.logo small{display:block;font-family:var(--sans);font-size:9.5px;letter-spacing:4px;margin-top:6px;opacity:.85;}
+header.solid .logo{color:var(--ink);}
+.nav-links{display:flex;gap:30px;align-items:center;}
+.nav-links a{white-space:nowrap;color:#fff;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;}
+header.solid .nav-links a{color:var(--ink);}
+.nav-links a:hover{color:var(--gold)!important;}
+.nav-phone{font-size:13px;letter-spacing:1px;color:#fff;white-space:nowrap;}
+header.solid .nav-phone{color:var(--ink);}
+.burger{display:none;background:none;border:none;font-size:28px;color:#fff;cursor:pointer;}
+header.solid .burger{color:var(--ink);}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:140px 0 90px;color:#fff;
+  /* BRAND: sustituye el degradado por una foto propia: background:url('tu-foto.jpg') center/cover; */
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.55)),
+    radial-gradient(ellipse at 20% 20%,#1d6b47 0%,transparent 55%),
+    radial-gradient(ellipse at 85% 80%,#3a3226 0%,transparent 55%),
+    linear-gradient(135deg,#0d2a1d 0%,#062015 45%,#15120d 100%);
+}
+.hero .wrap{width:100%;}
+.hero .eyebrow{color:var(--gold);}
+.hero h1{color:#fff;font-size:clamp(40px,6.4vw,82px);line-height:1.05;max-width:900px;margin-bottom:24px;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero p.lead{font-size:clamp(16px,1.6vw,19px);max-width:600px;opacity:.9;margin-bottom:44px;}
+.search{display:grid;grid-template-columns:repeat(4,1fr) auto;background:#fff;max-width:980px;}
+.search label{display:flex;flex-direction:column;padding:14px 20px;border-right:1px solid var(--border);color:var(--muted);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;font-weight:600;}
+.search select,.search input{border:none;outline:none;background:transparent;font-size:15px;color:var(--ink);padding-top:6px;font-family:var(--sans);width:100%;}
+.search button{border-radius:0;}
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.75;}
+
+/* ---------- INTRO / BOUTIQUE ---------- */
+.intro-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:80px;align-items:center;}
+.intro-grid p{margin-bottom:18px;font-size:17px;}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:70px;border-top:1px solid var(--border);}
+.pillar{padding:34px 28px 0 0;}
+.pillar .n{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:2px;}
+.pillar h4{font-size:22px;margin:10px 0 8px;}
+.pillar p{color:var(--muted);font-size:15px;}
+.intro-visual{aspect-ratio:4/5;position:relative;
+  background:linear-gradient(160deg,#e9e4da,#cfc5b3);}
+.intro-visual img{width:100%;height:100%;object-fit:cover;}
+.intro-visual .tag{position:absolute;left:-30px;bottom:40px;background:var(--accent);color:#fff;padding:26px 30px;max-width:260px;font-family:var(--serif);font-size:19px;line-height:1.35;}
+
+/* ---------- PROPIEDADES ---------- */
+.alt{background:var(--bg-alt);}
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:50px;flex-wrap:wrap;}
+.props{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+.prop{background:#fff;border:1px solid var(--border);display:flex;flex-direction:column;}
+.prop-img{aspect-ratio:4/3;position:relative;background:linear-gradient(135deg,#2b4b3b,#11261c);background-size:cover;background-position:center;}
+.prop-badge{position:absolute;top:16px;left:16px;background:#fff;color:var(--ink);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;font-weight:600;}
+.cee{position:absolute;bottom:16px;right:16px;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.95);padding:5px 10px;font-size:11px;font-weight:600;color:var(--ink);}
+.cee b{display:inline-grid;place-items:center;width:22px;height:22px;color:#fff;font-size:12px;}
+.prop-body{padding:24px 26px 28px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.prop-price{font-family:var(--serif);font-size:24px;color:var(--ink);}
+.prop-price small{display:block;font-family:var(--sans);font-size:11.5px;color:var(--muted);margin-top:2px;}
+.prop-title{font-size:15px;color:var(--ink);font-weight:600;}
+.prop-meta{display:flex;gap:18px;font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:14px;margin-top:auto;flex-wrap:wrap;}
+.offmarket{grid-column:1/-1;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;background:var(--black);color:#fff;padding:56px 60px;}
+.offmarket h3{color:#fff;font-size:clamp(26px,3vw,36px);margin-bottom:10px;}
+.offmarket p{opacity:.8;max-width:640px;}
+.legal-note{font-size:12.5px;color:var(--muted);margin-top:26px;max-width:900px;}
+
+/* ---------- SERVICIOS ---------- */
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);}
+.service{padding:44px 32px;border-right:1px solid var(--border);transition:background .25s;}
+.service:last-child{border-right:none;}
+.service:hover{background:var(--bg-alt);}
+.service .ico{font-family:var(--serif);font-size:34px;color:var(--gold);margin-bottom:22px;}
+.service h3{font-size:23px;margin-bottom:12px;}
+.service p{color:var(--muted);font-size:15px;margin-bottom:20px;}
+.service a{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--accent);}
+
+/* ---------- COLECCIONES ---------- */
+.collections{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:18px;}
+.col{position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:28px;color:#fff;cursor:pointer;}
+.col::before{content:"";position:absolute;inset:0;background:var(--bgc);transition:transform .6s ease;}
+.col::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.6));}
+.col:hover::before{transform:scale(1.06);}
+.col span{position:relative;z-index:1;}
+.col h3{color:#fff;font-size:26px;}
+.col small{display:block;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;opacity:.85;margin-top:6px;}
+.col.tall{grid-row:span 2;}
+
+/* ---------- EQUIPO ---------- */
+.team-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:center;}
+.team-photo{aspect-ratio:4/5;background:#e9e4da;overflow:hidden;}
+.team-photo img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.team-grid h3{font-size:34px;margin-bottom:4px;}
+.team-role{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:24px;display:block;}
+.team-grid p{margin-bottom:16px;font-size:16.5px;}
+.team-contact{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;}
+
+/* ---------- INFORMES ---------- */
+.reports{background:var(--accent);color:#fff;}
+.reports .eyebrow{color:var(--gold);}
+.reports h2{color:#fff;}
+.reports-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
+.reports ul{list-style:none;margin-top:26px;}
+.reports li{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.18);font-size:16px;}
+.reports li::before{content:"—";color:var(--gold);margin-right:12px;}
+.form-dark{background:rgba(0,0,0,.18);padding:40px;}
+.form-dark .field input,.form-dark .field select{background:transparent;color:#fff;border-color:rgba(255,255,255,.35);}
+.form-dark .field select option{color:var(--ink);}
+.form-dark .field label{color:rgba(255,255,255,.8);}
+.form-dark .rgpd-box{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.85);}
+.form-dark .check{color:rgba(255,255,255,.9);}
+.form-dark a{text-decoration:underline;}
+
+/* ---------- TESTIMONIOS ---------- */
+.testis{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:50px;}
+.testi{border-top:2px solid var(--accent);padding-top:28px;}
+.testi p{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--ink);margin-bottom:18px;}
+.testi .who{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+
+/* ---------- CONTACTO / FORMULARIOS ---------- */
+.contact-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:80px;}
+.contact-info p{margin-bottom:10px;}
+.contact-info .big{font-family:var(--serif);font-size:24px;color:var(--ink);}
+form .row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.field{display:flex;flex-direction:column;margin-bottom:18px;}
+.field label{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:8px;}
+.field input,.field select,.field textarea{padding:14px 14px;border:1px solid var(--border);background:#fff;font-size:15px;font-family:var(--sans);color:var(--ink);border-radius:0;}
+.field textarea{min-height:120px;resize:vertical;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;}
+.rgpd-box{font-size:12.5px;line-height:1.55;border:1px solid var(--border);background:var(--bg-alt);padding:16px 18px;margin:6px 0 16px;}
+.rgpd-box table{width:100%;border-collapse:collapse;}
+.rgpd-box th{text-align:left;vertical-align:top;padding:3px 12px 3px 0;white-space:nowrap;font-weight:600;}
+.rgpd-box td{padding:3px 0;}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;margin-bottom:12px;cursor:pointer;}
+.check input{margin-top:3px;width:17px;height:17px;flex-shrink:0;accent-color:var(--accent);}
+.form-msg{font-size:13px;margin-top:12px;}
+
+/* ---------- NORMATIVA ---------- */
+.norm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;}
+.norm{background:#fff;border:1px solid var(--border);padding:30px;}
+.norm h4{font-size:19px;margin-bottom:10px;}
+.norm p{font-size:14.5px;color:var(--muted);}
+.norm .ref{display:block;margin-top:14px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:600;}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--black);color:rgba(255,255,255,.72);padding:80px 0 34px;font-size:14px;}
+footer h4{color:#fff;font-size:13px;font-family:var(--sans);letter-spacing:2.5px;text-transform:uppercase;font-weight:600;margin-bottom:18px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:50px;padding-bottom:50px;border-bottom:1px solid rgba(255,255,255,.12);}
+footer p{margin-bottom:8px;}
+footer a:hover{color:#fff;}
+.foot-logo{font-family:var(--serif);font-size:22px;letter-spacing:3px;text-transform:uppercase;color:#fff;margin-bottom:16px;}
+.foot-legal{padding-top:30px;font-size:12px;line-height:1.7;color:rgba(255,255,255,.55);}
+.foot-legal p{margin-bottom:10px;}
+.foot-links{display:flex;flex-wrap:wrap;gap:8px 22px;margin:18px 0;font-size:12.5px;}
+.foot-links a,.foot-links button{color:rgba(255,255,255,.8);background:none;border:none;font:inherit;cursor:pointer;padding:0;}
+.foot-links a:hover,.foot-links button:hover{color:#fff;text-decoration:underline;}
+.todo{background:rgba(184,160,122,.18);color:inherit;padding:0 4px;}
+
+/* ---------- WHATSAPP ---------- */
+.wa-float{position:fixed;right:22px;bottom:22px;z-index:900;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.2);}
+.wa-float svg{width:30px;height:30px;fill:#fff;}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1180px){ .nav-phone{display:none;} }
+@media (max-width:1020px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;align-items:flex-start;padding:20px 24px 28px;gap:18px;border-bottom:1px solid var(--border);}
+  .nav-links.open{display:flex;}
+  .nav-links a{color:var(--ink)!important;}
+  .nav-phone{display:none;}
+  .burger{display:block;}
+  .search{grid-template-columns:1fr 1fr;}
+  .search label{border-bottom:1px solid var(--border);}
+  .search button{grid-column:1/-1;}
+  .intro-grid,.team-grid,.reports-grid,.contact-grid{grid-template-columns:1fr;gap:50px;}
+  .intro-visual{max-width:460px;}
+  .intro-visual .tag{left:0;}
+  .props,.testis,.norm-grid{grid-template-columns:1fr 1fr;}
+  .services{grid-template-columns:1fr 1fr;}
+  .service:nth-child(2){border-right:none;}
+  .service:nth-child(-n+2){border-bottom:1px solid var(--border);}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .offmarket{grid-template-columns:1fr;padding:40px 30px;}
+}
+@media (max-width:640px){
+  section{padding:76px 0;}
+  .wrap{padding:0 16px;}
+  .nav{padding:16px;}
+  .search{grid-template-columns:1fr;}
+  .search label{border-right:none;}
+  .pillars,.props,.testis,.norm-grid,.services,.collections,.foot-grid,form .row{grid-template-columns:1fr;}
+  .pillar{padding-right:0;}
+  .service{border-right:none!important;border-bottom:1px solid var(--border);}
+  .collections{grid-auto-rows:200px;}
+  .col.tall{grid-row:span 1;}
+  .form-dark{padding:26px 18px;}
+  .rgpd-box th{white-space:normal;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="top">
+  <div class="nav">
+    <a href="#top" class="logo">Rosa Rodríguez<small>Inmobiliaria boutique</small></a>
+    <nav class="nav-links" id="navLinks" aria-label="Principal">
+      <a href="#propiedades">Propiedades</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#colecciones">Colecciones</a>
+      <a href="#equipo">Nosotros</a>
+      <a href="#informes">Mercado</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a class="nav-phone" href="tel:+34698222520">+34 698 222 520</a>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Inmobiliaria boutique · Propiedades de alto standing</span>
+    <h1>Hogares <em>excepcionales</em>, un servicio a la altura</h1>
+    <p class="lead">Asesoramiento personal y discreto en la compra, venta e inversión de viviendas exclusivas. Conocimiento del mercado, red de compradores cualificados y acceso a propiedades fuera de mercado.</p>
+
+    <form class="search" id="searchForm" aria-label="Buscar propiedades">
+      <label>Operación
+        <select name="Operación">
+          <option>Comprar</option>
+          <option>Alquilar</option>
+          <option>Vender</option>
+        </select>
+      </label>
+      <label>Tipo
+        <select name="Tipo">
+          <option>Cualquiera</option>
+          <option>Villa / chalet</option>
+          <option>Ático</option>
+          <option>Piso de lujo</option>
+          <option>Finca / casa de campo</option>
+          <option>Obra nueva</option>
+        </select>
+      </label>
+      <label>Zona
+        <input name="Zona" type="text" placeholder="Ciudad o barrio">
+      </label>
+      <label>Presupuesto
+        <select name="Presupuesto">
+          <option>Sin límite</option>
+          <option>Hasta 500.000 €</option>
+          <option>500.000 € – 1 M€</option>
+          <option>1 M€ – 2 M€</option>
+          <option>Más de 2 M€</option>
+        </select>
+      </label>
+      <button class="btn btn-accent" type="submit">Buscar</button>
+    </form>
+  </div>
+  <span class="hero-scroll">Descubrir ↓</span>
+</section>
+
+<!-- ================= INTRO ================= -->
+<section id="nosotros">
+  <div class="wrap">
+    <div class="intro-grid">
+      <div>
+        <span class="eyebrow">Una inmobiliaria diferente</span>
+        <h2 class="title">Boutique por elección.<br>Exigente por naturaleza.</h2>
+        <p>Trabajamos con un número limitado de clientes y propiedades a la vez. Así cada operación recibe la atención, la estrategia y el cuidado que merece, desde la primera valoración hasta la firma ante notario.</p>
+        <p>Combinamos el trato cercano de una firma independiente con herramientas de marketing de primer nivel: fotografía y vídeo profesional, home staging, campañas digitales segmentadas y una red privada de compradores nacionales e internacionales.</p>
+        <a href="#contacto" class="btn btn-dark" style="margin-top:14px;">Hablemos</a>
+      </div>
+      <div class="intro-visual">
+        <!-- BRAND: sustituye por una foto de propiedad: <img src="interior.jpg" alt="..."> -->
+        <div class="tag">Cada propiedad cuenta una historia. Nuestro trabajo es contarla bien.</div>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar"><span class="n">01</span><h4>Conocimiento local</h4><p>Datos reales de precios de cierre, no de oferta, para fijar el precio correcto desde el primer día.</p></div>
+      <div class="pillar"><span class="n">02</span><h4>Discreción</h4><p>Ventas confidenciales y cartera off-market para clientes que valoran su privacidad.</p></div>
+      <div class="pillar"><span class="n">03</span><h4>Acompañamiento integral</h4><p>Coordinación con notaría, registro, entidades financieras, asesores fiscales y abogados.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROPIEDADES ================= -->
+<section id="propiedades" class="alt">
+  <div class="wrap">
+    <div class="head-row">
+      <div>
+        <span class="eyebrow">Selección exclusiva</span>
+        <h2 class="title" style="margin-bottom:0;">Propiedades destacadas</h2>
+      </div>
+      <a href="#contacto" class="btn btn-line" data-wa="Hola Rosa, me gustaría ver todas las propiedades disponibles.">Ver toda la cartera</a>
+    </div>
+
+    <div class="props" id="propsGrid">
+      <!-- Las tarjetas se generan desde PROPIEDADES (en el script, al final). -->
+    </div>
+
+    <p class="legal-note">
+      Información de las propiedades a disposición del consumidor conforme al Real Decreto 515/1989 (Documento Informativo Abreviado). Los precios indicados no incluyen impuestos (IVA o ITP, y AJD) ni gastos de notaría, registro y gestoría, que corren a cargo del comprador salvo pacto en contrario. La calificación energética se muestra según el Real Decreto 390/2021. Las superficies son aproximadas. Esta información no tiene carácter contractual.
+    </p>
+  </div>
+</section>
+
+<!-- ================= SERVICIOS ================= -->
+<section id="servicios">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:60px;">
+      <span class="eyebrow">Servicios</span>
+      <h2 class="title">Todo lo que necesitas, en un solo interlocutor</h2>
+      <p class="sub">Un único punto de contacto para cada fase de la operación.</p>
+    </div>
+    <div class="services">
+      <div class="service">
+        <div class="ico">I</div>
+        <h3>Vender</h3>
+        <p>Valoración basada en datos, plan de marketing premium, filtrado de compradores con solvencia acreditada y negociación.</p>
+        <a href="#contacto" data-interest="Vender mi propiedad">Solicitar valoración →</a>
+      </div>
+      <div class="service">
+        <div class="ico">II</div>
+        <h3>Comprar</h3>
+        <p>Búsqueda personalizada, acceso a propiedades fuera de mercado, revisión de nota simple, cargas y cédula, y acompañamiento hasta la escritura.</p>
+        <a href="#contacto" data-interest="Comprar">Iniciar búsqueda →</a>
+      </div>
+      <div class="service">
+        <div class="ico">III</div>
+        <h3>Invertir</h3>
+        <p>Análisis de rentabilidad, fiscalidad de la inversión y selección de activos residenciales con potencial de revalorización.</p>
+        <a href="index.html#calculadora">Calcular rentabilidad →</a>
+      </div>
+      <div class="service">
+        <div class="ico">IV</div>
+        <h3>Alquiler</h3>
+        <p>Gestión de alquileres de alto standing conforme a la Ley de Arrendamientos Urbanos y la Ley 12/2023 por el derecho a la vivienda.</p>
+        <a href="#contacto" data-interest="Alquiler">Más información →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COLECCIONES ================= -->
+<section id="colecciones" class="alt">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:56px;">
+      <span class="eyebrow">Colecciones</span>
+      <h2 class="title">Encuentra tu estilo de vida</h2>
+      <p class="sub">Explora por tipo de propiedad. Te enviamos las opciones disponibles, incluidas las que no se anuncian.</p>
+    </div>
+    <!-- BRAND: cambia --bgc por url('foto.jpg') center/cover para usar fotos reales -->
+    <div class="collections">
+      <a class="col tall" style="--bgc:linear-gradient(160deg,#2f5d46,#0e2419);" data-wa="Hola Rosa, me interesan villas y chalets exclusivos."><span><h3>Villas y chalets</h3><small>Privacidad y espacio</small></span></a>
+      <a class="col" style="--bgc:linear-gradient(160deg,#5a4a36,#1c160f);" data-wa="Hola Rosa, me interesan áticos con terraza."><span><h3>Áticos</h3><small>Terrazas y vistas</small></span></a>
+      <a class="col" style="--bgc:linear-gradient(160deg,#1f4b63,#0b1c26);" data-wa="Hola Rosa, me interesan propiedades en primera línea."><span><h3>Primera línea</h3><small>Mar, golf y lago</small></span></a>
+      <a class="col" style="--bgc:linear-gradient(160deg,#6b6049,#2a251b);" data-wa="Hola Rosa, me interesan fincas y casas de campo."><span><h3>Fincas</h3><small>Campo y naturaleza</small></span></a>
+      <a class="col" style="--bgc:linear-gradient(160deg,#3d3d3d,#111);" data-wa="Hola Rosa, me interesa obra nueva de alto standing."><span><h3>Obra nueva</h3><small>Diseño contemporáneo</small></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EQUIPO ================= -->
+<section id="equipo">
+  <div class="wrap">
+    <div class="team-grid">
+      <div class="team-photo"><img src="rosa.png" alt="Rosa Rodríguez, agente inmobiliaria"></div>
+      <div>
+        <span class="eyebrow">Nuestro equipo</span>
+        <h3>Rosa Rodríguez</h3>
+        <span class="team-role">Fundadora · Agente inmobiliaria</span>
+        <p>Acompaño a propietarios, compradores e inversores en operaciones residenciales de alto standing, con un enfoque cercano, transparente y basado en datos.</p>
+        <p>Mi compromiso es sencillo: decirte la verdad sobre el mercado, defender tus intereses en cada negociación y cuidar cada detalle para que la operación llegue a buen puerto.</p>
+        <div class="team-contact">
+          <a href="tel:+34698222520" class="btn btn-dark">Llamar</a>
+          <a href="#" class="btn btn-line" data-wa="Hola Rosa, vengo de tu web y me gustaría hablar contigo.">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INFORMES DE MERCADO ================= -->
+<section id="informes" class="reports">
+  <div class="wrap">
+    <div class="reports-grid">
+      <div>
+        <span class="eyebrow">Informes de mercado</span>
+        <h2 class="title">Toma decisiones con datos, no con intuición</h2>
+        <p style="opacity:.85;font-size:17px;">Recibe un informe personalizado de la zona que te interesa.</p>
+        <ul>
+          <li>Precios de cierre y evolución del €/m²</li>
+          <li>Plazo medio de venta</li>
+          <li>Oferta disponible y nueva demanda</li>
+          <li>Rentabilidad bruta del alquiler</li>
+        </ul>
+      </div>
+      <form class="form-dark" id="reportForm" novalidate>
+        <div class="field"><label for="rNombre">Nombre *</label><input id="rNombre" name="Nombre" required autocomplete="name"></div>
+        <div class="field"><label for="rEmail">Email *</label><input id="rEmail" name="Email" type="email" required autocomplete="email"></div>
+        <div class="field"><label for="rZona">Zona de interés *</label><input id="rZona" name="Zona" required></div>
+        <div class="rgpd-box" data-rgpd></div>
+        <label class="check"><input type="checkbox" name="privacidad" required> <span>He leído y acepto la <a href="privacidad.html" target="_blank">Política de Privacidad</a>. *</span></label>
+        <label class="check"><input type="checkbox" name="comercial"> <span>Acepto recibir comunicaciones comerciales sobre propiedades y mercado inmobiliario (opcional).</span></label>
+        <button type="submit" class="btn btn-line-light" style="width:100%;margin-top:6px;">Solicitar informe</button>
+        <p class="form-msg" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIOS ================= -->
+<section id="testimonios" hidden>
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Testimonios</span>
+      <h2 class="title">La confianza de nuestros clientes</h2>
+      <p class="sub" id="testiNote"></p>
+    </div>
+    <div class="testis" id="testiGrid"></div>
+  </div>
+</section>
+
+<!-- ================= NORMATIVA ================= -->
+<section id="normativa" class="alt">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Transparencia</span>
+      <h2 class="title">Operaciones seguras y conforme a la normativa española</h2>
+      <p class="sub">Esto es lo que garantizamos en cada operación.</p>
+    </div>
+    <div class="norm-grid">
+      <div class="norm">
+        <h4>Información al consumidor</h4>
+        <p>Antes de cualquier reserva o arras ponemos a tu disposición el Documento Informativo Abreviado, la nota simple registral, la cédula de habitabilidad o licencia de primera ocupación, cuando corresponda, y el desglose del precio y sus impuestos.</p>
+        <span class="ref">RD 515/1989 · RDL 1/2007</span>
+      </div>
+      <div class="norm">
+        <h4>Certificado energético</h4>
+        <p>Toda vivienda que se anuncia para venta o alquiler muestra su etiqueta de eficiencia energética. El certificado se entrega al comprador o inquilino.</p>
+        <span class="ref">RD 390/2021</span>
+      </div>
+      <div class="norm">
+        <h4>Honorarios claros</h4>
+        <p>Honorarios pactados por escrito en la hoja de encargo antes de empezar. En el alquiler de vivienda, los gastos de gestión inmobiliaria y de formalización del contrato corren a cargo del arrendador.</p>
+        <span class="ref">Ley 12/2023 · Art. 20.1 LAU</span>
+      </div>
+      <div class="norm">
+        <h4>Prevención del blanqueo</h4>
+        <p>Como sujetos obligados, identificamos a las partes y verificamos el origen de los fondos en cada operación.</p>
+        <span class="ref">Ley 10/2010</span>
+      </div>
+      <div class="norm">
+        <h4>Protección de datos</h4>
+        <p>Tus datos se tratan solo para atender tu solicitud, con tu consentimiento y sin cederlos a terceros sin base legal.</p>
+        <span class="ref">RGPD (UE) 2016/679 · LO 3/2018</span>
+      </div>
+      <div class="norm">
+        <h4>Hojas de reclamaciones</h4>
+        <p>Tenemos hojas de reclamaciones oficiales a tu disposición. También puedes acudir a los servicios de consumo de tu comunidad autónoma.</p>
+        <span class="ref">Normativa autonómica de consumo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <span class="eyebrow">Contacto</span>
+        <h2 class="title">Empecemos a hablar</h2>
+        <p class="sub" style="margin-bottom:34px;">Cuéntanos qué necesitas y te respondemos en menos de 24 horas laborables.</p>
+        <p class="big"><a href="tel:+34698222520">+34 698 222 520</a></p>
+        <p><a href="#" data-wa="Hola Rosa, vengo de tu web y quiero más información.">Escribir por WhatsApp →</a></p>
+        <p id="contactEmail"></p>
+      </div>
+      <form id="contactForm" novalidate>
+        <div class="row">
+          <div class="field"><label for="cNombre">Nombre *</label><input id="cNombre" name="Nombre" required autocomplete="name"></div>
+          <div class="field"><label for="cTel">Teléfono *</label><input id="cTel" name="Teléfono" type="tel" required autocomplete="tel"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="cEmail">Email</label><input id="cEmail" name="Email" type="email" autocomplete="email"></div>
+          <div class="field"><label for="cInteres">Me interesa</label>
+            <select id="cInteres" name="Interés">
+              <option>Comprar</option>
+              <option>Vender mi propiedad</option>
+              <option>Invertir</option>
+              <option>Alquiler</option>
+              <option>Cartera off-market</option>
+              <option>Otro</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label for="cMsg">Mensaje</label><textarea id="cMsg" name="Mensaje" placeholder="Zona, tipo de propiedad, plazos…"></textarea></div>
+        <div class="rgpd-box" data-rgpd></div>
+        <label class="check"><input type="checkbox" name="privacidad" required> <span>He leído y acepto la <a href="privacidad.html" target="_blank" style="color:var(--accent);text-decoration:underline;">Política de Privacidad</a>. *</span></label>
+        <label class="check"><input type="checkbox" name="comercial"> <span>Acepto recibir comunicaciones comerciales sobre propiedades y mercado inmobiliario (opcional).</span></label>
+        <button type="submit" class="btn btn-dark" style="margin-top:8px;">Enviar por WhatsApp</button>
+        <p class="form-msg" role="status"></p>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">Al enviar se abrirá WhatsApp con tus datos ya redactados. WhatsApp (Meta) tratará el mensaje según su propia política de privacidad.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">Rosa Rodríguez</div>
+        <p>Inmobiliaria boutique especializada en propiedades residenciales de alto standing.</p>
+      </div>
+      <div>
+        <h4>Explorar</h4>
+        <p><a href="#propiedades">Propiedades</a></p>
+        <p><a href="#servicios">Servicios</a></p>
+        <p><a href="#colecciones">Colecciones</a></p>
+        <p><a href="#informes">Mercado</a></p>
+      </div>
+      <div>
+        <h4>Herramientas</h4>
+        <p><a href="index.html#calculadora">Calculadora de rentabilidad</a></p>
+        <p><a href="index.html#hipoteca">Calculadora de hipoteca</a></p>
+        <p><a href="#normativa">Transparencia y normativa</a></p>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <p><a href="tel:+34698222520">+34 698 222 520</a></p>
+        <p><a href="#" data-wa="Hola Rosa, vengo de tu web y quiero más información.">WhatsApp</a></p>
+        <p id="footAddress"></p>
+      </div>
+    </div>
+
+    <div class="foot-legal">
+      <!-- NORMATIVA (art. 10 LSSI-CE): datos identificativos del prestador. Se rellenan desde LEGAL en el script. -->
+      <p id="legalIdent"></p>
+      <p id="legalRegistro"></p>
+      <p>Hojas de reclamaciones a disposición de los consumidores y usuarios. La información de las propiedades no tiene carácter contractual.</p>
+      <div class="foot-links">
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="privacidad.html">Política de privacidad</a>
+        <a href="cookies.html">Política de cookies</a>
+        <button type="button" data-cookie-settings>Configurar cookies</button>
+      </div>
+      <p>© <span id="year"></span> Rosa Rodríguez. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="#" data-wa="Hola Rosa, vengo de tu web y quiero más información." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.35.63 4.55 1.72 6.45L4 29l7.72-1.68a12 12 0 0 0 4.3.78c6.63 0 12.02-5.4 12.02-12.02C28.04 8.4 22.65 3 16.02 3zm0 21.9c-1.9 0-3.68-.5-5.22-1.4l-.37-.22-4.6 1 1.02-4.48-.24-.38a9.86 9.86 0 0 1-1.5-5.4c0-5.46 4.45-9.9 9.91-9.9 5.46 0 9.9 4.44 9.9 9.9 0 5.47-4.44 9.9-9.9 9.9zm5.44-7.42c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.71 2-1.4.25-.7.25-1.29.17-1.4-.07-.13-.27-.2-.57-.35z"/></svg>
+</a>
+
+<script src="legal-data.js"></script>
+<script>
+const BRAND = {
+  agentName: 'Rosa Rodríguez',
+  whatsapp: '34698222520'
+};
+
+/* ============================================================
+   PROPIEDADES — añade aquí tus propiedades reales.
+   Normativa aplicable a cada anuncio:
+   · cee: letra de calificación energética (A–G) o 'En trámite'.
+     Obligatoria en todo anuncio de venta o alquiler (RD 390/2021).
+   · El precio debe ser el precio total; se indica aparte si
+     incluye o no impuestos (RD 515/1989).
+   · foto: ruta a una imagen (opcional).
+   Ejemplo:
+   { titulo:'Villa con vistas al mar', zona:'…', precio:1850000,
+     operacion:'Venta', dormitorios:5, banos:4, m2:420, parcela:1500,
+     cee:'B', foto:'villa1.jpg', ref:'RR-001' }
+   ============================================================ */
+const PROPIEDADES = [];
+
+/* TESTIMONIOS — solo reseñas reales de clientes. Publicar reseñas
+   falsas o no verificadas es una práctica comercial desleal
+   (art. 27 bis Ley 3/1991 de Competencia Desleal, tras la Directiva Ómnibus).
+   Ejemplo: { texto:'…', autor:'M. G.', operacion:'Venta' }
+   La sección permanece oculta hasta que añadas al menos uno. */
+const TESTIMONIOS = [];
+
+/* ---------- utilidades ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pending = v => !v || v.startsWith('[COMPLETAR');
+const show = v => pending(v) ? `<span class="todo">${esc(v || '[COMPLETAR]')}</span>` : esc(v);
+const fmtEUR = n => n.toLocaleString('es-ES', {maximumFractionDigits:0}) + ' €';
+const waLink = text => `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(text)}`;
+const CEE_COLORS = {A:'#00843d',B:'#4cb748',C:'#bfd630',D:'#fff200',E:'#fcb814',F:'#f36e21',G:'#e21a22'};
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------- header ---------- */
+const header = $('header');
+const onScroll = () => header.classList.toggle('solid', window.scrollY > 40 || $('#navLinks').classList.contains('open'));
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+$('#burger').addEventListener('click', () => {
+  const open = $('#navLinks').classList.toggle('open');
+  $('#burger').setAttribute('aria-expanded', open);
+  onScroll();
+});
+document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => { $('#navLinks').classList.remove('open'); onScroll(); }));
+
+/* ---------- datos legales en el pie ---------- */
+$('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} · NIF: ${show(LEGAL.nif)} · Domicilio social: ${show(LEGAL.domicilio)} · ${show(LEGAL.registroMercantil)} · Email: ${show(LEGAL.email)} · Tel.: ${show(LEGAL.telefono)}`;
+$('#legalRegistro').innerHTML = LEGAL.registroAgentes === '' ? '' : `Registro de Agentes Inmobiliarios: ${show(LEGAL.registroAgentes)} · Seguro de responsabilidad civil: ${show(LEGAL.seguroRC)}`;
+if(!pending(LEGAL.domicilio)) $('#footAddress').textContent = LEGAL.domicilio;
+if(!pending(LEGAL.email)) $('#contactEmail').innerHTML = `<a href="mailto:${esc(LEGAL.email)}">${esc(LEGAL.email)}</a>`;
+
+/* ---------- propiedades ---------- */
+function renderProps(){
+  const grid = $('#propsGrid');
+  const cards = PROPIEDADES.map(p => {
+    const cee = String(p.cee || 'En trámite').toUpperCase();
+    const ceeHtml = CEE_COLORS[cee]
+      ? `<span class="cee">Cal. energética <b style="background:${CEE_COLORS[cee]};color:${'CD'.includes(cee)?'#111':'#fff'}">${cee}</b></span>`
+      : `<span class="cee">Cal. energética: en trámite</span>`;
+    const foto = p.foto ? `background-image:url('${esc(p.foto)}')` : '';
+    const meta = [
+      p.dormitorios && `${p.dormitorios} dorm.`,
+      p.banos && `${p.banos} baños`,
+      p.m2 && `${p.m2} m² constr.`,
+      p.parcela && `Parcela ${p.parcela} m²`
+    ].filter(Boolean).join('</span><span>');
+    return `<article class="prop">
+      <div class="prop-img" style="${foto}"><span class="prop-badge">${esc(p.operacion || 'Venta')}</span>${ceeHtml}</div>
+      <div class="prop-body">
+        <div class="prop-price">${p.precio ? fmtEUR(p.precio) : 'Precio a consultar'}<small>${p.operacion === 'Alquiler' ? 'al mes' : 'Impuestos y gastos de compraventa no incluidos'}</small></div>
+        <div class="prop-title">${esc(p.titulo)}</div>
+        <div style="font-size:14px;color:var(--muted);">${esc(p.zona || '')}${p.ref ? ' · Ref. ' + esc(p.ref) : ''}</div>
+        <div class="prop-meta"><span>${meta}</span></div>
+        <a class="btn btn-line" style="margin-top:14px;" href="${waLink(`Hola Rosa, me interesa la propiedad ${p.ref ? 'Ref. ' + p.ref : p.titulo}. ¿Me puedes enviar el Documento Informativo Abreviado y más información?`)}" target="_blank" rel="noopener">Solicitar información</a>
+      </div>
+    </article>`;
+  }).join('');
+  const off = `<div class="offmarket">
+    <div>
+      <span class="eyebrow" style="color:var(--gold);">Cartera privada</span>
+      <h3>${PROPIEDADES.length ? 'Hay más propiedades que no anunciamos' : 'Propiedades exclusivas, fuera de mercado'}</h3>
+      <p>Muchos de nuestros propietarios prefieren vender con total discreción. Cuéntanos qué buscas y te daremos acceso a la cartera privada que encaje contigo.</p>
+    </div>
+    <a class="btn btn-line-light" href="${waLink('Hola Rosa, me gustaría acceder a la cartera off-market. Busco: ')}" target="_blank" rel="noopener">Solicitar acceso</a>
+  </div>`;
+  grid.innerHTML = cards + off;
+}
+renderProps();
+
+/* ---------- testimonios ---------- */
+if(TESTIMONIOS.length){
+  $('#testimonios').hidden = false;
+  $('#testiNote').textContent = 'Opiniones de clientes que han realizado una operación con nosotros.';
+  $('#testiGrid').innerHTML = TESTIMONIOS.map(t => `<div class="testi"><p>“${esc(t.texto)}”</p><div class="who">${esc(t.autor)}${t.operacion ? ' · ' + esc(t.operacion) : ''}</div></div>`).join('');
+}
+
+/* ---------- enlaces a WhatsApp ---------- */
+document.querySelectorAll('[data-wa]').forEach(a => {
+  a.href = waLink(a.dataset.wa);
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.addEventListener('click', () => trackMeta('Contact'));
+});
+document.querySelectorAll('[data-interest]').forEach(a => a.addEventListener('click', () => { $('#cInteres').value = a.dataset.interest; }));
+
+/* ---------- formularios ---------- */
+function validate(form){
+  const msg = form.querySelector('.form-msg');
+  for(const el of form.querySelectorAll('[required]')){
+    const bad = el.type === 'checkbox' ? !el.checked : !el.value.trim() || (el.type === 'email' && !el.checkValidity());
+    if(bad){
+      msg.textContent = el.type === 'checkbox'
+        ? 'Para continuar debes aceptar la Política de Privacidad.'
+        : 'Revisa los campos obligatorios (*).';
+      el.focus();
+      return false;
+    }
+  }
+  msg.textContent = '';
+  return true;
+}
+function sendForm(form, titulo){
+  if(!validate(form)) return;
+  const lines = [`*${titulo}*`];
+  for(const [k, v] of new FormData(form).entries()){
+    if(k === 'privacidad') continue;
+    if(k === 'comercial') continue;
+    if(v && String(v).trim()) lines.push(`${k}: ${v}`);
+  }
+  lines.push('Política de privacidad: aceptada');
+  lines.push(`Comunicaciones comerciales: ${form.comercial.checked ? 'sí' : 'no'}`);
+  window.open(waLink(lines.join('\n')), '_blank');
+  trackMeta('Lead', {content_name: titulo});
+  form.querySelector('.form-msg').textContent = 'Se ha abierto WhatsApp con tu mensaje. ¡Gracias!';
+}
+$('#contactForm').addEventListener('submit', e => { e.preventDefault(); sendForm(e.target, 'Contacto web'); });
+$('#reportForm').addEventListener('submit', e => { e.preventDefault(); sendForm(e.target, 'Solicitud de informe de mercado'); });
+$('#searchForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const d = new FormData(e.target);
+  const partes = [...d.entries()].filter(([, v]) => v && v.trim()).map(([k, v]) => `${k}: ${v}`);
+  window.open(waLink(`Hola Rosa, estoy buscando una propiedad.\n${partes.join('\n')}`), '_blank');
+  trackMeta('Lead', {content_name: 'Buscador'});
+});
+
+function trackMeta(event, params){
+  // fbq solo existe si el visitante aceptó las cookies de marketing (ver cookie-consent.js).
+  if(typeof fbq === 'function') fbq('track', event, params || {});
+}
+</script>
+<script src="cookie-consent.js"></script>
+</body>
+</html>

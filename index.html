@@ -18,23 +18,9 @@
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- BRAND: Meta Pixel — sustituye TU_PIXEL_ID por el ID real de tu cuenta en
-     Meta Events Manager (business.facebook.com/events_manager) cuando lo tengas. -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'TU_PIXEL_ID');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=TU_PIXEL_ID&ev=PageView&noscript=1"
-/></noscript>
+<!-- NORMATIVA: el Meta Pixel ya no se carga aquí. Lo carga cookie-consent.js solo si el
+     visitante acepta las cookies de marketing (art. 22.2 LSSI-CE). El ID del píxel se
+     configura en cookie-consent.js. -->
 
 <style>
 /* ============================================================
@@ -238,6 +224,16 @@ header{
 .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
 .form-card .btn{ width:100%; justify-content:center; margin-top:8px; }
 .form-note{ font-size:12px; color:#999; margin-top:12px; text-align:center; }
+.form-note a{ color:var(--ev-accent); text-decoration:underline; }
+.rgpd-box{ font-size:12.5px; line-height:1.55; border:1px solid var(--ev-border); background:var(--ev-bg); padding:14px 16px; margin:6px 0 16px; border-radius:6px; }
+.rgpd-box table{ width:100%; border-collapse:collapse; }
+.rgpd-box th{ text-align:left; vertical-align:top; padding:3px 12px 3px 0; white-space:nowrap; font-weight:600; }
+.rgpd-box td{ padding:3px 0; }
+.rgpd-box a, .check a{ color:var(--ev-accent); text-decoration:underline; }
+.check{ display:flex; gap:10px; align-items:flex-start; font-size:13.5px; margin-bottom:12px; cursor:pointer; }
+.check input{ margin-top:3px; width:17px; height:17px; flex-shrink:0; accent-color:var(--ev-accent); }
+.todo{ background:#f3ead8; padding:0 4px; }
+@media (max-width:640px){ .rgpd-box th{ white-space:normal; } }
 
 /* ---------- CALCULADORA DE HIPOTECA ---------- */
 .mortgage-section{ background:var(--ev-bg); }
@@ -378,6 +374,9 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
 .footer-bottom{
   border-top:1px solid var(--ev-border); padding-top:22px; text-align:center; font-size:12px; color:#999;
 }
+.footer-legal{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px 20px; margin-bottom:12px; }
+.footer-legal a, .footer-legal button{ color:#777; background:none; border:none; font:inherit; cursor:pointer; padding:0; }
+.footer-legal a:hover, .footer-legal button:hover{ color:var(--ev-accent); text-decoration:underline; }
 
 /* ---------- WHATSAPP FLOAT ---------- */
 .wa-float{
@@ -540,6 +539,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
           <div class="hint">A tipo fijo, sin comisiones ni seguros</div>
         </div>
         <a class="btn btn-accent" id="mhWaBtn" target="_blank" rel="noopener" style="width:100%; justify-content:center;">Enviar este cálculo a Rosa por WhatsApp</a>
+        <p class="form-note">Al pulsar se abrirá WhatsApp con este mensaje. Trataremos los datos que nos envíes según nuestra <a href="privacidad.html" target="_blank">Política de Privacidad</a>.</p>
       </div>
     </div>
 
@@ -682,6 +682,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
         </div>
         <div class="calc-cta">
           <a class="btn btn-accent" id="calcWaBtn" target="_blank" rel="noopener" style="width:100%; justify-content:center;">Enviar estos datos a Rosa por WhatsApp</a>
+        <p class="form-note">Al pulsar se abrirá WhatsApp con este mensaje. Trataremos los datos que nos envíes según nuestra <a href="privacidad.html" target="_blank">Política de Privacidad</a>.</p>
         </div>
       </div>
     </div>
@@ -803,8 +804,11 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
           </div>
           <div class="field"><label>Comentarios adicionales</label><textarea name="comentarios" rows="3"></textarea></div>
 
+          <div class="rgpd-box" data-rgpd></div>
+          <label class="check"><input type="checkbox" name="privacidad" required> <span>He leído y acepto la <a href="privacidad.html" target="_blank">Política de Privacidad</a>. *</span></label>
+          <label class="check"><input type="checkbox" name="comercial"> <span>Acepto recibir comunicaciones comerciales sobre propiedades y mercado inmobiliario (opcional).</span></label>
           <button type="submit" class="btn btn-primary">Escribir por WhatsApp</button>
-          <p class="form-note">Al enviar, se abrirá WhatsApp con tus datos ya redactados.</p>
+          <p class="form-note">Al enviar, se abrirá WhatsApp con tus datos ya redactados. WhatsApp (Meta) tratará el mensaje según su propia política de privacidad.</p>
         </form>
         </div>
       </div>
@@ -834,8 +838,11 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
           </div>
           <div class="field"><label>Zona(s) de interés</label><input type="text" name="zona" placeholder="¿Dónde te gustaría comprar o invertir?"></div>
           <div class="field"><label>Comentarios</label><textarea name="comentarios" rows="3"></textarea></div>
+          <div class="rgpd-box" data-rgpd></div>
+          <label class="check"><input type="checkbox" name="privacidad" required> <span>He leído y acepto la <a href="privacidad.html" target="_blank">Política de Privacidad</a>. *</span></label>
+          <label class="check"><input type="checkbox" name="comercial"> <span>Acepto recibir comunicaciones comerciales sobre propiedades y mercado inmobiliario (opcional).</span></label>
           <button type="submit" class="btn btn-primary">Escribir por WhatsApp</button>
-          <p class="form-note">Al enviar, se abrirá WhatsApp con tus datos ya redactados.</p>
+          <p class="form-note">Al enviar, se abrirá WhatsApp con tus datos ya redactados. WhatsApp (Meta) tratará el mensaje según su propia política de privacidad.</p>
         </form>
         </div>
       </div>
@@ -938,6 +945,7 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
       <div class="quiz-result" id="quizResult">
         <p id="quizResultText"></p>
         <a class="btn btn-accent" id="quizWaBtn" target="_blank" rel="noopener">Enviar mis respuestas por WhatsApp</a>
+        <p class="form-note">Al pulsar se abrirá WhatsApp con este mensaje. Trataremos los datos que nos envíes según nuestra <a href="privacidad.html" target="_blank">Política de Privacidad</a>.</p>
       </div>
     </div>
   </div>
@@ -964,6 +972,12 @@ footer{ background:var(--ev-white); color:#666; padding:64px 0 28px; border-top:
       </div>
     </div>
     <div class="footer-bottom">
+      <div class="footer-legal">
+        <a href="aviso-legal.html">Aviso legal</a>
+        <a href="privacidad.html">Política de privacidad</a>
+        <a href="cookies.html">Política de cookies</a>
+        <button type="button" data-cookie-settings>Configurar cookies</button>
+      </div>
       © <span id="year"></span> Rosa Rodríguez. Todos los derechos reservados.
     </div>
   </div>
@@ -1049,10 +1063,13 @@ function sendFormToWhatsapp(form, titulo){
   const data = new FormData(form);
   let lines = [`*${titulo}*`];
   for (const [key, value] of data.entries()){
+    if(key === 'privacidad' || key === 'comercial') continue;
     if(value && value.trim() !== ''){
       lines.push(`${key}: ${value}`);
     }
   }
+  lines.push('Política de privacidad: aceptada');
+  lines.push(`Comunicaciones comerciales: ${form.comercial && form.comercial.checked ? 'sí' : 'no'}`);
   const text = encodeURIComponent(lines.join('\n') + utmSuffix());
   window.open(`https://wa.me/${BRAND.whatsapp}?text=${text}`, '_blank');
   trackMeta('Lead', { content_name: titulo });
@@ -1270,5 +1287,7 @@ function mostrarResultadoQuiz(){
   trackMeta('Lead', { content_name: 'Quiz de interés' });
 }
 </script>
+<script src="legal-data.js"></script>
+<script src="cookie-consent.js"></script>
 </body>
 </html>
