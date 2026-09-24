@@ -684,7 +684,7 @@ const BRAND = {
   // no se muestra ningún teléfono y los formularios se envían por email.
   telefono: '',           // formato visible, p. ej. '+34 910 000 000'
   whatsapp: '',           // mismo número en formato internacional sin '+' ni espacios, p. ej. '34910000000'
-  email: 'Rosa@TheBrokery.com'  // destino de los mensajes mientras no haya WhatsApp
+  email: 'rosa@thebrokery.com'  // email de contacto visible y destino de los mensajes mientras no haya WhatsApp
 };
 
 /* ============================================================
@@ -766,7 +766,7 @@ document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click'
 $('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} (${show(LEGAL.nombreComercial)}) · NIF: ${show(LEGAL.nif)} · Domicilio social: ${show(LEGAL.domicilio)} · ${show(LEGAL.registroMercantil)} · Email: ${show(LEGAL.email)}${LEGAL.telefono ? ' · Tel.: ' + show(LEGAL.telefono) : ''}`;
 $('#legalRegistro').innerHTML = LEGAL.registroAgentes === '' ? '' : `Registro de Agentes Inmobiliarios: ${show(LEGAL.registroAgentes)} · Seguro de responsabilidad civil: ${show(LEGAL.seguroRC)}`;
 if(!pending(LEGAL.domicilio)) $('#footAddress').textContent = LEGAL.domicilio;
-if(!pending(LEGAL.email)) $('#contactEmail').innerHTML = `<a href="mailto:${esc(LEGAL.email)}">${esc(LEGAL.email)}</a>`;
+$('#contactEmail').innerHTML = `<a href="mailto:${esc(BRAND.email)}">${esc(BRAND.email)}</a>`;
 
 /* ---------- propiedades ---------- */
 function renderProps(){
