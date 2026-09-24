@@ -40,6 +40,7 @@
   --sans:'Gotham','Montserrat',-apple-system,'Segoe UI',Arial,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
+[hidden]{display:none!important;}
 html{scroll-behavior:smooth;}
 body{font-family:var(--sans);font-weight:300;color:var(--text);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased;}
 img{max-width:100%;display:block;}
@@ -168,7 +169,9 @@ header.solid .burger{color:var(--ink);}
 
 /* ---------- EQUIPO (estilo tarjeta de visita) ---------- */
 .team-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
-.card-person{border:1px solid var(--border);padding:40px 30px 34px;text-align:center;background:#fff;}
+.card-person{border:1px solid var(--border);padding:0 0 34px;text-align:center;background:#fff;}
+.card-person img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top;margin-bottom:28px;}
+.card-person>*:not(img){margin-left:26px;margin-right:26px;}
 .card-person h3{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;}
 .card-person .role{font-size:15px;color:var(--text);padding-bottom:18px;margin-bottom:18px;border-bottom:1.5px solid var(--teal);line-height:1.45;}
 .card-person .role span{font-size:13px;}
@@ -303,7 +306,7 @@ footer a:hover{color:#fff;}
       <a href="#informes">Mercado</a>
       <a href="#contacto">Contacto</a>
     </nav>
-    <a class="nav-phone" href="tel:+34698222520">+34 698 222 520</a>
+    <a class="nav-phone" data-phone hidden></a>
     <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">☰</button>
   </div>
 </header>
@@ -476,18 +479,20 @@ footer a:hover{color:#fff;}
     </div>
     <div class="team-cards">
       <article class="card-person">
+        <img src="img/equipo-alvaro.jpg" alt="Álvaro Corredor Ochoa" loading="lazy">
         <h3>Álvaro Corredor Ochoa, PhD</h3>
         <p class="role">Director de Operaciones – España<br><span>Global Real Estate Professional</span></p>
         <p><a href="tel:+34641836977">+34 641 836 977</a></p>
         <p><a href="mailto:Alvaro@TheBrokery.com">Alvaro@TheBrokery.com</a></p>
       </article>
       <article class="card-person">
+        <img src="img/equipo-rosa.jpg" alt="Rosa Rodríguez" loading="lazy">
         <h3>Rosa Rodríguez</h3>
         <p class="role">Gerente Comercial</p>
-        <p><a href="tel:+34698222520">+34 698 222 520</a></p>
         <p><a href="mailto:Rosa@TheBrokery.com">Rosa@TheBrokery.com</a></p>
       </article>
       <article class="card-person">
+        <img src="img/equipo-guillermo.jpg" alt="Guillermo Rocafort Moreno" loading="lazy">
         <h3>Guillermo Rocafort Moreno</h3>
         <p class="role">Director de Desarrollo de Negocio</p>
         <p><a href="tel:+34669797659">+34 669 797 659</a></p>
@@ -589,8 +594,8 @@ footer a:hover{color:#fff;}
         <span class="eyebrow">Contacto</span>
         <h2 class="title">Empecemos a hablar</h2>
         <p class="sub" style="margin-bottom:34px;">Cuéntanos qué necesitas y te respondemos en menos de 24 horas laborables.</p>
-        <p class="big"><a href="tel:+34698222520">+34 698 222 520</a></p>
-        <p><a href="#" data-wa="Hola, vengo de la web de The Brokery y quiero más información.">Escribir por WhatsApp →</a></p>
+        <p class="big"><a data-phone hidden></a></p>
+        <p><a href="#" data-wa="Hola, vengo de la web de The Brokery y quiero más información." data-label-wa="Escribir por WhatsApp →" data-label-mail="Escribir por email →">Escribir por WhatsApp →</a></p>
         <p id="contactEmail"></p>
       </div>
       <form id="contactForm" novalidate>
@@ -615,9 +620,9 @@ footer a:hover{color:#fff;}
         <div class="rgpd-box" data-rgpd></div>
         <label class="check"><input type="checkbox" name="privacidad" required> <span>He leído y acepto la <a href="privacidad.html" target="_blank" style="color:var(--accent);text-decoration:underline;">Política de Privacidad</a>. *</span></label>
         <label class="check"><input type="checkbox" name="comercial"> <span>Acepto recibir comunicaciones comerciales sobre propiedades y mercado inmobiliario (opcional).</span></label>
-        <button type="submit" class="btn btn-dark" style="margin-top:8px;">Enviar por WhatsApp</button>
+        <button type="submit" class="btn btn-dark" style="margin-top:8px;" data-label-wa="Enviar por WhatsApp" data-label-mail="Enviar">Enviar por WhatsApp</button>
         <p class="form-msg" role="status"></p>
-        <p style="font-size:12px;color:var(--muted);margin-top:8px;">Al enviar se abrirá WhatsApp con tus datos ya redactados. WhatsApp (Meta) tratará el mensaje según su propia política de privacidad.</p>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;" data-label-wa="Al enviar se abrirá WhatsApp con tus datos ya redactados. WhatsApp (Meta) tratará el mensaje según su propia política de privacidad." data-label-mail="Al enviar se abrirá tu programa de correo con tus datos ya redactados.">Al enviar se abrirá WhatsApp con tus datos ya redactados. WhatsApp (Meta) tratará el mensaje según su propia política de privacidad.</p>
       </form>
     </div>
   </div>
@@ -646,8 +651,8 @@ footer a:hover{color:#fff;}
       </div>
       <div>
         <h4>Contacto</h4>
-        <p><a href="tel:+34698222520">+34 698 222 520</a></p>
-        <p><a href="#" data-wa="Hola, vengo de la web de The Brokery y quiero más información.">WhatsApp</a></p>
+        <p><a data-phone hidden></a></p>
+        <p><a href="#" data-wa="Hola, vengo de la web de The Brokery y quiero más información." data-label-wa="WhatsApp" data-label-mail="Email">WhatsApp</a></p>
         <p id="footAddress"></p>
       </div>
     </div>
@@ -668,14 +673,18 @@ footer a:hover{color:#fff;}
   </div>
 </footer>
 
-<a class="wa-float" href="#" data-wa="Hola, vengo de la web de The Brokery y quiero más información." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+<a class="wa-float" hidden href="#" data-wa="Hola, vengo de la web de The Brokery y quiero más información." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
   <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.35.63 4.55 1.72 6.45L4 29l7.72-1.68a12 12 0 0 0 4.3.78c6.63 0 12.02-5.4 12.02-12.02C28.04 8.4 22.65 3 16.02 3zm0 21.9c-1.9 0-3.68-.5-5.22-1.4l-.37-.22-4.6 1 1.02-4.48-.24-.38a9.86 9.86 0 0 1-1.5-5.4c0-5.46 4.45-9.9 9.91-9.9 5.46 0 9.9 4.44 9.9 9.9 0 5.47-4.44 9.9-9.9 9.9zm5.44-7.42c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.71 2-1.4.25-.7.25-1.29.17-1.4-.07-.13-.27-.2-.57-.35z"/></svg>
 </a>
 
 <script src="legal-data.js"></script>
 <script>
 const BRAND = {
-  whatsapp: '34698222520'
+  // BRAND: teléfono general de la agencia (NO un móvil personal). Mientras esté vacío,
+  // no se muestra ningún teléfono y los formularios se envían por email.
+  telefono: '',           // formato visible, p. ej. '+34 910 000 000'
+  whatsapp: '',           // mismo número en formato internacional sin '+' ni espacios, p. ej. '34910000000'
+  email: 'alvaro@thebrokery.com'  // destino de los mensajes mientras no haya WhatsApp
 };
 
 /* ============================================================
@@ -721,7 +730,21 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>'
 const pending = v => !v || v.startsWith('[COMPLETAR');
 const show = v => pending(v) ? `<span class="todo">${esc(v || '[COMPLETAR]')}</span>` : esc(v);
 const fmtEUR = n => n.toLocaleString('es-ES', {maximumFractionDigits:0}) + ' €';
-const waLink = text => `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(text)}`;
+const waLink = text => BRAND.whatsapp
+  ? `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(text)}`
+  : `mailto:${BRAND.email}?subject=${encodeURIComponent('Contacto desde la web de The Brokery')}&body=${encodeURIComponent(text)}`;
+const CANAL = BRAND.whatsapp ? 'wa' : 'mail';
+const openContact = url => CANAL === 'wa' ? window.open(url, '_blank') : (location.href = url);
+
+/* ---------- teléfono y canal de contacto ---------- */
+document.querySelectorAll('[data-phone]').forEach(a => {
+  if(!BRAND.telefono) return;
+  a.textContent = BRAND.telefono;
+  a.href = 'tel:' + BRAND.telefono.replace(/\s/g, '');
+  a.hidden = false;
+});
+document.querySelectorAll('[data-label-wa]').forEach(el => { el.textContent = el.dataset['label' + (CANAL === 'wa' ? 'Wa' : 'Mail')]; });
+if(BRAND.whatsapp) $('.wa-float').hidden = false;
 const CEE_COLORS = {A:'#00843d',B:'#4cb748',C:'#bfd630',D:'#fff200',E:'#fcb814',F:'#f36e21',G:'#e21a22'};
 
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -740,7 +763,7 @@ $('#burger').addEventListener('click', () => {
 document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => { $('#navLinks').classList.remove('open'); onScroll(); }));
 
 /* ---------- datos legales en el pie ---------- */
-$('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} (${show(LEGAL.nombreComercial)}) · NIF: ${show(LEGAL.nif)} · Domicilio social: ${show(LEGAL.domicilio)} · ${show(LEGAL.registroMercantil)} · Email: ${show(LEGAL.email)} · Tel.: ${show(LEGAL.telefono)}`;
+$('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} (${show(LEGAL.nombreComercial)}) · NIF: ${show(LEGAL.nif)} · Domicilio social: ${show(LEGAL.domicilio)} · ${show(LEGAL.registroMercantil)} · Email: ${show(LEGAL.email)}${LEGAL.telefono ? ' · Tel.: ' + show(LEGAL.telefono) : ''}`;
 $('#legalRegistro').innerHTML = LEGAL.registroAgentes === '' ? '' : `Registro de Agentes Inmobiliarios: ${show(LEGAL.registroAgentes)} · Seguro de responsabilidad civil: ${show(LEGAL.seguroRC)}`;
 if(!pending(LEGAL.domicilio)) $('#footAddress').textContent = LEGAL.domicilio;
 if(!pending(LEGAL.email)) $('#contactEmail').innerHTML = `<a href="mailto:${esc(LEGAL.email)}">${esc(LEGAL.email)}</a>`;
@@ -801,10 +824,10 @@ if(TESTIMONIOS.length){
 /* ---------- enlaces a WhatsApp ---------- */
 document.querySelectorAll('[data-wa]').forEach(a => {
   a.href = waLink(a.dataset.wa);
-  a.target = '_blank';
-  a.rel = 'noopener';
+  if(CANAL === 'wa'){ a.target = '_blank'; a.rel = 'noopener'; } else a.removeAttribute('target');
   a.addEventListener('click', () => trackMeta('Contact'));
 });
+if(CANAL === 'mail') document.querySelectorAll('a[href^="mailto:"][target]').forEach(a => a.removeAttribute('target'));
 document.querySelectorAll('[data-interest]').forEach(a => a.addEventListener('click', () => { $('#cInteres').value = a.dataset.interest; }));
 
 /* ---------- formularios ---------- */
@@ -833,9 +856,9 @@ function sendForm(form, titulo){
   }
   lines.push('Política de privacidad: aceptada');
   lines.push(`Comunicaciones comerciales: ${form.comercial.checked ? 'sí' : 'no'}`);
-  window.open(waLink(lines.join('\n')), '_blank');
+  openContact(waLink(lines.join('\n')));
   trackMeta('Lead', {content_name: titulo});
-  form.querySelector('.form-msg').textContent = 'Se ha abierto WhatsApp con tu mensaje. ¡Gracias!';
+  form.querySelector('.form-msg').textContent = (CANAL === 'wa' ? 'Se ha abierto WhatsApp' : 'Se ha abierto tu correo') + ' con tu mensaje. ¡Gracias!';
 }
 $('#contactForm').addEventListener('submit', e => { e.preventDefault(); sendForm(e.target, 'Contacto web'); });
 $('#reportForm').addEventListener('submit', e => { e.preventDefault(); sendForm(e.target, 'Solicitud de informe de mercado'); });
@@ -843,7 +866,7 @@ $('#searchForm').addEventListener('submit', e => {
   e.preventDefault();
   const d = new FormData(e.target);
   const partes = [...d.entries()].filter(([, v]) => v && v.trim()).map(([k, v]) => `${k}: ${v}`);
-  window.open(waLink(`Hola, estoy buscando una propiedad.\n${partes.join('\n')}`), '_blank');
+  openContact(waLink(`Hola, estoy buscando una propiedad.\n${partes.join('\n')}`));
   trackMeta('Lead', {content_name: 'Buscador'});
 });
 
