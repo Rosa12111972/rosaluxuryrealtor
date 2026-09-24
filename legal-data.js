@@ -18,7 +18,8 @@ window.LEGAL = {
   registroMercantil: '[COMPLETAR Registro Mercantil de Madrid, tomo …, folio …, hoja M-…]',
   domicilio: 'Calle Tomás y Valiente, 5, 6.º 3 C, 28660 Boadilla del Monte (Madrid)',
   email: 'alvaro@thebrokery.com',
-  telefono: '+34 698 222 520',
+  // Teléfono general de la empresa (no un móvil personal). Vacío = no se muestra.
+  telefono: '',
   // Registro de agentes inmobiliarios: obligatorio en Cataluña (AICAT, Decreto 12/2010)
   // y en la Comunitat Valenciana (Ley 2/2017). En otras comunidades es voluntario: déjalo vacío si no aplica.
   // En la Comunidad de Madrid no es obligatorio, por eso está vacío.
