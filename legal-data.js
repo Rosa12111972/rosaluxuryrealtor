@@ -6,7 +6,7 @@
    y cookies.html.
    ============================================================ */
 window.LEGAL = {
-  // Denominación social exacta, como figura en las escrituras (p. ej. 'Rosa Rodríguez Inmobiliaria, S.L.').
+  // Denominación social exacta, como figura en las escrituras (p. ej. 'Ejemplo Inmobiliaria, S.L.').
   titular: 'ROCOBORT, S.L.',
   // Nombre comercial con el que opera la agencia.
   nombreComercial: 'The Brokery',
