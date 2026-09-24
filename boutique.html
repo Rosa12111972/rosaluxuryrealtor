@@ -14,9 +14,9 @@
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- NORMATIVA: el Meta Pixel NO se carga aquí. Solo se carga si el usuario acepta
-     las cookies de marketing en el banner (art. 22.2 LSSI-CE y Guía de cookies de la AEPD).
-     Sustituye TU_PIXEL_ID en CONSENT_CONFIG (al final del archivo). -->
+<!-- NORMATIVA: el Meta Pixel NO se carga aquí. Lo carga cookie-consent.js solo si el
+     visitante acepta las cookies de marketing (art. 22.2 LSSI-CE). El ID del píxel se
+     configura en cookie-consent.js. -->
 
 <style>
 :root{
@@ -217,19 +217,6 @@ footer a:hover{color:#fff;}
 .foot-links a:hover,.foot-links button:hover{color:#fff;text-decoration:underline;}
 .todo{background:rgba(184,160,122,.18);color:inherit;padding:0 4px;}
 
-/* ---------- COOKIES ---------- */
-.cookie-banner{position:fixed;left:20px;right:20px;bottom:20px;z-index:2000;max-width:860px;margin:0 auto;background:#fff;color:var(--text);border:1px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,.18);padding:26px 28px;display:none;}
-.cookie-banner.show{display:block;}
-.cookie-banner h4{font-size:19px;margin-bottom:8px;}
-.cookie-banner p{font-size:13.5px;margin-bottom:16px;}
-.cookie-banner p a{text-decoration:underline;color:var(--accent);}
-.cookie-actions{display:flex;gap:10px;flex-wrap:wrap;}
-.cookie-actions .btn{padding:12px 22px;font-size:12px;letter-spacing:1.5px;flex:1 1 160px;}
-.cookie-prefs{display:none;border-top:1px solid var(--border);margin:4px 0 16px;padding-top:14px;}
-.cookie-prefs.open{display:block;}
-.cookie-prefs .check{margin-bottom:10px;}
-.cookie-prefs .check span b{display:block;color:var(--ink);}
-
 /* ---------- WHATSAPP ---------- */
 .wa-float{position:fixed;right:22px;bottom:22px;z-index:900;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.2);}
 .wa-float svg{width:30px;height:30px;fill:#fff;}
@@ -267,7 +254,6 @@ footer a:hover{color:#fff;}
   .collections{grid-auto-rows:200px;}
   .col.tall{grid-row:span 1;}
   .form-dark{padding:26px 18px;}
-  .cookie-banner{left:10px;right:10px;bottom:10px;padding:20px 18px;}
   .rgpd-box th{white-space:normal;}
 }
 </style>
@@ -620,7 +606,7 @@ footer a:hover{color:#fff;}
         <a href="aviso-legal.html">Aviso legal</a>
         <a href="privacidad.html">Política de privacidad</a>
         <a href="cookies.html">Política de cookies</a>
-        <button type="button" id="openCookieSettings">Configurar cookies</button>
+        <button type="button" data-cookie-settings>Configurar cookies</button>
       </div>
       <p>© <span id="year"></span> Rosa Rodríguez. Todos los derechos reservados.</p>
     </div>
@@ -630,21 +616,6 @@ footer a:hover{color:#fff;}
 <a class="wa-float" href="#" data-wa="Hola Rosa, vengo de tu web y quiero más información." target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
   <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.35.63 4.55 1.72 6.45L4 29l7.72-1.68a12 12 0 0 0 4.3.78c6.63 0 12.02-5.4 12.02-12.02C28.04 8.4 22.65 3 16.02 3zm0 21.9c-1.9 0-3.68-.5-5.22-1.4l-.37-.22-4.6 1 1.02-4.48-.24-.38a9.86 9.86 0 0 1-1.5-5.4c0-5.46 4.45-9.9 9.91-9.9 5.46 0 9.9 4.44 9.9 9.9 0 5.47-4.44 9.9-9.9 9.9zm5.44-7.42c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.24-.46-2.36-1.46-.87-.78-1.46-1.74-1.63-2.03-.17-.3-.02-.46.13-.6.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.22 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.71 2-1.4.25-.7.25-1.29.17-1.4-.07-.13-.27-.2-.57-.35z"/></svg>
 </a>
-
-<!-- ================= BANNER DE COOKIES ================= -->
-<div class="cookie-banner" id="cookieBanner" role="dialog" aria-modal="false" aria-labelledby="cookieTitle">
-  <h4 id="cookieTitle">Tu privacidad es importante</h4>
-  <p>Usamos cookies técnicas necesarias para que la web funcione y, solo si nos das tu consentimiento, cookies de marketing (Meta Pixel) para medir y mostrar anuncios relevantes. Puedes aceptarlas, rechazarlas o configurarlas, y cambiar de opinión cuando quieras desde «Configurar cookies» en el pie de página. Más información en nuestra <a href="cookies.html">Política de cookies</a>.</p>
-  <div class="cookie-prefs" id="cookiePrefs">
-    <label class="check"><input type="checkbox" checked disabled> <span><b>Técnicas (siempre activas)</b>Necesarias para el funcionamiento de la web y para recordar tus preferencias de cookies.</span></label>
-    <label class="check"><input type="checkbox" id="ckMarketing"> <span><b>Marketing</b>Meta Pixel (Meta Platforms Ireland Ltd.): medición de campañas y publicidad personalizada.</span></label>
-  </div>
-  <div class="cookie-actions">
-    <button class="btn btn-dark" id="ckReject" type="button">Rechazar</button>
-    <button class="btn btn-line" id="ckConfig" type="button" style="color:var(--ink);">Configurar</button>
-    <button class="btn btn-dark" id="ckAccept" type="button">Aceptar</button>
-  </div>
-</div>
 
 <script src="legal-data.js"></script>
 <script>
@@ -811,65 +782,11 @@ $('#searchForm').addEventListener('submit', e => {
   trackMeta('Lead', {content_name: 'Buscador'});
 });
 
-/* ============================================================
-   CONSENTIMIENTO DE COOKIES (art. 22.2 LSSI-CE · Guía AEPD 2023)
-   · Nada que no sea técnico se carga antes de que el usuario acepte.
-   · «Rechazar» está al mismo nivel y con el mismo peso que «Aceptar».
-   · El consentimiento se guarda 12 meses (máximo que recomienda la AEPD)
-     y se puede retirar en cualquier momento.
-   ============================================================ */
-const CONSENT_CONFIG = { pixelId: 'TU_PIXEL_ID', storageKey: 'rr_cookie_consent', maxAgeDays: 365 };
-
-function readConsent(){
-  try{
-    const c = JSON.parse(localStorage.getItem(CONSENT_CONFIG.storageKey));
-    if(c && Date.now() - c.date < CONSENT_CONFIG.maxAgeDays * 864e5) return c;
-  }catch(e){}
-  return null;
-}
-function saveConsent(marketing){
-  const c = {marketing, date: Date.now()};
-  try{ localStorage.setItem(CONSENT_CONFIG.storageKey, JSON.stringify(c)); }catch(e){}
-  return c;
-}
-let pixelLoaded = false;
-function loadPixel(){
-  if(pixelLoaded || !CONSENT_CONFIG.pixelId || CONSENT_CONFIG.pixelId === 'TU_PIXEL_ID') return;
-  pixelLoaded = true;
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', CONSENT_CONFIG.pixelId);
-  fbq('track', 'PageView');
-}
 function trackMeta(event, params){
-  if(pixelLoaded && typeof fbq === 'function') fbq('track', event, params || {});
+  // fbq solo existe si el visitante aceptó las cookies de marketing (ver cookie-consent.js).
+  if(typeof fbq === 'function') fbq('track', event, params || {});
 }
-function applyConsent(c){
-  if(c && c.marketing) loadPixel();
-}
-const banner = $('#cookieBanner');
-function closeBanner(marketing){
-  const hadMarketing = pixelLoaded;
-  applyConsent(saveConsent(marketing));
-  banner.classList.remove('show');
-  // Retirada del consentimiento: recargar para descargar el píxel ya inyectado.
-  if(hadMarketing && !marketing) location.reload();
-}
-$('#ckAccept').addEventListener('click', () => closeBanner(true));
-$('#ckReject').addEventListener('click', () => closeBanner(false));
-$('#ckConfig').addEventListener('click', () => {
-  const prefs = $('#cookiePrefs');
-  if(prefs.classList.contains('open')){ closeBanner($('#ckMarketing').checked); return; }
-  prefs.classList.add('open');
-  $('#ckConfig').textContent = 'Guardar selección';
-});
-$('#openCookieSettings').addEventListener('click', () => {
-  const c = readConsent();
-  $('#ckMarketing').checked = !!(c && c.marketing);
-  banner.classList.add('show');
-});
-
-const consent = readConsent();
-if(consent) applyConsent(consent); else banner.classList.add('show');
 </script>
+<script src="cookie-consent.js"></script>
 </body>
 </html>
