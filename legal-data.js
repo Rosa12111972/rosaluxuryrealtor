@@ -6,9 +6,14 @@
    y cookies.html.
    ============================================================ */
 window.LEGAL = {
-  titular: 'Rosa Rodríguez',
-  nif: '[COMPLETAR NIF]',
-  domicilio: '[COMPLETAR domicilio profesional]',
+  // Denominación social exacta, como figura en las escrituras (p. ej. 'Rosa Rodríguez Inmobiliaria, S.L.').
+  titular: '[COMPLETAR denominación social de la S.L.]',
+  // NIF de la sociedad (antiguo CIF). En una S.L. empieza por B.
+  nif: '[COMPLETAR NIF de la sociedad]',
+  // Datos de inscripción en el Registro Mercantil (art. 10.1.b LSSI-CE).
+  // Formato habitual: 'Registro Mercantil de Madrid, tomo X, folio Y, hoja M-Z'.
+  registroMercantil: '[COMPLETAR Registro Mercantil de …, tomo …, folio …, hoja …]',
+  domicilio: '[COMPLETAR domicilio social]',
   email: '[COMPLETAR email]',
   telefono: '+34 698 222 520',
   // Registro de agentes inmobiliarios: obligatorio en Cataluña (AICAT, Decreto 12/2010)

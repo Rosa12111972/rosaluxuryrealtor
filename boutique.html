@@ -670,7 +670,7 @@ $('#burger').addEventListener('click', () => {
 document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => { $('#navLinks').classList.remove('open'); onScroll(); }));
 
 /* ---------- datos legales en el pie ---------- */
-$('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} · NIF: ${show(LEGAL.nif)} · Domicilio: ${show(LEGAL.domicilio)} · Email: ${show(LEGAL.email)} · Tel.: ${show(LEGAL.telefono)}`;
+$('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} · NIF: ${show(LEGAL.nif)} · Domicilio social: ${show(LEGAL.domicilio)} · ${show(LEGAL.registroMercantil)} · Email: ${show(LEGAL.email)} · Tel.: ${show(LEGAL.telefono)}`;
 $('#legalRegistro').innerHTML = LEGAL.registroAgentes === '' ? '' : `Registro de Agentes Inmobiliarios: ${show(LEGAL.registroAgentes)} · Seguro de responsabilidad civil: ${show(LEGAL.seguroRC)}`;
 if(!pending(LEGAL.domicilio)) $('#footAddress').textContent = LEGAL.domicilio;
 if(!pending(LEGAL.email)) $('#contactEmail').innerHTML = `<a href="mailto:${esc(LEGAL.email)}">${esc(LEGAL.email)}</a>`;
