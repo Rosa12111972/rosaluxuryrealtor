@@ -217,6 +217,7 @@ body .ccb-actions button.ccb-line{background:#fff;color:var(--ink);}
 /* ---------- CONTACTO / FORMULARIOS ---------- */
 .contact-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:80px;}
 .contact-info p{margin-bottom:10px;}
+.contact-person{display:block;margin-bottom:6px;}
 .contact-info .big{font-size:22px;font-weight:300;letter-spacing:1px;color:var(--ink);}
 form .row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 .field{display:flex;flex-direction:column;margin-bottom:18px;}
@@ -700,7 +701,13 @@ const BRAND = {
   // no se muestra ningún teléfono y los formularios se envían por email.
   telefono: '',           // formato visible, p. ej. '+34 910 000 000'
   whatsapp: '',           // mismo número en formato internacional sin '+' ni espacios, p. ej. '34910000000'
-  email: 'rosa@thebrokery.com'  // email de contacto visible y destino de los mensajes mientras no haya WhatsApp
+  email: 'rosa@thebrokery.com',  // destino de los formularios y mensajes mientras no haya WhatsApp
+  // Emails que se muestran en la sección de contacto
+  contactos: [
+    { nombre:'Álvaro Corredor', email:'alvaro@thebrokery.com' },
+    { nombre:'Guillermo Rocafort', email:'guillermo@thebrokery.com' },
+    { nombre:'Rosa Rodríguez', email:'rosa@thebrokery.com' }
+  ]
 };
 
 /* ============================================================
@@ -783,7 +790,7 @@ document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click'
 $('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} (${show(LEGAL.nombreComercial)}) · NIF: ${show(LEGAL.nif)} · Domicilio social: ${show(LEGAL.domicilio)} · ${show(LEGAL.registroMercantil)} · Email: ${show(LEGAL.email)}${LEGAL.telefono ? ' · Tel.: ' + show(LEGAL.telefono) : ''}`;
 $('#legalRegistro').innerHTML = LEGAL.registroAgentes === '' ? '' : `Registro de Agentes Inmobiliarios: ${show(LEGAL.registroAgentes)} · Seguro de responsabilidad civil: ${show(LEGAL.seguroRC)}`;
 if(!pending(LEGAL.domicilio)) $('#footAddress').textContent = LEGAL.domicilio;
-$('#contactEmail').innerHTML = `<a href="mailto:${esc(BRAND.email)}">${esc(BRAND.email)}</a>`;
+$('#contactEmail').innerHTML = BRAND.contactos.map(c => `<span class="contact-person">${esc(c.nombre)} · <a href="mailto:${esc(c.email)}">${esc(c.email)}</a></span>`).join('');
 
 /* ---------- propiedades ---------- */
 function renderProps(){
