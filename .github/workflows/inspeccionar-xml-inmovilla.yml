@@ -1,0 +1,32 @@
+name: Inspeccionar XML de Inmovilla (temporal)
+on:
+  push:
+    branches: [claude/spanish-page-spanish-compliance-s2sui3]
+    paths: ['.github/workflows/inspeccionar-xml-inmovilla.yml']
+jobs:
+  inspeccionar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar XML de demostracion
+        run: |
+          curl -sSL -m 60 -o demo.xml https://procesos.inmovilla.com/xml/xml2demo/2-web.xml
+          ls -la demo.xml
+          file demo.xml
+          head -c 1500 demo.xml; echo
+      - name: Estructura
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET, collections
+          t = ET.parse('demo.xml'); r = t.getroot()
+          print('ROOT', r.tag, r.attrib, 'children', len(r))
+          kids = collections.Counter(c.tag for c in r)
+          print('CHILD TAGS', kids.most_common(10))
+          first = r[0] if len(r) else None
+          if first is not None:
+              print('--- PRIMER ELEMENTO ---')
+              for c in first:
+                  txt = (c.text or '').strip().replace('\n',' ')
+                  print(f'{c.tag} = {txt[:120]!r}', c.attrib if c.attrib else '', f'({len(c)} hijos)' if len(c) else '')
+                  for g in list(c)[:5]:
+                      print('    ', g.tag, (g.text or '').strip()[:100], g.attrib)
+          PY
