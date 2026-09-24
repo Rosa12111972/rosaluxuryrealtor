@@ -162,7 +162,8 @@ header.solid .burger{color:var(--ink);}
 /* ---------- BARRIOS ---------- */
 .barrios{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 .barrio{position:relative;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;color:#fff;background:linear-gradient(160deg,#5b5b5b,#231f20);background-size:cover;background-position:center;overflow:hidden;}
-.barrio::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(0,0,0,.65));}
+.barrio::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.35) 40%,rgba(0,0,0,.82) 100%);}
+.barrio h3,.barrio p{text-shadow:0 1px 3px rgba(0,0,0,.5);}
 .barrio>*{position:relative;z-index:1;}
 .barrio h3{color:#fff;font-size:17px;text-transform:uppercase;letter-spacing:4px;font-weight:400;margin-bottom:8px;padding-bottom:10px;border-bottom:1px solid var(--teal);}
 .barrio p{font-size:14px;opacity:.9;}
@@ -711,7 +712,7 @@ const BARRIOS = [
   { nombre:'Madrid capital', texto:'Salamanca, Chamberí, Retiro, Chamartín y los barrios más exclusivos de la ciudad.' },
   { nombre:'Aravaca y El Plantío', texto:'Chalets y urbanizaciones dentro del municipio de Madrid, junto a la zona noroeste.' },
   { nombre:'La Moraleja y zona norte', texto:'Alcobendas, San Sebastián de los Reyes, La Moraleja y El Soto de La Moraleja.' },
-  { nombre:'Boadilla del Monte', texto:'Nuestra sede. Urbanizaciones con parcela, amplias zonas verdes y colegios de prestigio.' },
+  { nombre:'Boadilla del Monte', texto:'Nuestra sede. Urbanizaciones con parcela, amplias zonas verdes y colegios de prestigio.', foto:'img/zona-boadilla.jpg' },
   { nombre:'Pozuelo de Alarcón', texto:'Residencial de alto standing, con urbanizaciones como Somosaguas y La Finca y colegios internacionales.' },
   { nombre:'Majadahonda', texto:'Una ciudad completa: amplia oferta comercial, servicios sanitarios de referencia y buena conexión con Madrid.' },
   { nombre:'Las Rozas', texto:'Urbanizaciones consolidadas, campos de golf y una gran oferta comercial y deportiva.' },
