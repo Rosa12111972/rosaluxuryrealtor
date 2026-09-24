@@ -14,7 +14,20 @@ import xml.etree.ElementTree as ET
 
 URL = os.environ.get('INMOVILLA_XML_URL', '').strip()
 SALIDA = os.environ.get('SALIDA', 'propiedades.json')
-MAX_FOTOS = 6
+MAX_FOTOS = 25
+
+# Características (campos 0/1 del XML) que se muestran en la ficha.
+EXTRAS = {
+    'ascensor': 'Ascensor', 'piscina_prop': 'Piscina privada', 'piscina_com': 'Piscina comunitaria',
+    'plaza_gara': 'Plaza de garaje', 'garajedoble': 'Garaje doble', 'trastero': 'Trastero',
+    'terraza': 'Terraza', 'balcon': 'Balcón', 'patio': 'Patio', 'jardin': 'Jardín',
+    'aire_con': 'Aire acondicionado', 'calefaccion': 'Calefacción', 'chimenea': 'Chimenea',
+    'alarma': 'Alarma', 'puerta_blin': 'Puerta blindada', 'gimnasio': 'Gimnasio',
+    'urbanizacion': 'Urbanización', 'vistasalmar': 'Vistas al mar', 'luminoso': 'Luminoso',
+    'todoext': 'Todo exterior', 'muebles': 'Amueblado', 'cocina_inde': 'Cocina independiente',
+    'lavanderia': 'Lavadero', 'sotano': 'Sótano', 'solarium': 'Solárium', 'sauna': 'Sauna',
+    'jacuzzi': 'Jacuzzi', 'barbacoa': 'Barbacoa', 'adaptadominus': 'Adaptado a movilidad reducida',
+}
 
 
 def texto(p, campo):
@@ -43,7 +56,10 @@ def convertir(p):
     zona = texto(p, 'zona')
     ciudad = texto(p, 'ciudad')
     titulo = texto(p, 'titulo1') or ' en '.join(x for x in [tipo, zona or ciudad] if x)
-    descripcion = texto(p, 'descrip1').replace('~', '\n')
+    descripcion = (texto(p, 'descrip1') or texto(p, 'tinterior')).replace('~', '\n')
+    # Coordenadas redondeadas a 3 decimales (≈100 m): el mapa muestra la zona, no la dirección exacta.
+    lat, lng = numero(p, 'latitud'), numero(p, 'altitud')
+    coords = [round(lat, 3), round(lng, 3)] if lat and lng else None
     return {
         'ref': texto(p, 'ref'),
         'titulo': titulo,
@@ -59,7 +75,13 @@ def convertir(p):
         'cee': texto(p, 'energialetra').upper() or 'En trámite',
         'destacado': texto(p, 'destacado') == '1',
         'fotos': fotos,
-        'descripcion': descripcion[:600],
+        'descripcion': descripcion[:4000],
+        'extras': [nombre for campo, nombre in EXTRAS.items() if texto(p, campo) == '1'],
+        'm2Utiles': entero(p, 'm_uties') or None,
+        'conservacion': texto(p, 'conservacion'),
+        'antiguedad': entero(p, 'antiguedad') or None,
+        'planta': texto(p, 'numplanta'),
+        'coords': coords,
     }
 
 

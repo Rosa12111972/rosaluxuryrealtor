@@ -13,292 +13,14 @@
 <meta property="og:locale" content="es_ES">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <meta name="twitter:card" content="summary">
 
 <!-- NORMATIVA: el Meta Pixel NO se carga aquí. Lo carga cookie-consent.js solo si el
      visitante acepta las cookies de marketing (art. 22.2 LSSI-CE). El ID del píxel se
      configura en cookie-consent.js. -->
 
-<style>
-:root{
-  /* Colores de marca The Brokery (tomados de las tarjetas de visita) */
-  --black:#231f20;
-  --ink:#231f20;
-  --teal:#49b9d4;          /* acento: líneas, detalles y fondos oscuros */
-  --accent:#1f7f97;        /* turquesa oscurecido para texto sobre blanco (contraste AA) */
-  --gold:var(--teal);
-  --text:#3a3637;
-  --muted:#6d6a6b;
-  --white:#ffffff;
-  --bg:#ffffff;
-  --bg-alt:#f5f5f5;
-  --border:#e3e3e3;
-  --maxw:1240px;
-  /* Gotham es la tipografía de la marca; Montserrat es su alternativa web gratuita más parecida. */
-  --serif:'Gotham','Montserrat',-apple-system,'Segoe UI',Arial,sans-serif;
-  --sans:'Gotham','Montserrat',-apple-system,'Segoe UI',Arial,sans-serif;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-[hidden]{display:none!important;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--sans);font-weight:300;color:var(--text);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased;}
-img{max-width:100%;display:block;}
-a{color:inherit;text-decoration:none;}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
-section{padding:110px 0;}
-h1,h2,h3,h4{font-family:var(--serif);font-weight:500;color:var(--ink);letter-spacing:.5px;}
-h1,h2,.title{font-weight:300;text-transform:uppercase;letter-spacing:.12em;}
-.eyebrow{display:block;text-transform:uppercase;letter-spacing:4px;font-size:12px;font-weight:600;color:var(--accent);margin-bottom:14px;}
-.title{font-size:clamp(24px,3.2vw,38px);line-height:1.25;margin-bottom:18px;}
-.title::after{content:"";display:block;width:64px;height:1px;background:var(--teal);margin-top:22px;}
-.center .title::after{margin-left:auto;margin-right:auto;}
-.sub{color:var(--muted);font-size:17px;max-width:620px;}
-.center{text-align:center;}
-.center .sub{margin:0 auto;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 34px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:600;border:1px solid transparent;cursor:pointer;transition:all .25s ease;font-family:var(--sans);border-radius:0;}
-.btn-dark{background:var(--black);color:#fff;}
-.btn-dark:hover{background:var(--teal);color:var(--ink);}
-.btn-accent{background:var(--accent);color:#fff;}
-.btn-accent:hover{background:var(--black);}
-.btn-teal{background:var(--teal);color:var(--ink);}
-.btn-teal:hover{background:#fff;color:var(--ink);}
-.btn-line{background:transparent;border-color:currentColor;}
-.btn-line:hover{background:var(--black);color:#fff;border-color:var(--black);}
-.btn-line-light{background:transparent;border-color:#fff;color:#fff;}
-.btn-line-light:hover{background:#fff;color:var(--black);}
-
-/* ---------- HEADER ---------- */
-header{position:fixed;inset:0 0 auto 0;z-index:1000;transition:background .3s,border-color .3s;border-bottom:1px solid transparent;}
-header.solid{background:rgba(255,255,255,.97);border-color:var(--border);backdrop-filter:blur(6px);}
-.nav{max-width:var(--maxw);margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
-.logo{display:flex;flex-direction:column;align-items:flex-start;gap:4px;color:#fff;line-height:1;}
-.logo svg{width:190px;height:auto;display:block;}
-.logo small{font-size:9px;letter-spacing:4px;text-transform:uppercase;font-weight:500;opacity:.85;padding-left:2px;}
-header.solid .logo{color:var(--ink);}
-.nav-links{display:flex;gap:30px;align-items:center;}
-.nav-links a{white-space:nowrap;color:#fff;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:400;padding-bottom:4px;border-bottom:1px solid transparent;}
-.nav-links a:hover{border-color:var(--teal);}
-header.solid .nav-links a{color:var(--ink);}
-
-.nav-phone{font-size:13px;letter-spacing:1px;color:#fff;white-space:nowrap;}
-header.solid .nav-phone{color:var(--ink);}
-.burger{display:none;background:none;border:none;font-size:28px;color:#fff;cursor:pointer;}
-header.solid .burger{color:var(--ink);}
-
-/* ---------- HERO ---------- */
-.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:140px 0 90px;color:#fff;
-  /* Foto de portada: edificio Metrópolis (Gran Vía, Madrid) de noche. El degradado oscurece la imagen para que el texto se lea bien. */
-  background:
-    linear-gradient(90deg,rgba(20,18,19,.72) 0%,rgba(20,18,19,.35) 60%,rgba(20,18,19,.15) 100%),
-    linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.25) 100%),
-    #231f20 url('img/hero-metropolis.jpg') center 60%/cover no-repeat;
-}
-.hero .wrap{width:100%;}
-.hero .eyebrow{color:var(--teal);}
-.hero h1{color:#fff;font-size:clamp(30px,5vw,60px);line-height:1.15;max-width:950px;margin-bottom:24px;}
-.hero h1 em{font-style:normal;font-weight:500;}
-.hero p.lead{font-size:clamp(16px,1.6vw,19px);max-width:600px;opacity:.9;margin-bottom:44px;}
-.search{display:grid;grid-template-columns:repeat(4,1fr) auto;background:#fff;max-width:980px;}
-.search label{display:flex;flex-direction:column;padding:14px 20px;border-right:1px solid var(--border);color:var(--muted);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;font-weight:600;}
-.search select,.search input{border:none;outline:none;background:transparent;font-size:15px;color:var(--ink);padding-top:6px;font-family:var(--sans);width:100%;}
-.search button{border-radius:0;}
-.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.75;}
-
-/* ---------- INTRO / BOUTIQUE ---------- */
-.intro-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:80px;align-items:center;}
-.intro-grid p{margin-bottom:18px;font-size:17px;}
-.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:70px;border-top:1px solid var(--border);}
-.pillar{padding:34px 28px 0 0;}
-.pillar .n{font-size:13px;color:var(--accent);letter-spacing:3px;font-weight:600;}
-.pillar h4{font-size:15px;margin:10px 0 8px;text-transform:uppercase;letter-spacing:2px;}
-.pillar p{color:var(--muted);font-size:15px;}
-.intro-visual{aspect-ratio:4/5;position:relative;
-  background:linear-gradient(160deg,#ececec,#cfcfcf);}
-.intro-visual img{width:100%;height:100%;object-fit:cover;}
-.img-note{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.45);color:#fff;font-size:10px;letter-spacing:.5px;padding:3px 8px;}
-.intro-visual .tag{position:absolute;left:-30px;bottom:40px;background:var(--ink);color:#fff;padding:26px 30px;max-width:270px;font-size:15px;font-weight:300;letter-spacing:.5px;line-height:1.5;border-top:3px solid var(--teal);}
-
-/* ---------- PROPIEDADES ---------- */
-.alt{background:var(--bg-alt);}
-.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:50px;flex-wrap:wrap;}
-.props{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
-.prop{background:#fff;border:1px solid var(--border);display:flex;flex-direction:column;}
-.prop-img{aspect-ratio:4/3;position:relative;background:linear-gradient(135deg,#4a4a4a,#231f20);background-size:cover;background-position:center;}
-.prop-badge{position:absolute;top:16px;left:16px;background:#fff;color:var(--ink);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;font-weight:600;}
-.cee{position:absolute;bottom:16px;right:16px;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.95);padding:5px 10px;font-size:11px;font-weight:600;color:var(--ink);}
-.cee b{display:inline-grid;place-items:center;width:22px;height:22px;color:#fff;font-size:12px;}
-.prop-body{padding:24px 26px 28px;display:flex;flex-direction:column;gap:8px;flex:1;}
-.prop-price{font-size:22px;font-weight:300;letter-spacing:1px;color:var(--ink);}
-.prop-price small{display:block;font-family:var(--sans);font-size:11.5px;color:var(--muted);margin-top:2px;}
-.prop-title{font-size:15px;color:var(--ink);font-weight:600;}
-.prop-meta{display:flex;gap:18px;font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:14px;margin-top:auto;flex-wrap:wrap;}
-.props-more{grid-column:1/-1;text-align:center;}
-.offmarket{grid-column:1/-1;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;background:var(--black);color:#fff;padding:56px 60px;}
-.offmarket h3{color:#fff;font-size:clamp(26px,3vw,36px);margin-bottom:10px;}
-.offmarket p{opacity:.8;max-width:640px;}
-.legal-note{font-size:12.5px;color:var(--muted);margin-top:26px;max-width:900px;}
-
-/* ---------- SERVICIOS ---------- */
-.services{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);}
-.service{padding:44px 32px;border-right:1px solid var(--border);transition:background .25s;}
-.service:last-child{border-right:none;}
-.service:hover{background:var(--bg-alt);}
-.service .ico{font-size:14px;letter-spacing:3px;font-weight:600;color:var(--accent);margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--teal);width:40px;}
-.service h3{font-size:16px;margin-bottom:12px;text-transform:uppercase;letter-spacing:3px;}
-.service p{color:var(--muted);font-size:15px;margin-bottom:20px;}
-.service a{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--accent);}
-
-/* ---------- COLECCIONES ---------- */
-.collections{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:260px;gap:18px;}
-.col{position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:28px;color:#fff;cursor:pointer;}
-.col::before{content:"";position:absolute;inset:0;background:var(--bgc);transition:transform .6s ease;}
-.col::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.6));}
-.col:hover::before{transform:scale(1.06);}
-.col span{position:relative;z-index:1;}
-.col h3{color:#fff;font-size:18px;text-transform:uppercase;letter-spacing:4px;font-weight:400;}
-.col small{display:block;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;opacity:.85;margin-top:6px;}
-.col.tall{grid-row:span 2;}
-.col-note{font-size:12px;color:var(--muted);margin-top:14px;text-align:right;}
-
-/* ---------- BARRIOS ---------- */
-.barrios{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-.barrio{position:relative;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;color:#fff;background:linear-gradient(160deg,#5b5b5b,#231f20);background-size:cover;background-position:center;overflow:hidden;}
-.barrio::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.35) 40%,rgba(0,0,0,.82) 100%);}
-.barrio h3,.barrio p{text-shadow:0 1px 3px rgba(0,0,0,.5);}
-.barrio>*{position:relative;z-index:1;}
-.barrio>.img-note{position:absolute;z-index:2;}
-.barrio h3{color:#fff;font-size:17px;text-transform:uppercase;letter-spacing:4px;font-weight:400;margin-bottom:8px;padding-bottom:10px;border-bottom:1px solid var(--teal);}
-.barrio p{font-size:14px;opacity:.9;}
-
-/* ---------- EQUIPO (estilo tarjeta de visita) ---------- */
-.team-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
-.card-person.lead{grid-column:1/-1;justify-self:center;width:100%;max-width:calc((100% - 60px)/3);}
-.card-person{border:1px solid var(--border);padding:0 0 34px;text-align:center;background:#fff;}
-.card-person img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top;margin-bottom:28px;}
-.card-person>*:not(img){margin-left:26px;margin-right:26px;}
-.card-person h3{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;}
-.card-person .role{font-size:15px;color:var(--text);padding-bottom:18px;margin-bottom:18px;border-bottom:1.5px solid var(--teal);line-height:1.45;}
-.card-person .role span{font-size:13px;}
-.card-person p{font-size:15px;margin-bottom:6px;}
-.card-person a:hover{color:var(--accent);}
-
-/* ---------- AVISO DE COOKIES con los colores de The Brokery ---------- */
-body .ccb{font-family:var(--sans);color:var(--text);}
-body .ccb h4{font-family:var(--sans);font-weight:500;text-transform:uppercase;letter-spacing:2px;font-size:15px;color:var(--ink);}
-body .ccb p a{color:var(--accent);}
-body .ccb-check input{accent-color:var(--ink);}
-body .ccb-actions button{background:var(--ink);border-color:var(--ink);}
-body .ccb-actions button:hover{background:var(--teal);border-color:var(--teal);color:var(--ink);}
-body .ccb-actions button.ccb-line{background:#fff;color:var(--ink);}
-
-/* ---------- INFORMES ---------- */
-.reports{background:var(--ink);color:#fff;}
-.reports .eyebrow{color:var(--teal);}
-.reports .title::after{background:var(--teal);}
-.reports h2{color:#fff;}
-.reports-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
-.reports ul{list-style:none;margin-top:26px;}
-.reports li{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.18);font-size:16px;}
-.reports li::before{content:"—";color:var(--teal);margin-right:12px;}
-.form-dark{background:rgba(0,0,0,.18);padding:40px;}
-.form-dark .field input,.form-dark .field select{background:transparent;color:#fff;border-color:rgba(255,255,255,.35);}
-.form-dark .field select option{color:var(--ink);}
-.form-dark .field label{color:rgba(255,255,255,.8);}
-.form-dark .rgpd-box{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.85);}
-.form-dark .check{color:rgba(255,255,255,.9);}
-.form-dark a{text-decoration:underline;}
-
-/* ---------- TESTIMONIOS ---------- */
-.testis{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:50px;}
-.testi{border-top:1px solid var(--teal);padding-top:28px;}
-.testi p{font-size:16px;font-weight:300;line-height:1.7;color:var(--ink);margin-bottom:18px;}
-.testi .who{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
-
-/* ---------- CONTACTO / FORMULARIOS ---------- */
-.contact-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:80px;}
-.contact-info p{margin-bottom:10px;}
-.contact-person{display:block;margin-bottom:6px;}
-.contact-info .big{font-size:22px;font-weight:300;letter-spacing:1px;color:var(--ink);}
-form .row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.field{display:flex;flex-direction:column;margin-bottom:18px;}
-.field label{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:8px;}
-.field input,.field select,.field textarea{padding:14px 14px;border:1px solid var(--border);background:#fff;font-size:15px;font-family:var(--sans);color:var(--ink);border-radius:0;}
-.field textarea{min-height:120px;resize:vertical;}
-.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--accent);outline-offset:-1px;}
-.rgpd-box{font-size:12.5px;line-height:1.55;border:1px solid var(--border);background:var(--bg-alt);padding:16px 18px;margin:6px 0 16px;}
-.rgpd-box table{width:100%;border-collapse:collapse;}
-.rgpd-box th{text-align:left;vertical-align:top;padding:3px 12px 3px 0;white-space:nowrap;font-weight:600;}
-.rgpd-box td{padding:3px 0;}
-.check{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;margin-bottom:12px;cursor:pointer;}
-.check input{margin-top:3px;width:17px;height:17px;flex-shrink:0;accent-color:var(--accent);}
-.form-msg{font-size:13px;margin-top:12px;}
-
-/* ---------- NORMATIVA ---------- */
-.norm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;}
-.norm{background:#fff;border:1px solid var(--border);padding:30px;}
-.norm h4{font-size:14px;margin-bottom:10px;text-transform:uppercase;letter-spacing:2px;}
-.norm p{font-size:14.5px;color:var(--muted);}
-.norm .ref{display:block;margin-top:14px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:600;}
-
-/* ---------- FOOTER ---------- */
-footer{background:var(--black);color:rgba(255,255,255,.72);padding:80px 0 34px;font-size:14px;}
-footer h4{color:#fff;font-size:13px;font-family:var(--sans);letter-spacing:2.5px;text-transform:uppercase;font-weight:600;margin-bottom:18px;}
-.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:50px;padding-bottom:50px;border-bottom:1px solid rgba(255,255,255,.12);}
-footer p{margin-bottom:8px;}
-footer a:hover{color:#fff;}
-.foot-logo{color:#fff;margin-bottom:20px;}
-.foot-logo svg{width:200px;height:auto;display:block;}
-.foot-legal{padding-top:30px;font-size:12px;line-height:1.7;color:rgba(255,255,255,.55);}
-.foot-legal p{margin-bottom:10px;}
-.foot-links{display:flex;flex-wrap:wrap;gap:8px 22px;margin:18px 0;font-size:12.5px;}
-.foot-links a,.foot-links button{color:rgba(255,255,255,.8);background:none;border:none;font:inherit;cursor:pointer;padding:0;}
-.foot-links a:hover,.foot-links button:hover{color:#fff;text-decoration:underline;}
-.todo{background:rgba(184,160,122,.18);color:inherit;padding:0 4px;}
-
-/* ---------- WHATSAPP ---------- */
-.wa-float{position:fixed;right:22px;bottom:22px;z-index:900;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.2);}
-.wa-float svg{width:30px;height:30px;fill:#fff;}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width:1180px){ .nav-phone{display:none;} }
-@media (max-width:1020px){
-  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;align-items:flex-start;padding:20px 24px 28px;gap:18px;border-bottom:1px solid var(--border);}
-  .nav-links.open{display:flex;}
-  .nav-links a{color:var(--ink)!important;}
-  .nav-phone{display:none;}
-  .burger{display:block;}
-  .search{grid-template-columns:1fr 1fr;}
-  .search label{border-bottom:1px solid var(--border);}
-  .search button{grid-column:1/-1;}
-  .intro-grid,.reports-grid,.contact-grid{grid-template-columns:1fr;gap:50px;}
-  .intro-visual{max-width:460px;}
-  .intro-visual .tag{left:0;}
-  .props,.testis,.norm-grid,.team-cards,.barrios{grid-template-columns:1fr 1fr;}
-  .card-person.lead{max-width:calc(50% - 15px);}
-  .services{grid-template-columns:1fr 1fr;}
-  .service:nth-child(2){border-right:none;}
-  .service:nth-child(-n+2){border-bottom:1px solid var(--border);}
-  .foot-grid{grid-template-columns:1fr 1fr;}
-  .offmarket{grid-template-columns:1fr;padding:40px 30px;}
-}
-@media (max-width:640px){
-  .hero{background:linear-gradient(180deg,rgba(20,18,19,.55),rgba(20,18,19,.7)),#231f20 url('img/hero-metropolis-movil.jpg') 48% center/cover no-repeat;}
-  section{padding:76px 0;}
-  .wrap{padding:0 16px;}
-  .nav{padding:16px;}
-  .search{grid-template-columns:1fr;}
-  .search label{border-right:none;}
-  .pillars,.props,.testis,.norm-grid,.services,.collections,.foot-grid,form .row,.team-cards,.barrios{grid-template-columns:1fr;}
-  .card-person.lead{max-width:none;}
-  .pillar{padding-right:0;}
-  .service{border-right:none!important;border-bottom:1px solid var(--border);}
-  .collections{grid-auto-rows:200px;}
-  .col.tall{grid-row:span 1;}
-  .form-dark{padding:26px 18px;}
-  .rgpd-box th{white-space:normal;}
-}
-</style>
+<link rel="stylesheet" href="brokery.css">
 </head>
 <body>
 
@@ -307,12 +29,11 @@ footer a:hover{color:#fff;}
   <div class="nav">
     <a href="#top" class="logo" aria-label="The Brokery España, inicio"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70.5 10.3" ><g fill="currentColor"><path d="M0.63 0.446L0.63 0.946L2.303 0.946L2.303 5.662L2.803 5.662L2.803 0.946L4.475 0.946L4.475 0.446L0.63 0.446Z"/><path d="M11.084 0.446L11.084 2.838L8.223 2.838L8.223 0.446L7.723 0.446L7.723 5.662L8.223 5.662L8.223 3.308L11.084 3.308L11.084 5.662L11.584 5.662L11.584 0.446L11.084 0.446Z"/><path d="M15.369 0.446L15.369 5.662L18.427 5.662L18.427 5.162L15.869 5.162L15.869 3.353L18.033 3.353L18.033 2.853L15.869 2.853L15.869 0.946L18.344 0.946L18.344 0.446L15.369 0.446Z"/><path d="M24.797 3.133L24.797 5.163L26.356 5.163C26.947 5.163 27.326 4.708 27.326 4.201C27.326 3.723 26.932 3.133 26.326 3.133L24.797 3.133ZM26.25 2.663C26.795 2.663 27.045 2.217 27.045 1.74C27.045 1.219 26.674 0.938 26.137 0.938L24.797 0.938L24.797 2.663L26.25 2.663ZM26.909 2.883C27.439 2.982 27.825 3.626 27.825 4.201C27.825 4.988 27.295 5.663 26.364 5.663L24.29 5.663L24.29 0.447L26.19 0.447C27.03 0.447 27.545 0.945 27.545 1.74C27.545 2.232 27.386 2.71 26.909 2.883Z"/><path d="M31.769 0.946L31.769 3.126L33.162 3.126C33.896 3.126 34.146 2.596 34.146 2.043C34.146 1.491 33.896 0.946 33.2 0.946L31.769 0.946ZM34.699 5.662L34.085 5.662L32.647 3.626L31.769 3.626L31.769 5.662L31.262 5.662L31.262 0.446L33.2 0.446C34.26 0.446 34.646 1.241 34.646 2.043C34.646 2.831 34.275 3.595 33.26 3.626L34.699 5.662Z"/><path d="M40.406 5.238C41.61 5.238 42.533 4.269 42.533 3.065C42.533 1.862 41.61 0.886 40.406 0.886C39.202 0.886 38.286 1.862 38.286 3.065C38.286 4.269 39.202 5.238 40.406 5.238ZM40.406 0.386C41.889 0.386 43.033 1.582 43.033 3.065C43.033 4.542 41.889 5.738 40.406 5.738C38.93 5.738 37.787 4.542 37.787 3.065C37.787 1.582 38.93 0.386 40.406 0.386Z"/><path d="M48.937 0.446L46.97 2.982L46.97 0.446L46.469 0.446L46.469 5.661L46.97 5.661L46.97 3.209L49.292 5.661L49.967 5.661L47.499 3.058L49.527 0.446L48.937 0.446Z"/><path d="M52.965 0.446L52.965 5.661L56.023 5.661L56.023 5.162L53.465 5.162L53.465 3.353L55.63 3.353L55.63 2.854L53.465 2.854L53.465 0.945L55.94 0.945L55.94 0.446L52.965 0.446Z"/><path d="M59.975 0.946L59.975 3.126L61.368 3.126C62.102 3.126 62.352 2.596 62.352 2.043C62.352 1.491 62.102 0.946 61.406 0.946L59.975 0.946ZM62.904 5.662L62.291 5.662L60.853 3.626L59.975 3.626L59.975 5.662L59.468 5.662L59.468 0.446L61.406 0.446C62.465 0.446 62.852 1.241 62.852 2.043C62.852 2.831 62.481 3.595 61.466 3.626L62.904 5.662Z"/><path d="M69.422 0.446L67.787 2.694L66.167 0.446L65.568 0.446L67.529 3.24L67.529 5.661L68.044 5.661L68.044 3.24L70.027 0.446L69.422 0.446Z"/><path d="M12.79 8.458L12.79 9.91L13.723 9.91L13.723 9.752L12.958 9.752L12.958 8.458L12.79 8.458Z"/><path d="M15.151 9.775C15.477 9.775 15.734 9.551 15.734 9.182C15.734 8.812 15.477 8.588 15.151 8.588C14.823 8.588 14.568 8.815 14.568 9.182C14.568 9.551 14.823 9.775 15.151 9.775ZM15.151 8.428C15.574 8.428 15.904 8.732 15.904 9.182C15.904 9.634 15.574 9.937 15.151 9.937C14.726 9.937 14.398 9.634 14.398 9.182C14.398 8.732 14.726 8.428 15.151 8.428Z"/><path d="M18.119 9.501C18.007 9.775 17.747 9.936 17.441 9.936C17.017 9.936 16.694 9.638 16.694 9.179C16.694 8.723 17.015 8.428 17.441 8.428C17.777 8.428 18.009 8.611 18.1 8.825L17.936 8.871C17.882 8.771 17.739 8.588 17.437 8.588C17.1 8.588 16.864 8.817 16.864 9.181C16.864 9.549 17.113 9.775 17.433 9.775C17.669 9.775 17.864 9.653 17.955 9.457L18.119 9.501Z"/><path d="M19.72 8.991C19.664 8.858 19.579 8.653 19.577 8.651L19.573 8.651C19.571 8.653 19.485 8.858 19.432 8.989L19.272 9.371L19.88 9.371L19.72 8.991ZM19.207 9.524L19.046 9.91L18.865 9.91L19.483 8.458L19.668 8.458L20.286 9.91L20.106 9.91L19.944 9.524L19.207 9.524Z"/><path d="M21.117 8.458L21.285 8.458L21.285 9.753L22.05 9.753L22.05 9.91L21.117 9.91L21.117 8.458Z"/><path d="M24.51 9.2C24.723 9.2 24.863 9.125 24.863 8.916C24.863 8.711 24.727 8.613 24.501 8.613L24.217 8.613L24.217 9.2L24.51 9.2ZM24.529 9.339C24.499 9.341 24.428 9.341 24.396 9.341L24.217 9.341L24.217 9.909L24.049 9.909L24.049 8.457L24.493 8.457C24.835 8.457 25.035 8.626 25.035 8.909C25.035 9.134 24.908 9.264 24.703 9.308L25.062 9.909L24.859 9.909L24.529 9.339Z"/><path d="M25.921 8.458L26.898 8.458L26.898 8.616L26.089 8.616L26.089 9.072L26.72 9.072L26.72 9.23L26.089 9.23L26.089 9.753L26.902 9.753L26.902 9.91L25.921 9.91L25.921 8.458Z"/><path d="M28.53 8.991C28.474 8.858 28.389 8.653 28.387 8.651L28.383 8.651C28.381 8.653 28.295 8.858 28.241 8.989L28.082 9.371L28.69 9.371L28.53 8.991ZM28.017 9.524L27.856 9.91L27.675 9.91L28.293 8.458L28.478 8.458L29.096 9.91L28.916 9.91L28.754 9.524L28.017 9.524Z"/><path d="M29.928 8.458L30.096 8.458L30.096 9.753L30.861 9.753L30.861 9.91L29.928 9.91L29.928 8.458Z"/><path d="M32.86 8.458L33.837 8.458L33.837 8.616L33.028 8.616L33.028 9.072L33.659 9.072L33.659 9.23L33.028 9.23L33.028 9.753L33.841 9.753L33.841 9.91L32.86 9.91L32.86 8.458Z"/><path d="M34.801 9.484C34.818 9.692 34.99 9.785 35.212 9.785C35.423 9.785 35.552 9.701 35.552 9.527C35.552 9.287 35.312 9.274 35.131 9.236C34.934 9.189 34.681 9.119 34.681 8.824C34.681 8.572 34.867 8.428 35.173 8.428C35.442 8.428 35.641 8.54 35.703 8.789L35.541 8.833C35.502 8.673 35.384 8.58 35.17 8.58C34.959 8.58 34.853 8.671 34.853 8.818C34.853 9.011 35.036 9.052 35.243 9.094C35.458 9.135 35.724 9.204 35.724 9.523C35.724 9.798 35.533 9.936 35.21 9.936C34.965 9.936 34.685 9.855 34.639 9.529L34.801 9.484Z"/><path d="M37.122 8.615L37.122 9.91L36.952 9.91L36.952 8.615L36.454 8.615L36.454 8.457L37.622 8.457L37.622 8.615L37.122 8.615Z"/><path d="M38.995 8.991C38.939 8.858 38.854 8.653 38.852 8.651L38.848 8.651C38.846 8.653 38.76 8.858 38.706 8.989L38.547 9.371L39.155 9.371L38.995 8.991ZM38.483 9.524L38.321 9.91L38.14 9.91L38.758 8.458L38.943 8.458L39.561 9.91L39.381 9.91L39.219 9.524L38.483 9.524Z"/><path d="M40.75 8.615L40.75 9.91L40.58 9.91L40.58 8.615L40.082 8.615L40.082 8.457L41.25 8.457L41.25 8.615L40.75 8.615Z"/><path d="M42.108 8.458L43.085 8.458L43.085 8.616L42.276 8.616L42.276 9.072L42.907 9.072L42.907 9.23L42.276 9.23L42.276 9.753L43.089 9.753L43.089 9.91L42.108 9.91L42.108 8.458Z"/><path d="M45.669 9.764C45.864 9.764 45.997 9.675 45.997 9.496C45.997 9.314 45.843 9.212 45.665 9.212L45.283 9.212L45.283 9.764L45.669 9.764ZM45.621 9.08C45.783 9.08 45.901 8.997 45.901 8.839C45.901 8.697 45.791 8.602 45.605 8.602L45.283 8.602L45.283 9.08L45.621 9.08ZM45.843 9.134C45.98 9.156 46.173 9.258 46.173 9.505C46.173 9.749 45.997 9.91 45.677 9.91L45.115 9.91L45.115 8.457L45.638 8.457C45.904 8.457 46.072 8.611 46.072 8.814C46.072 9.005 45.949 9.102 45.843 9.128L45.843 9.134Z"/><path d="M47.49 9.2C47.701 9.2 47.843 9.125 47.843 8.916C47.843 8.711 47.705 8.613 47.48 8.613L47.197 8.613L47.197 9.2L47.49 9.2ZM47.509 9.339C47.478 9.341 47.407 9.341 47.376 9.341L47.197 9.341L47.197 9.909L47.029 9.909L47.029 8.457L47.473 8.457C47.813 8.457 48.015 8.626 48.015 8.909C48.015 9.134 47.888 9.264 47.683 9.308L48.042 9.909L47.838 9.909L47.509 9.339Z"/><path d="M49.566 9.775C49.892 9.775 50.149 9.551 50.149 9.182C50.149 8.812 49.892 8.588 49.566 8.588C49.239 8.588 48.983 8.815 48.983 9.182C48.983 9.551 49.239 9.775 49.566 9.775ZM49.566 8.428C49.989 8.428 50.319 8.732 50.319 9.182C50.319 9.634 49.989 9.937 49.566 9.937C49.141 9.937 48.813 9.634 48.813 9.182C48.813 8.732 49.141 8.428 49.566 8.428Z"/><path d="M51.348 9.426L51.348 9.91L51.18 9.91L51.18 8.457L51.348 8.457L51.348 8.91L51.348 9.223L51.352 9.223L51.588 8.972L52.072 8.457L52.275 8.457L51.73 9.038L52.331 9.911L52.132 9.91L51.605 9.158L51.348 9.426Z"/><path d="M53.148 8.458L54.125 8.458L54.125 8.616L53.316 8.616L53.316 9.072L53.947 9.072L53.947 9.23L53.316 9.23L53.316 9.753L54.13 9.753L54.13 9.91L53.148 9.91L53.148 8.458Z"/><path d="M55.475 9.2C55.687 9.2 55.827 9.125 55.827 8.916C55.827 8.711 55.691 8.613 55.465 8.613L55.182 8.613L55.182 9.2L55.475 9.2ZM55.494 9.339C55.463 9.341 55.392 9.341 55.361 9.341L55.182 9.341L55.182 9.909L55.015 9.909L55.015 8.457L55.458 8.457C55.799 8.457 56 8.626 56 8.909C56 9.134 55.873 9.264 55.668 9.308L56.027 9.909L55.823 9.909L55.494 9.339Z"/><path d="M56.944 9.492C56.961 9.7 57.133 9.793 57.355 9.793C57.567 9.793 57.695 9.708 57.695 9.534C57.695 9.295 57.454 9.282 57.274 9.243C57.077 9.197 56.824 9.127 56.824 8.832C56.824 8.579 57.01 8.436 57.316 8.436C57.585 8.436 57.784 8.548 57.846 8.797L57.685 8.841C57.645 8.681 57.527 8.588 57.313 8.588C57.102 8.588 56.996 8.679 56.996 8.826C56.996 9.019 57.179 9.06 57.386 9.102C57.601 9.143 57.867 9.212 57.867 9.531C57.867 9.805 57.677 9.944 57.352 9.944C57.108 9.944 56.828 9.863 56.782 9.536L56.944 9.492Z"/></g></svg><small>España</small></a>
     <nav class="nav-links" id="navLinks" aria-label="Principal">
-      <a href="#propiedades">Propiedades</a>
-      <a href="#servicios">Servicios</a>
+      <a href="propiedades.html">Propiedades</a>
+      <a href="valoracion.html">Valoración</a>
       <a href="#barrios" data-if-barrios>Zonas</a>
-      <a href="#colecciones">Colecciones</a>
       <a href="#equipo">Nosotros</a>
-      <a href="#informes">Mercado</a>
+      <a href="empleo.html">Empleo</a>
       <a href="#contacto">Contacto</a>
     </nav>
     <a class="nav-phone" data-phone hidden></a>
@@ -329,32 +50,31 @@ footer a:hover{color:#fff;}
 
     <form class="search" id="searchForm" aria-label="Buscar propiedades">
       <label>Operación
-        <select name="Operación">
-          <option>Comprar</option>
-          <option>Alquilar</option>
-          <option>Vender</option>
+        <select name="operacion">
+          <option value="venta">Comprar</option>
+          <option value="alquiler">Alquilar</option>
+          <option value="vender">Vender</option>
         </select>
       </label>
       <label>Tipo
-        <select name="Tipo">
-          <option>Cualquiera</option>
-          <option>Villa / chalet</option>
-          <option>Ático</option>
-          <option>Piso de lujo</option>
-          <option>Finca / casa de campo</option>
-          <option>Obra nueva</option>
+        <select name="tipo">
+          <option value="">Cualquiera</option>
+          <option value="chalet">Villa / chalet</option>
+          <option value="atico">Ático</option>
+          <option value="piso">Piso</option>
+          <option value="finca">Finca / casa de campo</option>
         </select>
       </label>
       <label>Zona
-        <input name="Zona" type="text" placeholder="Ciudad o zona">
+        <input name="zona" type="text" placeholder="Ciudad o zona">
       </label>
       <label>Presupuesto
-        <select name="Presupuesto">
-          <option>Sin límite</option>
-          <option>Hasta 500.000 €</option>
-          <option>500.000 € – 1 M€</option>
-          <option>1 M€ – 2 M€</option>
-          <option>Más de 2 M€</option>
+        <select name="precio">
+          <option value="">Sin límite</option>
+          <option value="0-500000">Hasta 500.000 €</option>
+          <option value="500000-1000000">500.000 € – 1 M€</option>
+          <option value="1000000-2000000">1 M€ – 2 M€</option>
+          <option value="2000000-">Más de 2 M€</option>
         </select>
       </label>
       <button class="btn btn-accent" type="submit">Buscar</button>
@@ -398,7 +118,7 @@ footer a:hover{color:#fff;}
         <span class="eyebrow">Selección exclusiva</span>
         <h2 class="title" style="margin-bottom:0;">Propiedades destacadas</h2>
       </div>
-      <a href="#contacto" class="btn btn-line" data-wa="Hola, me gustaría ver todas las propiedades disponibles.">Ver toda la cartera</a>
+      <a href="propiedades.html" class="btn btn-line">Ver toda la cartera</a>
     </div>
 
     <div class="props" id="propsGrid">
@@ -424,7 +144,7 @@ footer a:hover{color:#fff;}
         <div class="ico">I</div>
         <h3>Vender</h3>
         <p>Valoración basada en datos, plan de marketing premium, filtrado de compradores con solvencia acreditada y negociación.</p>
-        <a href="#contacto" data-interest="Vender mi propiedad">Solicitar valoración →</a>
+        <a href="valoracion.html">Solicitar valoración →</a>
       </div>
       <div class="service">
         <div class="ico">II</div>
@@ -488,35 +208,7 @@ footer a:hover{color:#fff;}
       <h2 class="title">The Brokery España</h2>
       <p class="sub">Un equipo local con el respaldo de The Brokery. Acompañamos a propietarios, compradores e inversores en operaciones residenciales de alto standing, con un enfoque cercano, transparente y basado en datos.</p>
     </div>
-    <div class="team-cards">
-      <article class="card-person lead">
-        <img src="img/equipo-oleg.jpg" alt="Oleg Bortman, cofundador de The Brokery" loading="lazy">
-        <h3>Oleg Bortman</h3>
-        <p class="role">Cofundador<br><span>Associate Broker</span></p>
-        <p><a href="tel:+16024022296">+1 602 402 2296</a></p>
-        <p><a href="mailto:Oleg@TheBrokery.com">Oleg@TheBrokery.com</a></p>
-      </article>
-      <article class="card-person">
-        <img src="img/equipo-alvaro.jpg" alt="Álvaro Corredor Ochoa" loading="lazy">
-        <h3>Álvaro Corredor Ochoa, PhD</h3>
-        <p class="role">Director de Operaciones – España<br><span>Global Real Estate Professional</span></p>
-        <p><a href="tel:+34641836977">+34 641 836 977</a></p>
-        <p><a href="mailto:Alvaro@TheBrokery.com">Alvaro@TheBrokery.com</a></p>
-      </article>
-      <article class="card-person">
-        <img src="img/equipo-rosa.jpg" alt="Rosa Rodríguez" loading="lazy">
-        <h3>Rosa Rodríguez</h3>
-        <p class="role">Gerente Comercial</p>
-        <p><a href="mailto:Rosa@TheBrokery.com">Rosa@TheBrokery.com</a></p>
-      </article>
-      <article class="card-person">
-        <img src="img/equipo-guillermo.jpg" alt="Guillermo Rocafort Moreno" loading="lazy">
-        <h3>Guillermo Rocafort Moreno</h3>
-        <p class="role">Director de Desarrollo de Negocio</p>
-        <p><a href="tel:+34669797659">+34 669 797 659</a></p>
-        <p><a href="mailto:Guillermo@TheBrokery.com">Guillermo@TheBrokery.com</a></p>
-      </article>
-    </div>
+    <div class="team-cards" id="teamCards"><!-- Se genera desde EQUIPO (brokery-comun.js) --></div>
   </div>
 </section>
 
@@ -648,6 +340,17 @@ footer a:hover{color:#fff;}
 
 <!-- ================= FOOTER ================= -->
 <footer>
+  <section class="work-with-us" aria-labelledby="wwuTitle">
+    <div class="wwu-box">
+      <span class="wwu-eyebrow">Hablemos</span>
+      <h2 id="wwuTitle">Trabaja con nosotros</h2>
+      <p>Tanto si compras como si vendes, nadie conoce mejor el entorno que The Brokery. Contacta con nosotros y te ayudamos a conseguir tus objetivos inmobiliarios.</p>
+      <a class="btn-pill" href="#" data-wa="Hola, vengo de la web de The Brokery y me gustaría hablar con vosotros.">Contacta con nosotros <span aria-hidden="true"></span></a>
+      <div class="wwu-or"><span>o</span></div>
+      <p class="wwu-alt" data-if-phone hidden>Llámanos al <a data-phone hidden></a></p>
+      <p class="wwu-alt" data-if-nophone>Escríbenos a <a href="mailto:rosa@thebrokery.com" data-brand-email>rosa@thebrokery.com</a></p>
+    </div>
+  </section>
   <div class="wrap">
     <div class="foot-grid">
       <div>
@@ -656,10 +359,11 @@ footer a:hover{color:#fff;}
       </div>
       <div>
         <h4>Explorar</h4>
-        <p><a href="#propiedades">Propiedades</a></p>
-        <p><a href="#servicios">Servicios</a></p>
-        <p><a href="#colecciones">Colecciones</a></p>
-        <p><a href="#informes">Mercado</a></p>
+        <p><a href="propiedades.html">Propiedades</a></p>
+        <p><a href="valoracion.html">Valora tu vivienda</a></p>
+        <p><a href="boutique.html#equipo">Nuestro equipo</a></p>
+        <p><a href="boutique.html#informes">Informes de mercado</a></p>
+        <p><a href="empleo.html">Trabaja en The Brokery</a></p>
       </div>
       <div>
         <h4>Herramientas</h4>
@@ -696,21 +400,8 @@ footer a:hover{color:#fff;}
 </a>
 
 <script src="legal-data.js"></script>
+<script src="brokery-comun.js"></script>
 <script>
-const BRAND = {
-  // BRAND: teléfono general de la agencia (NO un móvil personal). Mientras esté vacío,
-  // no se muestra ningún teléfono y los formularios se envían por email.
-  telefono: '',           // formato visible, p. ej. '+34 910 000 000'
-  whatsapp: '',           // mismo número en formato internacional sin '+' ni espacios, p. ej. '34910000000'
-  email: 'rosa@thebrokery.com',  // destino de los formularios y mensajes mientras no haya WhatsApp
-  // Emails que se muestran en la sección de contacto
-  contactos: [
-    { nombre:'Álvaro Corredor', email:'alvaro@thebrokery.com' },
-    { nombre:'Guillermo Rocafort', email:'guillermo@thebrokery.com' },
-    { nombre:'Rosa Rodríguez', email:'rosa@thebrokery.com' }
-  ]
-};
-
 /* ============================================================
    PROPIEDADES — añade aquí tus propiedades reales.
    Normativa aplicable a cada anuncio:
@@ -749,108 +440,34 @@ const BARRIOS = [
    La sección permanece oculta hasta que añadas al menos uno. */
 const TESTIMONIOS = [];
 
-/* ---------- utilidades ---------- */
-const $ = s => document.querySelector(s);
-const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const pending = v => !v || v.startsWith('[COMPLETAR');
-const show = v => pending(v) ? `<span class="todo">${esc(v || '[COMPLETAR]')}</span>` : esc(v);
-const fmtEUR = n => n.toLocaleString('es-ES', {maximumFractionDigits:0, useGrouping:'always'}) + ' €';
-const waLink = text => BRAND.whatsapp
-  ? `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(text)}`
-  : `mailto:${BRAND.email}?subject=${encodeURIComponent('Contacto desde la web de The Brokery')}&body=${encodeURIComponent(text)}`;
-const CANAL = BRAND.whatsapp ? 'wa' : 'mail';
-const openContact = url => CANAL === 'wa' ? window.open(url, '_blank') : (location.href = url);
-
-/* ---------- teléfono y canal de contacto ---------- */
-document.querySelectorAll('[data-phone]').forEach(a => {
-  if(!BRAND.telefono) return;
-  a.textContent = BRAND.telefono;
-  a.href = 'tel:' + BRAND.telefono.replace(/\s/g, '');
-  a.hidden = false;
-});
-document.querySelectorAll('[data-label-wa]').forEach(el => { el.textContent = el.dataset['label' + (CANAL === 'wa' ? 'Wa' : 'Mail')]; });
-if(BRAND.whatsapp) $('.wa-float').hidden = false;
-const CEE_COLORS = {A:'#00843d',B:'#4cb748',C:'#bfd630',D:'#fff200',E:'#fcb814',F:'#f36e21',G:'#e21a22'};
-
-document.getElementById('year').textContent = new Date().getFullYear();
-$('#footLogo').innerHTML = $('.logo svg').outerHTML;
-
-/* ---------- header ---------- */
-const header = $('header');
-const onScroll = () => header.classList.toggle('solid', window.scrollY > 40 || $('#navLinks').classList.contains('open'));
-window.addEventListener('scroll', onScroll, {passive:true});
-onScroll();
-$('#burger').addEventListener('click', () => {
-  const open = $('#navLinks').classList.toggle('open');
-  $('#burger').setAttribute('aria-expanded', open);
-  onScroll();
-});
-document.querySelectorAll('#navLinks a').forEach(a => a.addEventListener('click', () => { $('#navLinks').classList.remove('open'); onScroll(); }));
-
-/* ---------- datos legales en el pie ---------- */
-$('#legalIdent').innerHTML = `Titular: ${show(LEGAL.titular)} (${show(LEGAL.nombreComercial)}) · NIF: ${show(LEGAL.nif)} · Domicilio social: ${show(LEGAL.domicilio)} · ${show(LEGAL.registroMercantil)} · Email: ${show(LEGAL.email)}${LEGAL.telefono ? ' · Tel.: ' + show(LEGAL.telefono) : ''}`;
-$('#legalRegistro').innerHTML = LEGAL.registroAgentes === '' ? '' : `Registro de Agentes Inmobiliarios: ${show(LEGAL.registroAgentes)} · Seguro de responsabilidad civil: ${show(LEGAL.seguroRC)}`;
-if(!pending(LEGAL.domicilio)) $('#footAddress').textContent = LEGAL.domicilio;
-$('#contactEmail').innerHTML = BRAND.contactos.map(c => `<span class="contact-person">${esc(c.nombre)} · <a href="mailto:${esc(c.email)}">${esc(c.email)}</a></span>`).join('');
-
 /* ---------- propiedades ---------- */
 function renderProps(){
   const grid = $('#propsGrid');
-  const cards = PROPIEDADES.map((p, i) => {
-    const cee = String(p.cee || 'En trámite').toUpperCase();
-    const letra = cee.replace(/\+/g, '');
-    const ceeHtml = CEE_COLORS[letra]
-      ? `<span class="cee">Cal. energética <b style="background:${CEE_COLORS[letra]};color:${'CD'.includes(letra)?'#111':'#fff'};width:auto;min-width:22px;padding:0 4px;">${esc(cee)}</b></span>`
-      : `<span class="cee">Cal. energética: en trámite</span>`;
-    const img = p.foto || (p.fotos && p.fotos[0]);
-    const foto = img ? `background-image:url('${esc(img)}')` : '';
-    const nuevaPestana = CANAL === 'wa' ? ' target="_blank" rel="noopener"' : '';
-    const meta = [
-      p.dormitorios && `${p.dormitorios} dorm.`,
-      p.banos && `${p.banos} baños`,
-      p.m2 && `${p.m2} m² constr.`,
-      p.parcela && `Parcela ${p.parcela} m²`
-    ].filter(Boolean).join('</span><span>');
-    return `<article class="prop${i >= PROPS_VISIBLES ? ' prop-extra' : ''}"${i >= PROPS_VISIBLES ? ' hidden' : ''}>
-      <div class="prop-img" style="${foto}"><span class="prop-badge">${esc(p.operacion || 'Venta')}</span>${ceeHtml}</div>
-      <div class="prop-body">
-        <div class="prop-price">${p.precio ? fmtEUR(p.precio) : 'Precio a consultar'}<small>${p.operacion === 'Alquiler' ? 'al mes' : 'Impuestos y gastos de compraventa no incluidos'}${p.precioAlquiler ? ` · También en alquiler: ${fmtEUR(p.precioAlquiler)}/mes` : ''}</small></div>
-        <div class="prop-title">${esc(p.titulo)}</div>
-        <div style="font-size:14px;color:var(--muted);">${esc(p.zona || '')}${p.ref ? ' · Ref. ' + esc(p.ref) : ''}</div>
-        <div class="prop-meta"><span>${meta}</span></div>
-        <a class="btn btn-line" style="margin-top:14px;" href="${waLink(`Hola, me interesa la propiedad ${p.ref ? 'Ref. ' + p.ref : p.titulo}. ¿Me podéis enviar el Documento Informativo Abreviado y más información?`)}"${nuevaPestana}>Solicitar información</a>
-      </div>
-    </article>`;
-  }).join('');
+  const cards = PROPIEDADES.map((p, i) => tarjetaPropiedad(p, i >= PROPS_VISIBLES ? ' hidden data-extra' : '')).join('');
   const off = `<div class="offmarket">
     <div>
       <span class="eyebrow" style="color:var(--teal);">Cartera privada</span>
       <h3>${PROPIEDADES.length ? 'Hay más propiedades que no anunciamos' : 'Propiedades exclusivas, fuera de mercado'}</h3>
       <p>Muchos de nuestros propietarios prefieren vender con total discreción. Cuéntanos qué buscas y te daremos acceso a la cartera privada que encaje contigo.</p>
     </div>
-    <a class="btn btn-line-light" href="${waLink('Hola, me gustaría acceder a la cartera off-market. Busco: ')}" target="_blank" rel="noopener">Solicitar acceso</a>
+    <a class="btn btn-line-light" href="${waLink('Hola, me gustaría acceder a la cartera off-market. Busco: ')}"${nuevaPestana()}>Solicitar acceso</a>
   </div>`;
   const mas = PROPIEDADES.length > PROPS_VISIBLES
-    ? `<div class="props-more"><button type="button" class="btn btn-dark" id="propsMore">Ver todas las propiedades (${PROPIEDADES.length})</button></div>`
+    ? `<div class="props-more"><a class="btn btn-dark" href="propiedades.html">Ver todas las propiedades (${PROPIEDADES.length})</a></div>`
     : '';
   grid.innerHTML = cards + mas + off;
-  const btn = $('#propsMore');
-  if(btn) btn.addEventListener('click', () => { grid.querySelectorAll('.prop-extra').forEach(el => el.hidden = false); btn.parentElement.remove(); });
 }
 const PROPS_VISIBLES = 6;
 renderProps();
 
 /* Propiedades de Inmovilla: las genera cada día la tarea de GitHub
    .github/workflows/propiedades-inmovilla.yml a partir del XML de la agencia. */
-fetch('propiedades.json', {cache: 'no-cache'})
-  .then(r => r.ok ? r.json() : [])
-  .then(lista => { if(Array.isArray(lista) && lista.length){ PROPIEDADES.push(...lista); renderProps(); } })
-  .catch(() => {});
+cargarPropiedades().then(lista => { if(lista.length){ PROPIEDADES.push(...lista); renderProps(); } });
 
 /* ---------- barrios ---------- */
 if(BARRIOS.length){
   $('#barrios').hidden = false;
-  $('#barriosGrid').innerHTML = BARRIOS.map(b => `<a class="barrio" href="${waLink(`Hola, me interesa ${b.nombre}. ¿Qué propiedades tenéis en la zona?`)}" target="_blank" rel="noopener" style="${b.foto ? `background-image:url('${esc(b.foto)}'),linear-gradient(160deg,#5b5b5b,#231f20)` : ''}">${b.ia ? '<span class="img-note">Imagen ilustrativa generada con IA</span>' : ''}<h3>${esc(b.nombre)}</h3><p>${esc(b.texto || '')}</p></a>`).join('');
+  $('#barriosGrid').innerHTML = BARRIOS.map(b => `<a class="barrio" href="${waLink(`Hola, me interesa ${b.nombre}. ¿Qué propiedades tenéis en la zona?`)}"${nuevaPestana()} style="${b.foto ? `background-image:url('${esc(b.foto)}'),linear-gradient(160deg,#5b5b5b,#231f20)` : ''}">${b.ia ? '<span class="img-note">Imagen ilustrativa generada con IA</span>' : ''}<h3>${esc(b.nombre)}</h3><p>${esc(b.texto || '')}</p></a>`).join('');
   // Si una foto aún no está subida, la tarjeta se queda con el fondo gris y sin etiqueta de IA.
   document.querySelectorAll('#barriosGrid .barrio').forEach((card, i) => {
     const b = BARRIOS[i];
@@ -863,6 +480,9 @@ if(BARRIOS.length){
   document.querySelectorAll('[data-if-barrios]').forEach(a => a.remove());
 }
 
+/* ---------- equipo ---------- */
+$('#teamCards').innerHTML = EQUIPO.map(tarjetaEquipo).join('');
+
 /* ---------- testimonios ---------- */
 if(TESTIMONIOS.length){
   $('#testimonios').hidden = false;
@@ -870,59 +490,19 @@ if(TESTIMONIOS.length){
   $('#testiGrid').innerHTML = TESTIMONIOS.map(t => `<div class="testi"><p>“${esc(t.texto)}”</p><div class="who">${esc(t.autor)}${t.operacion ? ' · ' + esc(t.operacion) : ''}</div></div>`).join('');
 }
 
-/* ---------- enlaces a WhatsApp ---------- */
-document.querySelectorAll('[data-wa]').forEach(a => {
-  a.href = waLink(a.dataset.wa);
-  if(CANAL === 'wa'){ a.target = '_blank'; a.rel = 'noopener'; } else a.removeAttribute('target');
-  a.addEventListener('click', () => trackMeta('Contact'));
-});
-if(CANAL === 'mail') document.querySelectorAll('a[href^="mailto:"][target]').forEach(a => a.removeAttribute('target'));
 document.querySelectorAll('[data-interest]').forEach(a => a.addEventListener('click', () => { $('#cInteres').value = a.dataset.interest; }));
 
-/* ---------- formularios ---------- */
-function validate(form){
-  const msg = form.querySelector('.form-msg');
-  for(const el of form.querySelectorAll('[required]')){
-    const bad = el.type === 'checkbox' ? !el.checked : !el.value.trim() || (el.type === 'email' && !el.checkValidity());
-    if(bad){
-      msg.textContent = el.type === 'checkbox'
-        ? 'Para continuar debes aceptar la Política de Privacidad.'
-        : 'Revisa los campos obligatorios (*).';
-      el.focus();
-      return false;
-    }
-  }
-  msg.textContent = '';
-  return true;
-}
-function sendForm(form, titulo){
-  if(!validate(form)) return;
-  const lines = [`*${titulo}*`];
-  for(const [k, v] of new FormData(form).entries()){
-    if(k === 'privacidad') continue;
-    if(k === 'comercial') continue;
-    if(v && String(v).trim()) lines.push(`${k}: ${v}`);
-  }
-  lines.push('Política de privacidad: aceptada');
-  lines.push(`Comunicaciones comerciales: ${form.comercial.checked ? 'sí' : 'no'}`);
-  openContact(waLink(lines.join('\n')));
-  trackMeta('Lead', {content_name: titulo});
-  form.querySelector('.form-msg').textContent = (CANAL === 'wa' ? 'Se ha abierto WhatsApp' : 'Se ha abierto tu correo') + ' con tu mensaje. ¡Gracias!';
-}
 $('#contactForm').addEventListener('submit', e => { e.preventDefault(); sendForm(e.target, 'Contacto web'); });
 $('#reportForm').addEventListener('submit', e => { e.preventDefault(); sendForm(e.target, 'Solicitud de informe de mercado'); });
 $('#searchForm').addEventListener('submit', e => {
   e.preventDefault();
   const d = new FormData(e.target);
-  const partes = [...d.entries()].filter(([, v]) => v && v.trim()).map(([k, v]) => `${k}: ${v}`);
-  openContact(waLink(`Hola, estoy buscando una propiedad.\n${partes.join('\n')}`));
-  trackMeta('Lead', {content_name: 'Buscador'});
+  if(d.get('operacion') === 'vender'){ location.href = 'valoracion.html'; return; }
+  const q = new URLSearchParams();
+  for(const [k, v] of d.entries()) if(v && String(v).trim()) q.set(k, String(v).trim());
+  location.href = 'propiedades.html?' + q.toString();
 });
 
-function trackMeta(event, params){
-  // fbq solo existe si el visitante aceptó las cookies de marketing (ver cookie-consent.js).
-  if(typeof fbq === 'function') fbq('track', event, params || {});
-}
 </script>
 <script src="cookie-consent.js"></script>
 </body>
