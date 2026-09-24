@@ -754,7 +754,7 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pending = v => !v || v.startsWith('[COMPLETAR');
 const show = v => pending(v) ? `<span class="todo">${esc(v || '[COMPLETAR]')}</span>` : esc(v);
-const fmtEUR = n => n.toLocaleString('es-ES', {maximumFractionDigits:0}) + ' €';
+const fmtEUR = n => n.toLocaleString('es-ES', {maximumFractionDigits:0, useGrouping:'always'}) + ' €';
 const waLink = text => BRAND.whatsapp
   ? `https://wa.me/${BRAND.whatsapp}?text=${encodeURIComponent(text)}`
   : `mailto:${BRAND.email}?subject=${encodeURIComponent('Contacto desde la web de The Brokery')}&body=${encodeURIComponent(text)}`;
