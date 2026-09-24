@@ -7,9 +7,9 @@
    ============================================================ */
 window.LEGAL = {
   // Denominación social exacta, como figura en las escrituras (p. ej. 'Rosa Rodríguez Inmobiliaria, S.L.').
-  titular: '[COMPLETAR denominación social de la S.L.]',
+  titular: 'ROCOBORT, S.L.',
   // NIF de la sociedad (antiguo CIF). En una S.L. empieza por B.
-  nif: '[COMPLETAR NIF de la sociedad]',
+  nif: 'B88790894',
   // Datos de inscripción en el Registro Mercantil (art. 10.1.b LSSI-CE).
   // Formato habitual: 'Registro Mercantil de Madrid, tomo X, folio Y, hoja M-Z'.
   registroMercantil: '[COMPLETAR Registro Mercantil de …, tomo …, folio …, hoja …]',
