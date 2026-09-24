@@ -133,6 +133,7 @@ header.solid .burger{color:var(--ink);}
 .prop-price small{display:block;font-family:var(--sans);font-size:11.5px;color:var(--muted);margin-top:2px;}
 .prop-title{font-size:15px;color:var(--ink);font-weight:600;}
 .prop-meta{display:flex;gap:18px;font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:14px;margin-top:auto;flex-wrap:wrap;}
+.props-more{grid-column:1/-1;text-align:center;}
 .offmarket{grid-column:1/-1;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;background:var(--black);color:#fff;padding:56px 60px;}
 .offmarket h3{color:#fff;font-size:clamp(26px,3vw,36px);margin-bottom:10px;}
 .offmarket p{opacity:.8;max-width:640px;}
@@ -795,26 +796,29 @@ $('#contactEmail').innerHTML = BRAND.contactos.map(c => `<span class="contact-pe
 /* ---------- propiedades ---------- */
 function renderProps(){
   const grid = $('#propsGrid');
-  const cards = PROPIEDADES.map(p => {
+  const cards = PROPIEDADES.map((p, i) => {
     const cee = String(p.cee || 'En trámite').toUpperCase();
-    const ceeHtml = CEE_COLORS[cee]
-      ? `<span class="cee">Cal. energética <b style="background:${CEE_COLORS[cee]};color:${'CD'.includes(cee)?'#111':'#fff'}">${cee}</b></span>`
+    const letra = cee.replace(/\+/g, '');
+    const ceeHtml = CEE_COLORS[letra]
+      ? `<span class="cee">Cal. energética <b style="background:${CEE_COLORS[letra]};color:${'CD'.includes(letra)?'#111':'#fff'};width:auto;min-width:22px;padding:0 4px;">${esc(cee)}</b></span>`
       : `<span class="cee">Cal. energética: en trámite</span>`;
-    const foto = p.foto ? `background-image:url('${esc(p.foto)}')` : '';
+    const img = p.foto || (p.fotos && p.fotos[0]);
+    const foto = img ? `background-image:url('${esc(img)}')` : '';
+    const nuevaPestana = CANAL === 'wa' ? ' target="_blank" rel="noopener"' : '';
     const meta = [
       p.dormitorios && `${p.dormitorios} dorm.`,
       p.banos && `${p.banos} baños`,
       p.m2 && `${p.m2} m² constr.`,
       p.parcela && `Parcela ${p.parcela} m²`
     ].filter(Boolean).join('</span><span>');
-    return `<article class="prop">
+    return `<article class="prop${i >= PROPS_VISIBLES ? ' prop-extra' : ''}"${i >= PROPS_VISIBLES ? ' hidden' : ''}>
       <div class="prop-img" style="${foto}"><span class="prop-badge">${esc(p.operacion || 'Venta')}</span>${ceeHtml}</div>
       <div class="prop-body">
-        <div class="prop-price">${p.precio ? fmtEUR(p.precio) : 'Precio a consultar'}<small>${p.operacion === 'Alquiler' ? 'al mes' : 'Impuestos y gastos de compraventa no incluidos'}</small></div>
+        <div class="prop-price">${p.precio ? fmtEUR(p.precio) : 'Precio a consultar'}<small>${p.operacion === 'Alquiler' ? 'al mes' : 'Impuestos y gastos de compraventa no incluidos'}${p.precioAlquiler ? ` · También en alquiler: ${fmtEUR(p.precioAlquiler)}/mes` : ''}</small></div>
         <div class="prop-title">${esc(p.titulo)}</div>
         <div style="font-size:14px;color:var(--muted);">${esc(p.zona || '')}${p.ref ? ' · Ref. ' + esc(p.ref) : ''}</div>
         <div class="prop-meta"><span>${meta}</span></div>
-        <a class="btn btn-line" style="margin-top:14px;" href="${waLink(`Hola, me interesa la propiedad ${p.ref ? 'Ref. ' + p.ref : p.titulo}. ¿Me podéis enviar el Documento Informativo Abreviado y más información?`)}" target="_blank" rel="noopener">Solicitar información</a>
+        <a class="btn btn-line" style="margin-top:14px;" href="${waLink(`Hola, me interesa la propiedad ${p.ref ? 'Ref. ' + p.ref : p.titulo}. ¿Me podéis enviar el Documento Informativo Abreviado y más información?`)}"${nuevaPestana}>Solicitar información</a>
       </div>
     </article>`;
   }).join('');
@@ -826,9 +830,22 @@ function renderProps(){
     </div>
     <a class="btn btn-line-light" href="${waLink('Hola, me gustaría acceder a la cartera off-market. Busco: ')}" target="_blank" rel="noopener">Solicitar acceso</a>
   </div>`;
-  grid.innerHTML = cards + off;
+  const mas = PROPIEDADES.length > PROPS_VISIBLES
+    ? `<div class="props-more"><button type="button" class="btn btn-dark" id="propsMore">Ver todas las propiedades (${PROPIEDADES.length})</button></div>`
+    : '';
+  grid.innerHTML = cards + mas + off;
+  const btn = $('#propsMore');
+  if(btn) btn.addEventListener('click', () => { grid.querySelectorAll('.prop-extra').forEach(el => el.hidden = false); btn.parentElement.remove(); });
 }
+const PROPS_VISIBLES = 6;
 renderProps();
+
+/* Propiedades de Inmovilla: las genera cada día la tarea de GitHub
+   .github/workflows/propiedades-inmovilla.yml a partir del XML de la agencia. */
+fetch('propiedades.json', {cache: 'no-cache'})
+  .then(r => r.ok ? r.json() : [])
+  .then(lista => { if(Array.isArray(lista) && lista.length){ PROPIEDADES.push(...lista); renderProps(); } })
+  .catch(() => {});
 
 /* ---------- barrios ---------- */
 if(BARRIOS.length){

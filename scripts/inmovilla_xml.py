@@ -67,9 +67,21 @@ def main():
     if not URL:
         sys.exit('Falta la variable INMOVILLA_XML_URL')
     with urllib.request.urlopen(URL, timeout=120) as r:
-        raiz = ET.fromstring(r.read())
-    props = [convertir(p) for p in raiz.findall('propiedad')]
+        datos = r.read()
+    print(f'XML descargado: {len(datos)} bytes')
+    raiz = ET.fromstring(datos)
+    print(f'Raíz <{raiz.tag}> con {len(raiz)} elementos:', sorted({c.tag for c in raiz})[:10])
+    props = [convertir(p) for p in raiz.iter('propiedad')]
     props = [p for p in props if p['ref']]
+    if not props:
+        print('Inicio del XML:', datos[:800].decode('utf-8', 'replace'))
+        # No borrar las propiedades publicadas si el XML llega vacío por un fallo puntual.
+        if os.path.exists(SALIDA):
+            try:
+                if json.load(open(SALIDA, encoding='utf-8')):
+                    sys.exit('El XML no trae propiedades; se mantienen las publicadas.')
+            except ValueError:
+                pass
     props.sort(key=lambda p: (not p['destacado'], -(p['precio'] or 0)))
     with open(SALIDA, 'w', encoding='utf-8') as f:
         json.dump(props, f, ensure_ascii=False, indent=1)
