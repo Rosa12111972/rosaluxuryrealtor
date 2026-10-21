@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Herramienta interna: no debe aparecer en buscadores ni enlazarse desde la web pública. -->
 <meta name="robots" content="noindex, nofollow">
-<title>Máquina de Leads | Rosa Rodríguez</title>
+<title>Máquina de Leads</title>
 <style>
 /* ============================================================
    MÁQUINA DE LEADS — herramienta interna de captación.
@@ -24,6 +24,9 @@
   --hot:#b3261e;
   --warm:#c77700;
   --cold:#5b6b7a;
+  --warn:#7a5b00;
+  --on-ink:#ffffff;
+  --on-accent:#ffffff;
   --font-serif:'Georgia','Times New Roman',serif;
   --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
 }
@@ -40,20 +43,20 @@ h2{font-size:22px; margin-bottom:6px;}
 .sub{color:var(--ev-gray); font-size:14px; margin-bottom:18px;}
 .tabs{display:flex; gap:4px; flex-wrap:wrap;}
 .tab{background:none; border:1px solid var(--ev-border); padding:9px 14px; font-size:13px; cursor:pointer; border-radius:2px; color:var(--ev-text);}
-.tab.active{background:var(--ev-black); color:#fff; border-color:var(--ev-black);}
+.tab.active{background:var(--ev-black); color:var(--on-ink); border-color:var(--ev-black);}
 main{padding:28px 0 60px;}
 .panel{display:none;}
 .panel.active{display:block;}
 .card{background:var(--ev-white); border:1px solid var(--ev-border); border-radius:10px; padding:20px; margin-bottom:18px;}
 .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
 label{display:block; font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--ev-gray); margin-bottom:4px; font-weight:600;}
-input,select,textarea{width:100%; padding:10px; border:1px solid var(--ev-border); border-radius:4px; font:inherit; font-size:14px; background:#fff; color:var(--ev-text);}
+input,select,textarea{width:100%; padding:10px; border:1px solid var(--ev-border); border-radius:4px; font:inherit; font-size:14px; background:var(--ev-white); color:var(--ev-text);}
 textarea{min-height:120px; resize:vertical;}
 .btn{display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border-radius:2px; font-size:13px; letter-spacing:.5px; text-transform:uppercase; font-weight:600; cursor:pointer; border:1px solid transparent; text-decoration:none;}
-.btn-primary{background:var(--ev-black); color:#fff;}
-.btn-accent{background:var(--ev-accent); color:#fff;}
+.btn-primary{background:var(--ev-black); color:var(--on-ink);}
+.btn-accent{background:var(--ev-accent); color:var(--on-accent);}
 .btn-outline{background:transparent; border-color:var(--ev-black); color:var(--ev-black);}
-.btn-wa{background:#25D366; color:#fff;}
+.btn-wa{background:#25D366; color:#0b2e17;}
 .btn-sm{padding:6px 10px; font-size:11px;}
 .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:12px;}
 .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:18px;}
@@ -61,7 +64,7 @@ textarea{min-height:120px; resize:vertical;}
 .stat b{display:block; font-family:var(--font-serif); font-size:28px; font-weight:400; color:var(--ev-black);}
 .stat span{font-size:12px; color:var(--ev-gray); text-transform:uppercase; letter-spacing:1px;}
 .links{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin-top:14px;}
-.links a{display:block; padding:12px; border:1px solid var(--ev-border); border-radius:6px; background:#fff; text-decoration:none; color:var(--ev-text); font-size:14px;}
+.links a{display:block; padding:12px; border:1px solid var(--ev-border); border-radius:6px; background:var(--ev-white); text-decoration:none; color:var(--ev-text); font-size:14px;}
 .links a:hover{border-color:var(--ev-accent);}
 .links a b{display:block; color:var(--ev-black);}
 .links a small{color:var(--ev-gray);}
@@ -71,25 +74,25 @@ textarea{min-height:120px; resize:vertical;}
 .lead-top{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;}
 .lead h3{font-size:17px; color:var(--ev-black);}
 .meta{font-size:13px; color:var(--ev-gray);}
-.badge{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; padding:3px 8px; border-radius:20px; background:#eee; color:#333; margin-right:4px;}
-.badge.hot{background:#fbe9e7; color:var(--hot);}
-.badge.warm{background:#fff4e0; color:var(--warm);}
-.badge.cold{background:#eef1f4; color:var(--cold);}
-.badge.warn{background:#fff3cd; color:#7a5b00;}
+.badge{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; padding:3px 8px; border-radius:20px; background:rgba(127,127,127,.15); color:var(--ev-text); margin-right:4px;}
+.badge.hot{background:rgba(229,57,53,.13); color:var(--hot);}
+.badge.warm{background:rgba(255,152,0,.14); color:var(--warm);}
+.badge.cold{background:rgba(96,125,139,.15); color:var(--cold);}
+.badge.warn{background:rgba(255,193,7,.2); color:var(--warn);}
 .signals{font-size:12px; color:var(--ev-gray); margin-top:6px;}
 .lead-actions{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; align-items:center;}
 .lead-actions select{width:auto; padding:6px; font-size:12px;}
 .filters{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:14px;}
-.notice{background:#eef5f1; border:1px solid #cfe3d8; border-radius:8px; padding:14px; font-size:13px; margin-bottom:18px;}
+.notice{background:rgba(46,139,87,.09); border:1px solid rgba(46,139,87,.3); border-radius:8px; padding:14px; font-size:13px; margin-bottom:18px;}
 .notice b{color:var(--ev-accent);}
 .empty{text-align:center; color:var(--ev-gray); padding:40px 0;}
-dialog{border:none; border-radius:10px; padding:22px; width:min(640px,calc(100% - 32px)); max-height:90vh;}
+dialog{background:var(--ev-white); color:var(--ev-text); border:none; border-radius:10px; padding:22px; width:min(640px,calc(100% - 32px)); max-height:90vh;}
 dialog::backdrop{background:rgba(0,0,0,.4);}
-.toast{position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--ev-black); color:#fff; padding:10px 18px; border-radius:4px; font-size:14px; opacity:0; transition:opacity .2s; pointer-events:none;}
+.toast{position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--ev-black); color:var(--on-ink); padding:10px 18px; border-radius:4px; font-size:14px; opacity:0; transition:opacity .2s; pointer-events:none;}
 .toast.show{opacity:1;}
-.badge.qA{background:#e3f1e9; color:var(--ev-accent);}
-.badge.qB{background:#fff4e0; color:var(--warm);}
-.badge.qC{background:#eef1f4; color:var(--cold);}
+.badge.qA{background:rgba(46,139,87,.15); color:var(--ev-accent);}
+.badge.qB{background:rgba(255,152,0,.14); color:var(--warm);}
+.badge.qC{background:rgba(96,125,139,.15); color:var(--cold);}
 .guide{padding-left:20px; margin-top:10px; font-size:14px;}
 .guide li{margin-bottom:8px;}
 .checklist{list-style:'☐  ';}
@@ -103,6 +106,18 @@ dialog::backdrop{background:rgba(0,0,0,.4);}
 .agenda-group{font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--ev-gray); font-weight:600; margin:18px 0 8px;}
 .plan h3{font-size:16px; margin-top:14px;}
 @media (max-width:600px){ .tab{flex:1 1 45%;} }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ev-black:#f2f2ef; --ev-accent:#5fbf8f; --ev-text:#d9dcd9; --ev-white:#1c1f1d; --ev-gray:#9aa19c;
+    --ev-bg:#121413; --ev-border:#2e3330; --hot:#ff8a80; --warm:#ffb74d; --cold:#a9b8c6; --warn:#ffd54f;
+    --on-ink:#111111; --on-accent:#0b1a12; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ev-black:#f2f2ef; --ev-accent:#5fbf8f; --ev-text:#d9dcd9; --ev-white:#1c1f1d; --ev-gray:#9aa19c;
+  --ev-bg:#121413; --ev-border:#2e3330; --hot:#ff8a80; --warm:#ffb74d; --cold:#a9b8c6; --warn:#ffd54f;
+  --on-ink:#111111; --on-accent:#0b1a12; color-scheme:dark;
+}
 </style>
 </head>
 <body>
@@ -205,6 +220,7 @@ dialog::backdrop{background:rgba(0,0,0,.4);}
       <div><label for="fTemp">Temperatura</label><select id="fTemp"><option value="">Todas</option><option value="hot">Caliente</option><option value="warm">Templado</option><option value="cold">Frío</option></select></div>
       <div><label for="fEstado">Estado</label><select id="fEstado"><option value="">Todos</option></select></div>
       <div><label for="fOperacion">Operación</label><select id="fOperacion"><option value="">Todas</option><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select></div>
+      <div><label for="fSegmento">Segmento</label><select id="fSegmento"><option value="">Todos</option><option value="sin">Anuncios «sin agencias»</option><option value="resto">Resto</option></select></div>
       <div><label for="fCalidad">Calidad exclusiva</label><select id="fCalidad"><option value="">Todas</option><option value="A">A · Firmar ya</option><option value="B">B · Trabajar</option><option value="C">C · No exclusiva</option><option value="-">Sin cualificar</option></select></div>
       <div><label for="fOrden">Ordenar por</label><select id="fOrden"><option value="score">Intención</option><option value="calidad">Calidad exclusiva</option><option value="seguimiento">Próximo seguimiento</option><option value="reciente">Más reciente</option></select></div>
     </div>
@@ -256,6 +272,8 @@ dialog::backdrop{background:rgba(0,0,0,.4);}
       <dl class="objections">
         <dt>«No quiero exclusiva, prefiero varias agencias»</dt>
         <dd>Con varias agencias, el piso aparece repetido con precios y fotos distintas: el comprador lo percibe como un piso que «no se vende» y negocia a la baja. En exclusiva tienes un único responsable que invierte en marketing, filtra a los compradores y te rinde cuentas cada semana.</dd>
+        <dt>«Abstenerse agencias» en el anuncio</dt>
+        <dd>La mayoría acaba trabajando con agencia: lo que rechazan es la llamada insistente, no la ayuda. Espera a que el anuncio lleve unas 3 semanas, haz un único contacto ofreciendo algo útil (informe de precios vendidos, un comprador real) sin mencionar la exclusiva, y deja que sea el propietario quien pida más. La exclusiva llega en la visita, cuando ya confía en ti.</dd>
         <dt>«Lo vendo yo solo, sin comisión»</dt>
         <dd>Perfecto, y si en X semanas no lo consigues, aquí estoy. Mientras tanto: ¿cómo filtras a los curiosos, verificas la financiación del comprador y negocias sin implicarte emocionalmente? La diferencia de precio negociado suele pagar los honorarios.</dd>
         <dt>«La comisión es muy alta»</dt>
@@ -294,6 +312,7 @@ dialog::backdrop{background:rgba(0,0,0,.4);}
       </div>
       <div style="margin-top:12px"><label>Mensaje de WhatsApp · venta</label><textarea name="msgVenta"></textarea></div>
       <div style="margin-top:12px"><label>Mensaje de WhatsApp · alquiler</label><textarea name="msgAlquiler"></textarea></div>
+      <div style="margin-top:12px"><label>Mensaje de WhatsApp · anuncios «sin agencias»</label><textarea name="msgSinAgencias"></textarea></div>
       <p class="meta" style="margin-top:6px">Variables: {nombre} {agente} {agencia} {tipo} {zona} {precio} {fuente}</p>
       <div style="margin-top:12px"><label>Mensaje · propuesta de exclusiva</label><textarea name="msgExclusiva"></textarea></div>
       <p class="meta" style="margin-top:6px">Variables adicionales: {precioRecomendado} {plazo}</p>
@@ -306,7 +325,7 @@ dialog::backdrop{background:rgba(0,0,0,.4);}
     </form>
 
     <div class="notice">
-      <b>Protección de datos (RGPD / LOPDGDD):</b> solo se tratan datos que el propietario ha publicado en su anuncio, con la finalidad de ofrecerle servicios de intermediación (interés legítimo, art. 6.1.f RGPD). En el primer contacto identifícate, explica de dónde has obtenido su teléfono y ofrécele no volver a contactarle. Si lo pide, pulsa «No contactar»: su teléfono se añade a la lista de exclusión y no podrá volver a importarse. Respeta los anuncios que indican «abstenerse agencias». No hagas llamadas comerciales automatizadas ni envíos masivos. Elimina los leads descartados que ya no necesites.
+      <b>Protección de datos (RGPD / LOPDGDD):</b> solo se tratan datos que el propietario ha publicado en su anuncio, con la finalidad de ofrecerle servicios de intermediación (interés legítimo, art. 6.1.f RGPD). En el primer contacto identifícate, explica de dónde has obtenido su teléfono y ofrécele no volver a contactarle. Si lo pide, pulsa «No contactar»: su teléfono se añade a la lista de exclusión y no podrá volver a importarse. Con los anuncios que indican «abstenerse agencias», haz un único contacto respetuoso que aporte valor, sin insistir; si responde que no, márcalo como «No contactar». No hagas llamadas comerciales automatizadas ni envíos masivos. Elimina los leads descartados que ya no necesites.
     </div>
 
     <div class="card">
@@ -398,6 +417,7 @@ const DEFAULT_SETTINGS = {
   agencia: 'The Brokery',
   msgVenta: 'Hola{nombre}, soy {agente}, agente inmobiliaria de {agencia}. He visto en {fuente} tu anuncio de {tipo} en {zona}. Trabajo con compradores que buscan justo en esa zona y me gustaría comentarte cómo podría ayudarte a vender más rápido y al mejor precio, sin compromiso. Si prefieres que no vuelva a escribirte, dímelo y no te molestaré más.',
   msgAlquiler: 'Hola{nombre}, soy {agente}, agente inmobiliaria de {agencia}. He visto en {fuente} tu anuncio de alquiler de {tipo} en {zona}. Puedo ayudarte a encontrar inquilinos solventes y verificados, con contrato y garantías. ¿Te interesa que lo hablemos? Si prefieres que no vuelva a escribirte, dímelo y no te molestaré más.',
+  msgSinAgencias: 'Hola{nombre}, soy {agente}, de {agencia}. He visto tu anuncio de {tipo} en {zona} y sé que prefieres venderlo sin agencias: lo respeto y no te voy a pedir que firmes nada. Solo quería ofrecerte, gratis y sin compromiso, un informe con los precios reales a los que se han vendido viviendas parecidas en tu zona, por si te sirve para negociar. Si no te interesa, dímelo y no vuelvo a escribirte.',
   msgExclusiva: 'Hola{nombre}, gracias de nuevo por enseñarme tu {tipo} de {zona}. Como te comenté, mi recomendación es salir a {precioRecomendado} con un plan en exclusiva de {plazo}: reportaje profesional, difusión destacada en portales y redes, base de compradores cualificados, informe semanal de visitas y gestión completa hasta la notaría. ¿Te viene bien que lo revisemos juntos esta semana?',
   preciosZona: '',
   apiKey: '',
@@ -646,7 +666,7 @@ function fillForm(data){
 function updatePreview(){
   const r = scoreLead(formData());
   $('#scorePreview').innerHTML = `Intención: <span class="badge ${r.temp}">${TEMP_LABEL[r.temp]} · ${r.score}</span>` +
-    (r.noAgencias ? ' <span class="badge warn">Pide no agencias</span>' : '');
+    (r.noAgencias ? ' <span class="badge warn">Sin agencias · enfoque especial</span>' : '');
 }
 
 function addLead(data, { silent } = {}){
@@ -718,7 +738,9 @@ function fillTpl(tpl, l){
 const waUrl = (l, msg) => `https://wa.me/34${normPhone(l.telefono)}?text=${encodeURIComponent(msg)}`;
 function waLink(l){
   const s = state.settings;
-  return waUrl(l, fillTpl(l.operacion === 'alquiler' ? s.msgAlquiler : s.msgVenta, l));
+  // «Abstenerse agencias» no es un no definitivo: se aborda ofreciendo valor, no captación directa.
+  const tpl = scoreLead(l).noAgencias ? s.msgSinAgencias : l.operacion === 'alquiler' ? s.msgAlquiler : s.msgVenta;
+  return waUrl(l, fillTpl(tpl, l));
 }
 
 function renderStats(){
@@ -741,12 +763,13 @@ function renderLeads(){
   renderStats();
   const txt = $('#fTexto').value.toLowerCase();
   const temp = $('#fTemp').value, est = $('#fEstado').value, op = $('#fOperacion').value, orden = $('#fOrden').value;
-  const cal = $('#fCalidad').value;
+  const cal = $('#fCalidad').value, seg = $('#fSegmento').value;
 
   let list = state.leads.map(l => ({ l, r: scoreLead(l), q: qualityLead(l) })).filter(({ l, r, q }) =>
     (!txt || [l.nombre, l.zona, l.telefono, l.tipo, l.descripcion].join(' ').toLowerCase().includes(txt)) &&
     (!temp || r.temp === temp) && (!est || l.estado === est) && (!op || l.operacion === op) &&
-    (!cal || (cal === '-' ? !q : q && q.grade === cal))
+    (!cal || (cal === '-' ? !q : q && q.grade === cal)) &&
+    (!seg || (seg === 'sin') === r.noAgencias)
   );
   list.sort((a, b) =>
     orden === 'calidad' ? ((b.q ? b.q.score : -1) - (a.q ? a.q.score : -1)) || (b.r.score - a.r.score) :
@@ -764,7 +787,8 @@ function renderLeads(){
     const gap = priceGap(l);
     const due = l.seguimiento && l.seguimiento <= today();
     const blocked = l.estado === 'No contactar';
-    const canWa = normPhone(l.telefono) && !blocked && !r.noAgencias;
+    const canWa = normPhone(l.telefono) && !blocked;
+    const esperar = r.noAgencias && l.publicado && addDays(l.publicado, 21) > today() ? addDays(l.publicado, 21) : '';
     return `
     <article class="lead ${r.temp}">
       <div class="lead-top">
@@ -783,10 +807,11 @@ function renderLeads(){
           ${q ? `<span class="badge q${q.grade}">Exclusiva ${QUAL_LABEL[q.grade]}</span>` : '<span class="badge">Sin cualificar</span>'}
           <span class="badge">${esc(l.estado)}</span>
           ${gap && gap.pct > 10 ? `<span class="badge warn">+${gap.pct}% sobre mercado</span>` : ''}
-          ${r.noAgencias ? '<span class="badge warn">Pide no agencias</span>' : ''}
+          ${r.noAgencias ? '<span class="badge warn">Sin agencias</span>' : ''}
           ${due ? '<span class="badge hot">Seguimiento pendiente</span>' : ''}
         </div>
       </div>
+      ${r.noAgencias ? `<div class="signals"><b>Anuncio «sin agencias»:</b> ${esperar ? `mejor contactar a partir del ${esc(fmtFecha(esperar))}, cuando lleve 3 semanas sin vender. ` : ''}Ofrece valor (informe de precios, comprador), no la exclusiva en el primer mensaje.</div>` : ''}
       ${r.signals.length ? `<div class="signals">Señales: ${r.signals.map(esc).join(' · ')}</div>` : ''}
       ${l.notas && l.notas.length ? `<div class="signals">Última nota (${esc(l.notas[l.notas.length - 1].fecha)}): ${esc(l.notas[l.notas.length - 1].texto)}</div>` : ''}
       <div class="lead-actions">
@@ -925,6 +950,7 @@ async function aiPlan(l, v){
     nombre: l.nombre, anuncio: (l.descripcion || '').slice(0, 1500),
     señalesIntencion: scoreLead(l).signals, cualificacion: l.cualif || null, calidadExclusiva: qualityLead(l),
     notas: (l.notas || []).map(x => `${x.fecha}: ${x.texto}`),
+    anuncioSinAgencias: scoreLead(l).noAgencias,
     visita: { fecha: v.fecha, fechaLegible: fmtFecha(v.fecha), hora: v.hora, duracionMin: v.duracion, direccion: v.direccion },
     contexto: v.contexto
   };
@@ -936,7 +962,7 @@ async function aiPlan(l, v){
     output_config: { effort: 'medium' },
     system: `Eres el asistente de seguimiento de ${s.agente}, agente inmobiliaria de ${s.agencia} en España. Preparas la visita de valoración a un propietario particular y redactas la secuencia de mensajes de WhatsApp que ${s.agente} enviará para convertirla en una exclusiva de calidad (precio de mercado, propietario motivado, plazo, todos los titulares de acuerdo).
 
-Escribe en español de España, en primera persona como ${s.agente}, con tono cercano y profesional, sin presionar. Cada mensaje: máximo 600 caracteres, sin emojis en exceso. Personaliza con la ficha (motivo, plazo, dudas, notas). No inventes cifras, comparables ni datos que no estén en la ficha; si hace falta un dato, deja que ${s.agente} lo aporte en la visita. Si la calidad de exclusiva es B o C, orienta los mensajes a resolver lo que falla (precio, titulares, otras agencias) en vez de forzar la exclusiva.
+Escribe en español de España, en primera persona como ${s.agente}, con tono cercano y profesional, sin presionar. Cada mensaje: máximo 600 caracteres, sin emojis en exceso. Personaliza con la ficha (motivo, plazo, dudas, notas). No inventes cifras, comparables ni datos que no estén en la ficha; si hace falta un dato, deja que ${s.agente} lo aporte en la visita. Si la calidad de exclusiva es B o C, orienta los mensajes a resolver lo que falla (precio, titulares, otras agencias) en vez de forzar la exclusiva. Si anuncioSinAgencias es true, el propietario empezó queriendo vender sin agencias: valida esa decisión, gana su confianza con datos y servicio, y presenta la exclusiva como la forma de conseguir lo que él quiere (precio, rapidez, tranquilidad), nunca como una corrección.
 
 Responde solo con un objeto JSON, sin texto alrededor, con esta forma:
 {"resumen": "objetivo y estrategia de la visita en 2-3 frases",
@@ -1126,7 +1152,7 @@ $('#csvFile').addEventListener('change', e => {
   });
 });
 
-['#fTexto', '#fTemp', '#fEstado', '#fOperacion', '#fCalidad', '#fOrden'].forEach(s => $(s).addEventListener('input', renderLeads));
+['#fTexto', '#fTemp', '#fEstado', '#fOperacion', '#fCalidad', '#fSegmento', '#fOrden'].forEach(s => $(s).addEventListener('input', renderLeads));
 $('#fEstado').innerHTML += ESTADOS.filter(e => e !== 'No contactar').map(e => `<option>${e}</option>`).join('');
 
 $('#leadList').addEventListener('click', e => {
