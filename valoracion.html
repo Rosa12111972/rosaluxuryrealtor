@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cuánto vale tu casa? Valoración gratuita | Rosa Rodríguez</title>
+<meta name="description" content="Descubre en 1 minuto cuánto vale tu vivienda en venta o cuánto puedes cobrar de alquiler. Valoración gratuita y sin compromiso.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23004225%22 font-family=%22Georgia,serif%22>R</text></svg>">
+<meta property="og:type" content="website">
+<meta property="og:title" content="¿Cuánto vale tu casa? Valoración gratuita">
+<meta property="og:description" content="Descubre en 1 minuto cuánto vale tu vivienda en venta o en alquiler. Sin compromiso.">
+<meta property="og:image" content="https://rosa12111972.github.io/rosaluxuryrealtor/og-image.png">
+<meta property="og:url" content="https://rosa12111972.github.io/rosaluxuryrealtor/valoracion.html">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+/* ============================================================
+   VALORACIÓN — página de captación de propietarios.
+   El propietario calcula el valor de su vivienda y es ÉL quien
+   te escribe por WhatsApp: sin llamadas en frío.
+   ============================================================ */
+:root{
+  --ev-black:#111111;
+  --ev-accent:#004225;
+  --ev-text:#3d3d3d;
+  --ev-white:#ffffff;
+  --ev-gray:#6b6b6b;
+  --ev-bg:#f7f6f4;
+  --ev-border:#e5e1d8;
+  --font-serif:'Georgia','Times New Roman',serif;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--font-sans); color:var(--ev-text); background:var(--ev-bg); line-height:1.55; -webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+.wrap{max-width:760px; margin:0 auto; padding:0 16px;}
+h1,h2,h3{font-family:var(--font-serif); font-weight:400;}
+header{background:var(--ev-white); border-bottom:1px solid var(--ev-border);}
+header .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px; gap:12px;}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+.brand img{width:40px; height:40px; border-radius:50%; object-fit:cover; border:1px solid var(--ev-border);}
+.brand span{font-family:var(--font-serif); font-size:18px; color:var(--ev-black);}
+.hero{text-align:center; padding:48px 0 24px;}
+.eyebrow{text-transform:uppercase; letter-spacing:3px; font-size:12px; color:var(--ev-accent); font-weight:600; display:block; margin-bottom:10px;}
+.hero h1{font-size:clamp(30px,6vw,44px); color:var(--ev-black); line-height:1.15; margin-bottom:14px;}
+.hero h1 em{font-style:normal; color:var(--ev-accent);}
+.hero p{color:var(--ev-gray); font-size:17px; max-width:560px; margin:0 auto;}
+.badges{display:flex; gap:10px 18px; justify-content:center; flex-wrap:wrap; margin-top:18px; font-size:14px;}
+.badges span::before{content:"✓ "; color:var(--ev-accent); font-weight:700;}
+.card{background:var(--ev-white); border:1px solid var(--ev-border); border-radius:10px; padding:24px; margin:24px 0; box-shadow:0 6px 24px rgba(0,0,0,.05);}
+.card h2{font-size:22px; color:var(--ev-black); margin-bottom:4px;}
+.card .sub{color:var(--ev-gray); font-size:14px; margin-bottom:18px;}
+.op{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px;}
+.op label{border:1px solid var(--ev-border); border-radius:8px; padding:14px; text-align:center; cursor:pointer; font-weight:600; color:var(--ev-black);}
+.op input{position:absolute; opacity:0;}
+.op label:has(input:checked){border-color:var(--ev-accent); background:rgba(0,66,37,.06); color:var(--ev-accent);}
+.field{margin-bottom:14px;}
+.field label{display:block; font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--ev-gray); margin-bottom:6px;}
+.field input,.field select{width:100%; padding:12px; border:1px solid var(--ev-border); border-radius:4px; font:inherit; font-size:15px; background:#fff; color:var(--ev-text);}
+.field input:focus,.field select:focus{outline:none; border-color:var(--ev-accent);}
+.row{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.extras{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+.extras label{border:1px solid var(--ev-border); border-radius:20px; padding:6px 12px; font-size:14px; cursor:pointer;}
+.extras label:has(input:checked){border-color:var(--ev-accent); color:var(--ev-accent); background:rgba(0,66,37,.06);}
+.extras input{margin-right:4px; accent-color:var(--ev-accent);}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:16px 24px; border-radius:2px; font-size:14px; letter-spacing:1px; text-transform:uppercase; font-weight:600; cursor:pointer; border:1px solid transparent; text-decoration:none;}
+.btn-accent{background:var(--ev-accent); color:#fff;}
+.btn-accent:hover{background:var(--ev-black);}
+.btn-wa{background:#25D366; color:#0b2e17;}
+.result{display:none; text-align:center;}
+.result.show{display:block;}
+.result .range{font-family:var(--font-serif); font-size:clamp(28px,7vw,40px); color:var(--ev-accent); margin:6px 0;}
+.result .note{font-size:13px; color:var(--ev-gray); margin-bottom:18px;}
+.steps{display:grid; gap:12px; margin:8px 0 24px;}
+.steps div{background:var(--ev-white); border:1px solid var(--ev-border); border-radius:8px; padding:14px 16px; font-size:15px;}
+.steps b{color:var(--ev-accent); font-family:var(--font-serif); font-size:20px; margin-right:6px;}
+.rgpd-box{font-size:12.5px; line-height:1.55; border:1px solid var(--ev-border); background:var(--ev-bg); padding:14px 16px; margin:6px 0 16px; border-radius:6px;}
+.rgpd-box table{width:100%; border-collapse:collapse;}
+.rgpd-box th{text-align:left; vertical-align:top; padding:3px 12px 3px 0; font-weight:600;}
+.rgpd-box td{padding:3px 0;}
+.rgpd-box a,.check a{color:var(--ev-accent); text-decoration:underline;}
+.check{display:flex; gap:10px; align-items:flex-start; font-size:13.5px; margin-bottom:12px; cursor:pointer;}
+.check input{margin-top:3px; width:17px; height:17px; flex-shrink:0; accent-color:var(--ev-accent);}
+.todo{background:#fff3cd;}
+footer{padding:28px 0 40px; font-size:13px; color:var(--ev-gray); text-align:center;}
+footer a, footer button{color:var(--ev-gray); margin:0 8px; background:none; border:none; font:inherit; cursor:pointer; text-decoration:underline;}
+@media (max-width:520px){ .row{grid-template-columns:1fr;} .rgpd-box th{white-space:normal;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="rosa.png" alt=""><span>Rosa Rodríguez</span></a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="eyebrow">Valoración gratuita</span>
+    <h1>¿Cuánto vale <em>tu casa</em>?</h1>
+    <p>Descubre en 1 minuto el precio de venta o la renta de alquiler que puedes pedir por tu vivienda. Sin compromiso y sin llamadas.</p>
+    <div class="badges"><span>Gratis</span><span>Sin compromiso</span><span>Datos de ventas reales</span><span>Respuesta en 24 h</span></div>
+  </section>
+
+  <form class="card" id="valForm">
+    <h2>Tu vivienda</h2>
+    <p class="sub">Cuantos más datos, más precisa será la valoración.</p>
+
+    <div class="op">
+      <label><input type="radio" name="operacion" value="Venta" checked> Quiero vender</label>
+      <label><input type="radio" name="operacion" value="Alquiler"> Quiero alquilar</label>
+    </div>
+
+    <div class="field"><label for="zona">Zona o municipio</label><input id="zona" name="zona" list="zonasList" required placeholder="Ej. Boadilla del Monte"><datalist id="zonasList"></datalist></div>
+    <div class="row">
+      <div class="field"><label for="tipo">Tipo</label>
+        <select id="tipo" name="tipo"><option>Piso</option><option>Chalet</option><option>Ático</option><option>Dúplex</option><option>Adosado</option><option>Estudio</option><option>Local</option></select></div>
+      <div class="field"><label for="m2">Superficie (m²)</label><input id="m2" name="m2" type="number" min="15" max="3000" required placeholder="Ej. 110"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label for="hab">Habitaciones</label><input id="hab" name="habitaciones" type="number" min="0" max="20" placeholder="Ej. 3"></div>
+      <div class="field"><label for="estado">Estado</label>
+        <select id="estado" name="estado"><option value="bueno">Buen estado</option><option value="reformado">Reformado</option><option value="reformar">A reformar</option><option value="nuevo">Obra nueva</option></select></div>
+    </div>
+    <div class="extras">
+      <label><input type="checkbox" name="extras" value="Terraza">Terraza</label>
+      <label><input type="checkbox" name="extras" value="Garaje">Garaje</label>
+      <label><input type="checkbox" name="extras" value="Piscina">Piscina</label>
+      <label><input type="checkbox" name="extras" value="Ascensor">Ascensor</label>
+      <label><input type="checkbox" name="extras" value="Exterior">Exterior</label>
+    </div>
+    <div class="row">
+      <div class="field"><label for="plazo">¿Para cuándo?</label>
+        <select id="plazo" name="plazo"><option>Menos de 3 meses</option><option>3 a 6 meses</option><option>Más de 6 meses</option><option>Solo quiero saber cuánto vale</option></select></div>
+      <div class="field"><label for="motivo">Motivo</label>
+        <select id="motivo" name="motivo"><option>Cambio de vivienda</option><option>Traslado</option><option>Herencia</option><option>Separación</option><option>Inversión / liquidez</option><option>Otro</option></select></div>
+    </div>
+    <button class="btn btn-accent" type="submit">Calcular valoración</button>
+  </form>
+
+  <section class="card result" id="result" aria-live="polite">
+    <span class="eyebrow" id="resLabel">Valor estimado</span>
+    <div class="range" id="resRange"></div>
+    <p class="note" id="resNote"></p>
+
+    <form id="leadForm" style="text-align:left">
+      <h2 style="text-align:center">Recibe tu informe completo</h2>
+      <p class="sub" style="text-align:center">Con las operaciones reales cerradas en tu zona y una estrategia para conseguir el mejor precio. Te lo envío por WhatsApp en menos de 24 h.</p>
+      <div class="row">
+        <div class="field"><label for="nombre">Nombre</label><input id="nombre" name="nombre" required autocomplete="name"></div>
+        <div class="field"><label for="telefono">Teléfono</label><input id="telefono" name="telefono" type="tel" required autocomplete="tel"></div>
+      </div>
+      <div class="rgpd-box" data-rgpd></div>
+      <label class="check"><input type="checkbox" name="privacidad" required> <span>He leído y acepto la <a href="privacidad.html" target="_blank">Política de Privacidad</a>. *</span></label>
+      <label class="check"><input type="checkbox" name="comercial"> <span>Acepto recibir comunicaciones comerciales sobre propiedades y mercado inmobiliario (opcional).</span></label>
+      <button class="btn btn-wa" type="submit">Pedir mi informe por WhatsApp</button>
+    </form>
+  </section>
+
+  <h2 style="font-size:24px; text-align:center; margin-top:36px">Cómo funciona</h2>
+  <div class="steps">
+    <div><b>1</b> Calculas aquí una primera estimación, al momento.</div>
+    <div><b>2</b> Te envío un informe con precios reales de operaciones cerradas cerca de tu casa.</div>
+    <div><b>3</b> Si quieres, lo vemos juntos en tu casa y decides tú. Sin compromiso.</div>
+  </div>
+</main>
+
+<footer>
+  <a href="aviso-legal.html">Aviso legal</a>
+  <a href="privacidad.html">Privacidad</a>
+  <a href="cookies.html">Cookies</a>
+  <button type="button" data-cookie-settings>Configurar cookies</button>
+  <p style="margin-top:10px">© <span id="year"></span> Rosa Rodríguez</p>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN DE LA VALORACIÓN
+   Rellena el precio medio de cada zona con datos reales de
+   operaciones cerradas (venta en €/m², alquiler en €/m² al mes).
+   Mientras una zona no tenga precio, la página no muestra cifra:
+   ofrece el informe personalizado en 24 h.
+   ============================================================ */
+const VALORACION = {
+  agentName: 'Rosa Rodríguez',
+  whatsapp: '34698222520', // formato internacional sin '+' ni espacios
+  margen: 0.08,            // horquilla ± sobre el valor central
+  zonas: {
+    // 'Boadilla del Monte': { venta: 0, alquiler: 0 },
+    // 'Majadahonda':        { venta: 0, alquiler: 0 },
+    // 'Pozuelo de Alarcón': { venta: 0, alquiler: 0 },
+  },
+  ajusteEstado: { bueno: 0, reformado: 0.06, reformar: -0.12, nuevo: 0.10 },
+  ajusteExtra: { Terraza: 0.03, Garaje: 0.03, Piscina: 0.04, Ascensor: 0.02, Exterior: 0.02 }
+};
+
+const $ = s => document.querySelector(s);
+document.getElementById('year').textContent = new Date().getFullYear();
+$('#zonasList').innerHTML = Object.keys(VALORACION.zonas).map(z => `<option value="${z}">`).join('');
+
+function getUtm(){
+  const p = new URLSearchParams(location.search);
+  return ['utm_source', 'utm_medium', 'utm_campaign'].filter(k => p.get(k)).map(k => `${k}: ${p.get(k)}`).join(' | ');
+}
+function trackMeta(event, params){
+  if (typeof fbq === 'function') fbq('track', event, params || {});
+}
+const fmt = n => Math.round(n).toLocaleString('es-ES') + ' €';
+const roundTo = (n, step) => Math.round(n / step) * step;
+
+function findZona(text){
+  const t = text.trim().toLowerCase();
+  const key = Object.keys(VALORACION.zonas).find(z => t.includes(z.toLowerCase()) || z.toLowerCase().includes(t));
+  return key ? VALORACION.zonas[key] : null;
+}
+
+let estimacion = null;
+$('#valForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target;
+  const venta = f.operacion.value === 'Venta';
+  const zona = findZona(f.zona.value);
+  const base = zona && (venta ? zona.venta : zona.alquiler);
+  const m2 = Number(f.m2.value);
+  estimacion = null;
+
+  if (base && m2){
+    let factor = 1 + (VALORACION.ajusteEstado[f.estado.value] || 0);
+    f.querySelectorAll('[name=extras]:checked').forEach(x => factor += VALORACION.ajusteExtra[x.value] || 0);
+    const central = base * m2 * factor;
+    const step = venta ? 5000 : 25;
+    const lo = roundTo(central * (1 - VALORACION.margen), step), hi = roundTo(central * (1 + VALORACION.margen), step);
+    estimacion = `${fmt(lo)} - ${fmt(hi)}${venta ? '' : ' al mes'}`;
+    $('#resLabel').textContent = venta ? 'Precio de venta estimado' : 'Renta mensual estimada';
+    $('#resRange').textContent = estimacion;
+    $('#resNote').textContent = 'Estimación orientativa según el precio medio de la zona. La cifra exacta depende de la planta, orientación, calidades y de las operaciones cerradas en tu calle: eso es lo que incluye el informe.';
+  } else {
+    $('#resLabel').textContent = venta ? 'Valoración de venta' : 'Valoración de alquiler';
+    $('#resRange').textContent = 'Informe personalizado';
+    $('#resNote').textContent = 'Para tu zona preparo la valoración a mano con operaciones reales cerradas cerca de tu casa. Déjame tus datos y te la envío en menos de 24 h.';
+  }
+  $('#result').classList.add('show');
+  $('#result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  trackMeta('ViewContent', { content_name: 'Valoracion ' + f.operacion.value });
+});
+
+// El propietario envía su solicitud por WhatsApp: el formato lo entiende la Máquina de Leads.
+$('#leadForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = $('#valForm'), f = e.target;
+  const extras = [...v.querySelectorAll('[name=extras]:checked')].map(x => x.value).join(', ');
+  const lines = [
+    '*Solicitud de valoración (web)*',
+    `Operación: ${v.operacion.value}`,
+    `Zona: ${v.zona.value.trim()}`,
+    `Tipo: ${v.tipo.value}`,
+    `Superficie: ${v.m2.value} m2`,
+    v.habitaciones.value ? `Habitaciones: ${v.habitaciones.value} hab.` : '',
+    `Estado: ${v.estado.options[v.estado.selectedIndex].text}`,
+    extras ? `Extras: ${extras}` : '',
+    `Plazo: ${v.plazo.value}`,
+    `Motivo: ${v.motivo.value}`,
+    estimacion ? `Estimación vista: ${estimacion.replace(/ €/g, ' euros')}` : '',
+    `Nombre: ${f.nombre.value.trim()}`,
+    `Teléfono: ${f.telefono.value.trim()}`,
+    'Política de privacidad: aceptada',
+    `Comunicaciones comerciales: ${f.comercial.checked ? 'sí' : 'no'}`,
+    getUtm() ? `[Origen] ${getUtm()}` : ''
+  ].filter(Boolean);
+  trackMeta('Lead', { content_name: 'Valoracion ' + v.operacion.value });
+  window.open(`https://wa.me/${VALORACION.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank');
+});
+</script>
+<script src="legal-data.js"></script>
+<script src="cookie-consent.js"></script>
+</body>
+</html>

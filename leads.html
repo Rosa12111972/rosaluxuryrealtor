@@ -140,7 +140,16 @@ dialog::backdrop{background:rgba(0,0,0,.4);}
 
   <!-- ==================== 1 · BUSCAR ==================== -->
   <section class="panel active" id="panel-buscar">
-    <h2>Encuentra propietarios con intención</h2>
+    <h2>Que los propietarios vengan a ti</h2>
+    <p class="sub">Sin llamadas en frío: difunde tu página de valoración gratuita. El propietario calcula cuánto vale su casa (venta o alquiler) y es él quien te escribe por WhatsApp con todos los datos. Pega ese mensaje en «2 · Captar» y el lead se crea solo, marcado como «Te ha escrito él».</p>
+
+    <div class="card">
+      <label for="inboundUrl">Tu página de valoración</label>
+      <div class="row" style="margin-top:0"><input id="inboundUrl" readonly style="flex:1 1 260px"><a class="btn btn-outline btn-sm" id="inboundOpen" target="_blank" rel="noopener">Abrir</a><button class="btn btn-outline btn-sm" type="button" data-copy="#inboundUrl">Copiar</button></div>
+      <div id="inboundPieces"></div>
+    </div>
+
+    <h2 style="margin-top:28px">Encuentra propietarios con intención</h2>
     <p class="sub">Genera búsquedas de anuncios de <b>particulares</b> que ya están vendiendo o alquilando en tu zona, priorizando señales de urgencia (bajada de precio, traslado, herencia…).</p>
 
     <div class="card">
@@ -312,6 +321,8 @@ dialog::backdrop{background:rgba(0,0,0,.4);}
       </div>
       <div style="margin-top:12px"><label>Mensaje de WhatsApp · venta</label><textarea name="msgVenta"></textarea></div>
       <div style="margin-top:12px"><label>Mensaje de WhatsApp · alquiler</label><textarea name="msgAlquiler"></textarea></div>
+      <div style="margin-top:12px"><label>Respuesta a quien pide valoración en tu web</label><textarea name="msgInbound"></textarea></div>
+      <div style="margin-top:12px"><label>Dirección de tu página de valoración</label><input name="urlValoracion" type="url"></div>
       <div style="margin-top:12px"><label>Mensaje de WhatsApp · anuncios «sin agencias»</label><textarea name="msgSinAgencias"></textarea></div>
       <p class="meta" style="margin-top:6px">Variables: {nombre} {agente} {agencia} {tipo} {zona} {precio} {fuente}</p>
       <div style="margin-top:12px"><label>Mensaje · propuesta de exclusiva</label><textarea name="msgExclusiva"></textarea></div>
@@ -417,6 +428,8 @@ const DEFAULT_SETTINGS = {
   agencia: 'The Brokery',
   msgVenta: 'Hola{nombre}, soy {agente}, agente inmobiliaria de {agencia}. He visto en {fuente} tu anuncio de {tipo} en {zona}. Trabajo con compradores que buscan justo en esa zona y me gustaría comentarte cómo podría ayudarte a vender más rápido y al mejor precio, sin compromiso. Si prefieres que no vuelva a escribirte, dímelo y no te molestaré más.',
   msgAlquiler: 'Hola{nombre}, soy {agente}, agente inmobiliaria de {agencia}. He visto en {fuente} tu anuncio de alquiler de {tipo} en {zona}. Puedo ayudarte a encontrar inquilinos solventes y verificados, con contrato y garantías. ¿Te interesa que lo hablemos? Si prefieres que no vuelva a escribirte, dímelo y no te molestaré más.',
+  msgInbound: 'Hola{nombre}, soy {agente}, de {agencia}. Gracias por pedir la valoración de tu {tipo} en {zona}. Estoy preparando el informe con las operaciones reales cerradas cerca de tu casa. Para afinar la cifra, ¿te viene bien que pase a verla 20 minutos esta semana? Sin ningún compromiso.',
+  urlValoracion: 'https://rosa12111972.github.io/rosaluxuryrealtor/valoracion.html',
   msgSinAgencias: 'Hola{nombre}, soy {agente}, de {agencia}. He visto tu anuncio de {tipo} en {zona} y sé que prefieres venderlo sin agencias: lo respeto y no te voy a pedir que firmes nada. Solo quería ofrecerte, gratis y sin compromiso, un informe con los precios reales a los que se han vendido viviendas parecidas en tu zona, por si te sirve para negociar. Si no te interesa, dímelo y no vuelvo a escribirte.',
   msgExclusiva: 'Hola{nombre}, gracias de nuevo por enseñarme tu {tipo} de {zona}. Como te comenté, mi recomendación es salir a {precioRecomendado} con un plan en exclusiva de {plazo}: reportaje profesional, difusión destacada en portales y redes, base de compradores cualificados, informe semanal de visitas y gestión completa hasta la notaría. ¿Te viene bien que lo revisemos juntos esta semana?',
   preciosZona: '',
@@ -433,6 +446,7 @@ const SIGNALS = [
   { label: 'Precio rebajado', pts: 15, re: /\b(rebajad[oa]|bajada de precio|precio reducido|nuevo precio|ha bajado)\b/i },
   { label: 'Negociable',      pts: 10, re: /\b(negociable|a negociar|escucho ofertas|acepto ofertas)\b/i },
   { label: 'Oportunidad',     pts: 5,  re: /\b(oportunidad|ocasi[oó]n|por debajo de mercado)\b/i },
+  { label: 'Te ha escrito él', pts: 40, re: /Solicitud de valoraci[oó]n/i },
   { label: 'Particular',      pts: 10, re: /\b(particular|propietario|due[ñn]o directo)\b/i }
 ];
 const NO_AGENCIAS_RE = /(abstenerse|sin|no)\s+(agencias|inmobiliarias|intermediarios)/i;
@@ -544,7 +558,8 @@ function priceGap(l){
 }
 function qualityLead(l){
   const c = l.cualif;
-  if (!c) return null;
+  // Una cualificación parcial (p. ej. la que trae la web) aún no da nota.
+  if (!c || QUAL.some(q => !c[q.key])) return null;
   let score = 0;
   QUAL.forEach(q => { const o = q.opts.find(o => o[0] === c[q.key]); if (o) score += o[2]; });
   const gap = priceGap(l);
@@ -581,11 +596,15 @@ function extractFromText(raw){
   const m2 = t.match(/(\d{2,4})\s?m(?:²|2|\s)/i);
   if (m2) out.m2 = Number(m2[1]);
 
-  const hab = t.match(/(\d{1,2})\s?(?:hab\.?|habitaciones|dormitorios)/i);
+  const hab = t.match(/(\d{1,2})[ \t]?(?:hab\.?|habitaciones|dormitorios)/i);
   if (hab) out.habitaciones = Number(hab[1]);
 
-  if (/alquil|arrend|\/mes|al mes/i.test(t)) out.operacion = 'alquiler';
-  else if (/venta|vendo|se vende/i.test(t)) out.operacion = 'venta';
+  // «€/mes» aparece también en ventas (comunidad, IBI, hipoteca): decide por palabras clave y, si hay duda, por el precio.
+  const esAlquiler = /\b(alquil\w*|se alquila|arrend\w*|fianza|inquilin\w*)\b/i.test(t);
+  const esVenta = /\b(venta|vendo|se vende|vender)\b/i.test(t);
+  if (esVenta && !esAlquiler) out.operacion = 'venta';
+  else if (esAlquiler && !esVenta) out.operacion = 'alquiler';
+  else if (out.precio) out.operacion = out.precio < 15000 ? 'alquiler' : 'venta';
 
   const tipo = t.match(/\b(piso|chalet|[aá]tico|d[uú]plex|casa|estudio|apartamento|local|adosado|pareado)\b/i);
   if (tipo) out.tipo = tipo[1].charAt(0).toUpperCase() + tipo[1].slice(1).toLowerCase();
@@ -595,6 +614,32 @@ function extractFromText(raw){
 
   const url = t.match(/https?:\/\/\S+/);
   if (url) out.url = url[0];
+
+  // Solicitudes que llegan desde la página de valoración (el propietario te escribe a ti).
+  const campo = k => { const m = t.match(new RegExp('^\\s*' + k + ':\\s*(.+)$', 'im')); return m ? m[1].trim() : ''; };
+  if (/Solicitud de valoraci[oó]n/i.test(t)){
+    out.fuente = 'Web valoración';
+    out.publicado = today();
+    if (campo('Nombre')) out.nombre = campo('Nombre');
+    if (campo('Zona')) out.zona = campo('Zona');
+    if (campo('Tipo')) out.tipo = campo('Tipo');
+    if (campo('Operación')) out.operacion = /alquil/i.test(campo('Operación')) ? 'alquiler' : 'venta';
+    const num = k => Number((campo(k).match(/\d+/) || [])[0]) || '';
+    out.m2 = num('Superficie');
+    out.habitaciones = num('Habitaciones');
+    // La horquilla de la estimación no es una bajada de precio: se usa su punto medio.
+    const est = [...campo('Estimación vista').matchAll(/\d{1,3}(?:\.\d{3})+|\d+/g)].map(m => parseNum(m[0]));
+    out.precio = est.length ? Math.round(est.reduce((a, b) => a + b, 0) / est.length) : '';
+    delete out.precioAnterior;
+    const tel = normPhone(campo('Teléfono'));
+    if (tel.length === 9) out.telefono = tel;
+    const plazo = campo('Plazo'), motivo = campo('Motivo');
+    out.cualif = {
+      motivacion: /solo quiero saber/i.test(plazo) ? 'baja' : /traslado|herencia|separaci|cambio/i.test(motivo) ? 'alta' : 'media',
+      plazo: /menos de 3/i.test(plazo) ? '3' : /3 a 6/i.test(plazo) ? '6' : 'mas'
+    };
+    return out;
+  }
 
   const fuentes = { idealista: 'Idealista', fotocasa: 'Fotocasa', milanuncios: 'Milanuncios', wallapop: 'Wallapop', habitaclia: 'Habitaclia', pisos: 'Pisos.com', yaencontre: 'Yaencontré' };
   for (const k in fuentes){ if (new RegExp(k, 'i').test(t)){ out.fuente = fuentes[k]; break; } }
@@ -613,6 +658,70 @@ function extractFromText(raw){
 }
 
 /* ============================================================
+   1 · CAPTACIÓN SIN LLAMADAS — textos para difundir la valoración
+   ============================================================ */
+function utmLink(source, medium){
+  const u = new URL(state.settings.urlValoracion);
+  u.searchParams.set('utm_source', source);
+  u.searchParams.set('utm_medium', medium);
+  u.searchParams.set('utm_campaign', 'valoracion');
+  return u.toString();
+}
+function renderInbound(){
+  let ok = true;
+  try{ new URL(state.settings.urlValoracion); }catch(e){ ok = false; }
+  if (!ok){ $('#inboundPieces').innerHTML = '<p class="meta">Indica la dirección de tu página de valoración en Ajustes.</p>'; return; }
+  const zona = $('#qZona').value.trim() || 'tu zona';
+  $('#inboundUrl').value = state.settings.urlValoracion;
+  $('#inboundOpen').href = state.settings.urlValoracion;
+  const ag = state.settings.agente;
+  const pieces = [
+    { t: 'Publicación para Instagram y Facebook', d: 'Fíjala en tu perfil y pon el enlace en la bio.',
+      x: `¿Sabes cuánto vale hoy tu casa en ${zona}? 🏡\n\nMuchos propietarios venden o alquilan por debajo de mercado por no tener datos reales. Calcula gratis en 1 minuto el precio de venta o la renta de alquiler de tu vivienda y te envío un informe con operaciones cerradas cerca de ti.\n\nSin compromiso y sin llamadas 👉 ${utmLink('instagram', 'organico')}` },
+    { t: 'Anuncio en Meta (Instagram/Facebook Ads)', d: 'Segmenta por radio de 3-5 km alrededor de tu zona, edad 35-70. Objetivo: tráfico o clientes potenciales.',
+      x: `Propietarios de ${zona}: ¿cuánto vale tu casa hoy?\nDescúbrelo gratis en 1 minuto, para vender o para alquilar. Informe con precios reales de tu zona, sin compromiso.\n${utmLink('meta', 'pago')}` },
+    { t: 'Estado de WhatsApp y mensaje a tu red', d: 'Pide referidos a clientes, amigos y familia: es la fuente de exclusivas más rentable.',
+      x: `¡Hola! Te escribo porque muchas personas me preguntan cuánto vale su casa. He preparado una calculadora gratuita de valoración (venta y alquiler). Si tú o alguien que conozcas está pensando en vender o alquilar, aquí la tienes: ${utmLink('whatsapp', 'referidos')}\n¡Gracias por pasarla! ${ag}` },
+    { t: 'Ficha de Google (Perfil de Empresa)', d: 'Publícala como «novedad» en tu ficha de Google: aparece a quien busca inmobiliarias en tu zona.',
+      x: `Valoración gratuita de tu vivienda en ${zona}. Calcula en 1 minuto cuánto vale tu casa en venta o cuánto puedes cobrar de alquiler, y recibe un informe con operaciones reales. ${utmLink('google', 'ficha')}` },
+    { t: 'Buzoneo y cartel con código QR', d: 'Buzonea en las calles donde trabajas y deja el cartel en comercios de barrio. Descarga el QR para imprimirlo.',
+      x: `¿CUÁNTO VALE TU CASA?\nValoración gratuita para vender o alquilar en ${zona}.\nEscanea el código QR y descúbrelo en 1 minuto.\n${ag} · Sin compromiso`, qr: utmLink('buzoneo', 'offline') }
+  ];
+  $('#inboundPieces').innerHTML = pieces.map((p, i) => `
+    <div class="task" style="margin-top:12px">
+      <b>${esc(p.t)}</b><div class="meta">${esc(p.d)}</div>
+      <pre id="piece${i}">${esc(p.x)}</pre>
+      <div class="lead-actions">
+        <button class="btn btn-outline btn-sm" type="button" data-copy="#piece${i}">Copiar texto</button>
+        ${p.qr ? `<button class="btn btn-outline btn-sm" type="button" data-qr="${esc(p.qr)}">Descargar QR</button>` : ''}
+      </div>
+    </div>`).join('');
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-copy]');
+  if (c){
+    const el = $(c.dataset.copy);
+    navigator.clipboard.writeText(el.value || el.textContent).then(() => toast('Copiado'), () => toast('No se pudo copiar'));
+  }
+  const q = e.target.closest('[data-qr]');
+  if (q) downloadQR(q.dataset.qr);
+});
+function loadScript(src){
+  return new Promise((ok, ko) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = ko; document.head.appendChild(s); });
+}
+async function downloadQR(text){
+  try{
+    if (!window.QRCode) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js');
+    const box = document.createElement('div');
+    new QRCode(box, { text, width: 600, height: 600, correctLevel: QRCode.CorrectLevel.M });
+    const canvas = box.querySelector('canvas');
+    canvas.toBlob(blob => download('qr-valoracion.png', blob, 'image/png'));
+  }catch(err){
+    toast('No se pudo generar el QR');
+  }
+}
+
+/* ============================================================
    1 · BUSCAR — búsquedas de intención en portales
    ============================================================ */
 function buildSearches(){
@@ -621,7 +730,9 @@ function buildSearches(){
   const op = $('#qOperacion').value;
   const tipo = $('#qTipo').value;
   const senal = $('#qSenal').value;
-  const opWords = op === 'venta' ? '(vendo OR "se vende" OR venta)' : '(alquilo OR "se alquila" OR alquiler)';
+  const opWords = op === 'venta'
+    ? '(vendo OR "se vende" OR venta) -alquiler -alquilo -"se alquila"'
+    : '(alquilo OR "se alquila" OR alquiler) -vendo -"se vende"';
   const intent = senal ? `"${senal}"` : '(urge OR urgente OR rebajado OR negociable OR traslado OR herencia)';
   const base = `"${zona}" ${tipo ? `"${tipo}"` : ''} ${opWords}`;
 
@@ -654,6 +765,7 @@ function buildSearches(){
    2 · CAPTAR — formulario y CSV
    ============================================================ */
 const form = $('#leadForm');
+let lastCualif = null;
 function formData(){
   const o = {};
   new FormData(form).forEach((v, k) => o[k] = typeof v === 'string' ? v.trim() : v);
@@ -739,7 +851,7 @@ const waUrl = (l, msg) => `https://wa.me/34${normPhone(l.telefono)}?text=${encod
 function waLink(l){
   const s = state.settings;
   // «Abstenerse agencias» no es un no definitivo: se aborda ofreciendo valor, no captación directa.
-  const tpl = scoreLead(l).noAgencias ? s.msgSinAgencias : l.operacion === 'alquiler' ? s.msgAlquiler : s.msgVenta;
+  const tpl = l.fuente === 'Web valoración' ? s.msgInbound : scoreLead(l).noAgencias ? s.msgSinAgencias : l.operacion === 'alquiler' ? s.msgAlquiler : s.msgVenta;
   return waUrl(l, fillTpl(tpl, l));
 }
 
@@ -1155,12 +1267,16 @@ function goTab(name){ document.querySelector(`.tab[data-tab="${name}"]`).click()
 
 $('#btnGenerar').addEventListener('click', buildSearches);
 $('#qZona').addEventListener('keydown', e => { if (e.key === 'Enter') buildSearches(); });
+$('#qZona').addEventListener('input', renderInbound);
 
 $('#btnExtraer').addEventListener('click', () => {
   const raw = $('#rawText').value;
   if (!raw.trim()){ toast('Pega primero el texto del anuncio'); return; }
   form.reset();
-  fillForm(extractFromText(raw));
+  const ext = extractFromText(raw);
+  lastCualif = ext.cualif || null;
+  delete ext.cualif;
+  fillForm(ext);
   toast('Datos extraídos: revísalos antes de guardar');
 });
 form.addEventListener('input', updatePreview);
@@ -1169,7 +1285,10 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   const data = formData();
   if (!data.telefono && !data.url){ toast('Añade al menos teléfono o URL del anuncio'); return; }
+  // Las solicitudes de la web traen ya parte de la cualificación (plazo y motivo).
+  if (lastCualif && !data.id) data.cualif = lastCualif;
   if (addLead(data) === 'blocked') return;
+  lastCualif = null;
   save();
   form.reset();
   $('#rawText').value = '';
@@ -1314,6 +1433,7 @@ Object.keys(DEFAULT_SETTINGS).forEach(k => sForm.elements[k].value = state.setti
 sForm.addEventListener('submit', e => {
   e.preventDefault();
   Object.keys(DEFAULT_SETTINGS).forEach(k => state.settings[k] = sForm.elements[k].value);
+  renderInbound();
   // Aplica la lista de exclusión también a los leads ya guardados.
   const blocked = blockedPhones();
   const before = state.leads.length;
@@ -1346,6 +1466,7 @@ $('#btnBorrarTodo').addEventListener('click', () => {
 });
 
 updatePreview();
+renderInbound();
 </script>
 </body>
 </html>
