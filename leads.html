@@ -318,8 +318,8 @@ dialog::backdrop{background:rgba(0,0,0,.4);}
       <p class="meta" style="margin-top:6px">Variables adicionales: {precioRecomendado} {plazo}</p>
       <div style="margin-top:12px"><label>Precio de mercado por zona (venta, €/m²)</label><textarea name="preciosZona" placeholder="Boadilla del Monte = 3900&#10;Majadahonda = 4300&#10;Pozuelo de Alarcón = 5200"></textarea></div>
       <p class="meta" style="margin-top:6px">Una zona por línea. Se usa para detectar inmuebles sobrevalorados, que rara vez son buenas exclusivas.</p>
-      <div style="margin-top:12px"><label>Clave de API de Claude (opcional)</label><input name="apiKey" type="password" autocomplete="off" placeholder="sk-ant-…"></div>
-      <p class="meta" style="margin-top:6px">Con la clave, el agente redacta cada mensaje y el guion de la visita a medida de cada propietario (datos del anuncio, cualificación y notas). Sin ella, usa plantillas. La clave se guarda solo en este navegador y no se incluye en las copias de seguridad: úsala solo en tu propio dispositivo y fija un límite de gasto en console.anthropic.com.</p>
+      <div style="margin-top:12px"><label>Clave de API de Claude (solo fuera de Claude)</label><input name="apiKey" type="password" autocomplete="off" placeholder="sk-ant-…"></div>
+      <p class="meta" style="margin-top:6px">Abierta desde claude.ai, el agente IA funciona sin clave. Fuera de Claude (p. ej. en tu web), con la clave el agente redacta cada mensaje y el guion de la visita a medida de cada propietario (datos del anuncio, cualificación y notas). Sin ella, usa plantillas. La clave se guarda solo en este navegador y no se incluye en las copias de seguridad: úsala solo en tu propio dispositivo y fija un límite de gasto en console.anthropic.com.</p>
       <div style="margin-top:12px"><label>Lista «No contactar» (un teléfono por línea)</label><textarea name="noContactar" placeholder="Propietarios que han pedido no ser contactados"></textarea></div>
       <div class="row"><button class="btn btn-accent" type="submit">Guardar ajustes</button></div>
     </form>
@@ -940,10 +940,8 @@ function templatePlan(l, v){
   };
 }
 
-async function aiPlan(l, v){
+function aiPrompt(l, v){
   const s = state.settings;
-  const { default: Anthropic } = await import(SDK_URL);
-  const client = new Anthropic({ apiKey: s.apiKey, dangerouslyAllowBrowser: true });
   const ficha = {
     operacion: l.operacion, tipo: l.tipo, zona: l.zona, precio: l.precio, precioAnterior: l.precioAnterior,
     precioRecomendado: l.precioRecomendado, m2: l.m2, habitaciones: l.habitaciones, fuente: l.fuente,
@@ -954,12 +952,7 @@ async function aiPlan(l, v){
     visita: { fecha: v.fecha, fechaLegible: fmtFecha(v.fecha), hora: v.hora, duracionMin: v.duracion, direccion: v.direccion },
     contexto: v.contexto
   };
-  const response = await client.beta.messages.create({
-    model: 'claude-opus-5-5',
-    max_tokens: 16000,
-    betas: ['server-side-fallback-2026-07-01'],
-    fallbacks: 'default',
-    output_config: { effort: 'medium' },
+  return {
     system: `Eres el asistente de seguimiento de ${s.agente}, agente inmobiliaria de ${s.agencia} en España. Preparas la visita de valoración a un propietario particular y redactas la secuencia de mensajes de WhatsApp que ${s.agente} enviará para convertirla en una exclusiva de calidad (precio de mercado, propietario motivado, plazo, todos los titulares de acuerdo).
 
 Escribe en español de España, en primera persona como ${s.agente}, con tono cercano y profesional, sin presionar. Cada mensaje: máximo 600 caracteres, sin emojis en exceso. Personaliza con la ficha (motivo, plazo, dudas, notas). No inventes cifras, comparables ni datos que no estén en la ficha; si hace falta un dato, deja que ${s.agente} lo aporte en la visita. Si la calidad de exclusiva es B o C, orienta los mensajes a resolver lo que falla (precio, titulares, otras agencias) en vez de forzar la exclusiva. Si anuncioSinAgencias es true, el propietario empezó queriendo vender sin agencias: valida esa decisión, gana su confianza con datos y servicio, y presenta la exclusiva como la forma de conseguir lo que él quiere (precio, rapidez, tranquilidad), nunca como una corrección.
@@ -970,12 +963,32 @@ Responde solo con un objeto JSON, sin texto alrededor, con esta forma:
  "preguntas": ["preguntas clave para la visita", "..."],
  "mensajes": ["...", "...", "...", "...", "...", "..."]}
 "mensajes" tiene exactamente 6 textos, en este orden: ${SECUENCIA.map((x, i) => `${i + 1}) ${x.tipo} (${x.cuando === 'hoy' ? 'se envía hoy' : x.cuando < 0 ? 'el día antes de la visita' : x.cuando + ' días después de la visita'})`).join('; ')}.`,
-    messages: [{ role: 'user', content: 'Ficha del lead:\n' + JSON.stringify(ficha, null, 2) }]
-  });
-  if (response.stop_reason === 'refusal') throw new Error('El modelo no ha podido generar el plan');
-  const text = response.content.filter(b => b.type === 'text').map(b => b.text).join('');
-  const plan = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
-  if (!plan.resumen || !Array.isArray(plan.mensajes) || plan.mensajes.length !== SECUENCIA.length) throw new Error('Respuesta incompleta');
+    user: 'Ficha del lead:\n' + JSON.stringify(ficha, null, 2)
+  };
+}
+const canUseAI = () => !!(caps.sample || state.settings.apiKey);
+async function aiPlan(l, v){
+  const { system, user } = aiPrompt(l, v);
+  let plan;
+  if (caps.sample){
+    plan = await caps.sample.json(system + '\n\n' + user, { modelTier: 'default' });
+  } else {
+    const { default: Anthropic } = await import(SDK_URL);
+    const client = new Anthropic({ apiKey: state.settings.apiKey, dangerouslyAllowBrowser: true });
+    const response = await client.beta.messages.create({
+      model: 'claude-opus-5-5',
+      max_tokens: 16000,
+      betas: ['server-side-fallback-2026-07-01'],
+      fallbacks: 'default',
+      output_config: { effort: 'medium' },
+      system,
+      messages: [{ role: 'user', content: user }]
+    });
+    if (response.stop_reason === 'refusal') throw new Error('El modelo no ha podido generar el plan');
+    const text = response.content.filter(b => b.type === 'text').map(b => b.text).join('');
+    plan = JSON.parse(text.slice(text.indexOf('{'), text.lastIndexOf('}') + 1));
+  }
+  if (!plan || !plan.resumen || !Array.isArray(plan.mensajes) || plan.mensajes.length !== SECUENCIA.length) throw new Error('Respuesta incompleta');
   return plan;
 }
 
@@ -1011,20 +1024,34 @@ function icsFor(l){
     'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
 }
 
+function gcalLink(l){
+  const v = l.visita;
+  const start = new Date(`${v.fecha}T${v.hora}:00`);
+  const end = new Date(start.getTime() + (Number(v.duracion) || 60) * 60000);
+  const z = d => d.toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
+  const details = [v.plan.resumen, '', ...(v.plan.preguntas || []).map(x => '- ' + x), '', `Propietario: ${l.nombre || ''} ${l.telefono || ''}`].join('\n');
+  return 'https://calendar.google.com/calendar/render?' + new URLSearchParams({
+    action: 'TEMPLATE', text: `Visita de valoración · ${l.tipo || 'Inmueble'} ${l.zona || ''}`,
+    dates: `${z(start)}/${z(end)}`, details, location: v.direccion || l.zona || ''
+  });
+}
 function renderPlan(l){
   if (!l.visita){ $('#visitPlan').innerHTML = ''; return; }
   const p = l.visita.plan;
   const tareas = (l.tareas || []).filter(t => t.origen === 'visita' && t.texto);
   $('#visitPlan').innerHTML = `<div class="plan">
-    <p class="meta">${l.visita.ia ? 'Plan redactado por el agente IA' : 'Plan generado con plantillas (añade tu clave de API en Ajustes para personalizarlo con IA)'}</p>
+    <p class="meta">${l.visita.ia ? 'Plan redactado por el agente IA' : 'Plan generado con plantillas (ábrelo en Claude o añade tu clave de API en Ajustes para personalizarlo con IA)'}</p>
     <h3>Estrategia</h3><p>${esc(p.resumen)}</p>
     <h3>Preparación</h3><ul class="guide checklist">${(p.preparacion || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
     <h3>Preguntas para la visita</h3><ul class="guide">${(p.preguntas || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul>
     <h3>Secuencia de seguimiento</h3>
     ${tareas.map(t => `<div class="task"><b>${esc(fmtFecha(t.fecha))}</b> · ${esc(t.tipo)}${t.hecha ? ' · <span class="badge qA">Enviado</span>' : ''}<pre>${esc(t.texto)}</pre></div>`).join('')}
-    <div class="row"><button class="btn btn-outline" type="button" id="btnIcs">Añadir al calendario (.ics)</button></div>
+    <div class="row">
+      <a class="btn btn-accent" href="${esc(gcalLink(l))}" target="_blank" rel="noopener">Añadir a Google Calendar</a>
+      ${caps.downloads ? '' : '<button class="btn btn-outline" type="button" id="btnIcs">Descargar .ics (Outlook / Apple)</button>'}
+    </div>
   </div>`;
-  $('#btnIcs').addEventListener('click', () => download(`visita-${l.visita.fecha}.ics`, icsFor(l), 'text/calendar'));
+  if ($('#btnIcs')) $('#btnIcs').addEventListener('click', () => download(`visita-${l.visita.fecha}.ics`, icsFor(l), 'text/calendar'));
 }
 
 let visitLeadId = null;
@@ -1087,7 +1114,20 @@ function completeTask(l, t){
    EXPORTACIÓN
    ============================================================ */
 const CSV_COLS = ['nombre','telefono','operacion','tipo','zona','precio','precioAnterior','m2','habitaciones','publicado','fuente','url','estado','seguimiento','creado','descripcion'];
+// Abierta como página de Claude, las descargas y la IA pasan por el visor (sin clave de API).
+const caps = { downloads: null, sample: null };
+if (window.claude && typeof window.claude.use === 'function'){
+  window.claude.use('downloads').then(d => caps.downloads = d, () => {});
+  window.claude.use('sample').then(sm => caps.sample = sm, () => {});
+}
 function download(name, content, type){
+  if (caps.downloads){
+    caps.downloads.save({ filename: name, data: content }).catch(err => {
+      if (err && err.code === 'rejected_extension') toast('Este formato no se puede descargar aquí');
+      else if (err && err.code !== 'declined') toast('No se pudo descargar el archivo');
+    });
+    return;
+  }
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([content], { type }));
   a.download = name;
@@ -1233,7 +1273,7 @@ $('#visitForm').addEventListener('submit', async e => {
   if (v.fecha < today()){ toast('La fecha de la visita ya ha pasado'); return; }
   const btn = $('#btnPlanificar');
   let plan = templatePlan(l, v);
-  if (state.settings.apiKey){
+  if (canUseAI()){
     btn.disabled = true;
     $('#visitStatus').textContent = 'El agente está preparando la visita…';
     try{
