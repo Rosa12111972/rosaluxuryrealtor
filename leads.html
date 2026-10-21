@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Herramienta interna: no debe aparecer en buscadores ni enlazarse desde la web pública. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Máquina de Leads | Rosa Rodríguez</title>
+<style>
+/* ============================================================
+   MÁQUINA DE LEADS — herramienta interna de captación.
+   Localiza propietarios particulares que YA anuncian su casa
+   en venta o alquiler, puntúa su intención y organiza el
+   seguimiento. Los datos se guardan solo en este navegador.
+   ============================================================ */
+:root{
+  --ev-black:#111111;
+  --ev-accent:#004225;
+  --ev-text:#3d3d3d;
+  --ev-white:#ffffff;
+  --ev-gray:#6b6b6b;
+  --ev-bg:#f7f6f4;
+  --ev-border:#e5e1d8;
+  --hot:#b3261e;
+  --warm:#c77700;
+  --cold:#5b6b7a;
+  --font-serif:'Georgia','Times New Roman',serif;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{font-family:var(--font-sans); color:var(--ev-text); background:var(--ev-bg); line-height:1.5; -webkit-font-smoothing:antialiased;}
+a{color:var(--ev-accent);}
+.wrap{max-width:1180px; margin:0 auto; padding:0 16px;}
+header{background:var(--ev-white); border-bottom:1px solid var(--ev-border); padding:18px 0;}
+header .wrap{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;}
+h1,h2,h3{font-family:var(--font-serif); font-weight:400;}
+h1{font-size:24px;}
+h1 small{display:block; font-family:var(--font-sans); font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--ev-accent); font-weight:600;}
+h2{font-size:22px; margin-bottom:6px;}
+.sub{color:var(--ev-gray); font-size:14px; margin-bottom:18px;}
+.tabs{display:flex; gap:4px; flex-wrap:wrap;}
+.tab{background:none; border:1px solid var(--ev-border); padding:9px 14px; font-size:13px; cursor:pointer; border-radius:2px; color:var(--ev-text);}
+.tab.active{background:var(--ev-black); color:#fff; border-color:var(--ev-black);}
+main{padding:28px 0 60px;}
+.panel{display:none;}
+.panel.active{display:block;}
+.card{background:var(--ev-white); border:1px solid var(--ev-border); border-radius:10px; padding:20px; margin-bottom:18px;}
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+label{display:block; font-size:12px; text-transform:uppercase; letter-spacing:1px; color:var(--ev-gray); margin-bottom:4px; font-weight:600;}
+input,select,textarea{width:100%; padding:10px; border:1px solid var(--ev-border); border-radius:4px; font:inherit; font-size:14px; background:#fff; color:var(--ev-text);}
+textarea{min-height:120px; resize:vertical;}
+.btn{display:inline-flex; align-items:center; gap:6px; padding:10px 18px; border-radius:2px; font-size:13px; letter-spacing:.5px; text-transform:uppercase; font-weight:600; cursor:pointer; border:1px solid transparent; text-decoration:none;}
+.btn-primary{background:var(--ev-black); color:#fff;}
+.btn-accent{background:var(--ev-accent); color:#fff;}
+.btn-outline{background:transparent; border-color:var(--ev-black); color:var(--ev-black);}
+.btn-wa{background:#25D366; color:#fff;}
+.btn-sm{padding:6px 10px; font-size:11px;}
+.row{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:12px;}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:18px;}
+.stat{background:var(--ev-white); border:1px solid var(--ev-border); border-radius:10px; padding:14px;}
+.stat b{display:block; font-family:var(--font-serif); font-size:28px; font-weight:400; color:var(--ev-black);}
+.stat span{font-size:12px; color:var(--ev-gray); text-transform:uppercase; letter-spacing:1px;}
+.links{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin-top:14px;}
+.links a{display:block; padding:12px; border:1px solid var(--ev-border); border-radius:6px; background:#fff; text-decoration:none; color:var(--ev-text); font-size:14px;}
+.links a:hover{border-color:var(--ev-accent);}
+.links a b{display:block; color:var(--ev-black);}
+.links a small{color:var(--ev-gray);}
+.lead{background:var(--ev-white); border:1px solid var(--ev-border); border-left:5px solid var(--cold); border-radius:8px; padding:14px 16px; margin-bottom:10px;}
+.lead.hot{border-left-color:var(--hot);}
+.lead.warm{border-left-color:var(--warm);}
+.lead-top{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+.lead h3{font-size:17px; color:var(--ev-black);}
+.meta{font-size:13px; color:var(--ev-gray);}
+.badge{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; padding:3px 8px; border-radius:20px; background:#eee; color:#333; margin-right:4px;}
+.badge.hot{background:#fbe9e7; color:var(--hot);}
+.badge.warm{background:#fff4e0; color:var(--warm);}
+.badge.cold{background:#eef1f4; color:var(--cold);}
+.badge.warn{background:#fff3cd; color:#7a5b00;}
+.signals{font-size:12px; color:var(--ev-gray); margin-top:6px;}
+.lead-actions{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; align-items:center;}
+.lead-actions select{width:auto; padding:6px; font-size:12px;}
+.filters{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:14px;}
+.notice{background:#eef5f1; border:1px solid #cfe3d8; border-radius:8px; padding:14px; font-size:13px; margin-bottom:18px;}
+.notice b{color:var(--ev-accent);}
+.empty{text-align:center; color:var(--ev-gray); padding:40px 0;}
+dialog{border:none; border-radius:10px; padding:22px; width:min(640px,calc(100% - 32px)); max-height:90vh;}
+dialog::backdrop{background:rgba(0,0,0,.4);}
+.toast{position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--ev-black); color:#fff; padding:10px 18px; border-radius:4px; font-size:14px; opacity:0; transition:opacity .2s; pointer-events:none;}
+.toast.show{opacity:1;}
+@media (max-width:600px){ .tab{flex:1 1 45%;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1><small>Herramienta interna</small>Máquina de Leads</h1>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="buscar">1 · Buscar</button>
+      <button class="tab" data-tab="captar">2 · Captar</button>
+      <button class="tab" data-tab="leads">3 · Mis leads</button>
+      <button class="tab" data-tab="ajustes">Ajustes</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ==================== 1 · BUSCAR ==================== -->
+  <section class="panel active" id="panel-buscar">
+    <h2>Encuentra propietarios con intención</h2>
+    <p class="sub">Genera búsquedas de anuncios de <b>particulares</b> que ya están vendiendo o alquilando en tu zona, priorizando señales de urgencia (bajada de precio, traslado, herencia…).</p>
+
+    <div class="card">
+      <div class="grid">
+        <div><label for="qZona">Zona / municipio</label><input id="qZona" placeholder="p. ej. Boadilla del Monte"></div>
+        <div><label for="qOperacion">Operación</label>
+          <select id="qOperacion"><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select></div>
+        <div><label for="qTipo">Tipo de inmueble</label>
+          <select id="qTipo"><option value="piso">Piso</option><option value="chalet">Chalet / casa</option><option value="ático">Ático</option><option value="local">Local</option><option value="">Cualquiera</option></select></div>
+        <div><label for="qSenal">Señal de intención</label>
+          <select id="qSenal">
+            <option value="">Todas (recomendado)</option>
+            <option value="urge">Urgencia</option>
+            <option value="rebajado">Precio rebajado</option>
+            <option value="traslado">Traslado</option>
+            <option value="herencia">Herencia</option>
+            <option value="negociable">Negociable</option>
+          </select></div>
+      </div>
+      <div class="row"><button class="btn btn-primary" id="btnGenerar">Generar búsquedas</button></div>
+      <div class="links" id="searchLinks"></div>
+    </div>
+
+    <div class="notice">
+      <b>Cómo trabajar:</b> abre cada búsqueda, entra en los anuncios de particulares y copia el texto del anuncio (Ctrl+A, Ctrl+C) en la pestaña <b>2 · Captar</b>. La herramienta extrae precio, teléfono, m² y señales de intención y lo puntúa automáticamente. Repite cada día: los anuncios recientes y los que bajan de precio son los propietarios más receptivos.
+    </div>
+  </section>
+
+  <!-- ==================== 2 · CAPTAR ==================== -->
+  <section class="panel" id="panel-captar">
+    <h2>Añadir propietario</h2>
+    <p class="sub">Pega el texto del anuncio y pulsa «Extraer datos». Revisa los campos antes de guardar.</p>
+
+    <div class="card">
+      <label for="rawText">Texto del anuncio</label>
+      <textarea id="rawText" placeholder="Pega aquí el texto completo del anuncio de particular…"></textarea>
+      <div class="row"><button class="btn btn-outline" id="btnExtraer">Extraer datos</button></div>
+    </div>
+
+    <form class="card" id="leadForm">
+      <input type="hidden" name="id">
+      <div class="grid">
+        <div><label>Nombre del propietario</label><input name="nombre" placeholder="Si aparece en el anuncio"></div>
+        <div><label>Teléfono</label><input name="telefono" type="tel"></div>
+        <div><label>Operación</label><select name="operacion"><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select></div>
+        <div><label>Tipo</label><input name="tipo" placeholder="Piso, chalet…"></div>
+        <div><label>Zona / dirección</label><input name="zona"></div>
+        <div><label>Precio actual (€)</label><input name="precio" type="number" min="0"></div>
+        <div><label>Precio anterior (€)</label><input name="precioAnterior" type="number" min="0" placeholder="Si ha bajado"></div>
+        <div><label>m²</label><input name="m2" type="number" min="0"></div>
+        <div><label>Habitaciones</label><input name="habitaciones" type="number" min="0"></div>
+        <div><label>Publicado el</label><input name="publicado" type="date"></div>
+        <div><label>Portal / fuente</label><input name="fuente" placeholder="Idealista, Fotocasa…"></div>
+        <div><label>URL del anuncio</label><input name="url" type="url"></div>
+      </div>
+      <div style="margin-top:12px"><label>Descripción / notas</label><textarea name="descripcion"></textarea></div>
+      <div class="row">
+        <button class="btn btn-accent" type="submit">Guardar lead</button>
+        <button class="btn btn-outline" type="reset" id="btnLimpiar">Limpiar</button>
+        <span class="meta" id="scorePreview"></span>
+      </div>
+    </form>
+
+    <div class="card">
+      <h3 style="font-size:17px">Importar en bloque (CSV)</h3>
+      <p class="sub" style="margin:4px 0 10px">Columnas reconocidas: nombre, telefono, operacion, tipo, zona, precio, precioAnterior, m2, habitaciones, publicado, fuente, url, descripcion. Separador «,» o «;».</p>
+      <input type="file" id="csvFile" accept=".csv,text/csv">
+    </div>
+  </section>
+
+  <!-- ==================== 3 · MIS LEADS ==================== -->
+  <section class="panel" id="panel-leads">
+    <div class="stats" id="stats"></div>
+
+    <div class="filters">
+      <div><label for="fTexto">Buscar</label><input id="fTexto" placeholder="Zona, teléfono, nombre…"></div>
+      <div><label for="fTemp">Temperatura</label><select id="fTemp"><option value="">Todas</option><option value="hot">Caliente</option><option value="warm">Templado</option><option value="cold">Frío</option></select></div>
+      <div><label for="fEstado">Estado</label><select id="fEstado"><option value="">Todos</option></select></div>
+      <div><label for="fOperacion">Operación</label><select id="fOperacion"><option value="">Todas</option><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select></div>
+      <div><label for="fOrden">Ordenar por</label><select id="fOrden"><option value="score">Intención</option><option value="seguimiento">Próximo seguimiento</option><option value="reciente">Más reciente</option></select></div>
+    </div>
+
+    <div id="leadList"></div>
+
+    <div class="row">
+      <button class="btn btn-outline" id="btnExport">Exportar CSV</button>
+    </div>
+  </section>
+
+  <!-- ==================== AJUSTES ==================== -->
+  <section class="panel" id="panel-ajustes">
+    <h2>Ajustes</h2>
+    <form class="card" id="settingsForm">
+      <div class="grid">
+        <div><label>Tu nombre</label><input name="agente"></div>
+        <div><label>Agencia</label><input name="agencia"></div>
+      </div>
+      <div style="margin-top:12px"><label>Mensaje de WhatsApp · venta</label><textarea name="msgVenta"></textarea></div>
+      <div style="margin-top:12px"><label>Mensaje de WhatsApp · alquiler</label><textarea name="msgAlquiler"></textarea></div>
+      <p class="meta" style="margin-top:6px">Variables: {nombre} {agente} {agencia} {tipo} {zona} {precio} {fuente}</p>
+      <div style="margin-top:12px"><label>Lista «No contactar» (un teléfono por línea)</label><textarea name="noContactar" placeholder="Propietarios que han pedido no ser contactados"></textarea></div>
+      <div class="row"><button class="btn btn-accent" type="submit">Guardar ajustes</button></div>
+    </form>
+
+    <div class="notice">
+      <b>Protección de datos (RGPD / LOPDGDD):</b> solo se tratan datos que el propietario ha publicado en su anuncio, con la finalidad de ofrecerle servicios de intermediación (interés legítimo, art. 6.1.f RGPD). En el primer contacto identifícate, explica de dónde has obtenido su teléfono y ofrécele no volver a contactarle. Si lo pide, pulsa «No contactar»: su teléfono se añade a la lista de exclusión y no podrá volver a importarse. Respeta los anuncios que indican «abstenerse agencias». No hagas llamadas comerciales automatizadas ni envíos masivos. Elimina los leads descartados que ya no necesites.
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:17px">Copia de seguridad</h3>
+      <p class="sub" style="margin:4px 0 10px">Los datos viven solo en este navegador. Exporta una copia con regularidad.</p>
+      <div class="row">
+        <button class="btn btn-outline" id="btnBackup">Descargar copia (JSON)</button>
+        <label class="btn btn-outline" style="margin:0">Restaurar copia<input type="file" id="restoreFile" accept=".json" hidden></label>
+        <button class="btn btn-outline" id="btnBorrarTodo" style="border-color:var(--hot); color:var(--hot)">Borrar todos los leads</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog id="noteDialog">
+  <h2 id="noteTitle">Seguimiento</h2>
+  <form method="dialog" id="noteForm">
+    <div class="grid" style="margin-top:12px">
+      <div><label>Próximo seguimiento</label><input type="date" name="seguimiento"></div>
+    </div>
+    <div style="margin-top:12px"><label>Añadir nota</label><textarea name="nota" placeholder="Qué habéis hablado, objeciones, siguiente paso…"></textarea></div>
+    <div id="noteHistory" class="meta" style="margin-top:12px; max-height:200px; overflow:auto"></div>
+    <div class="row">
+      <button class="btn btn-accent" value="save">Guardar</button>
+      <button class="btn btn-outline" value="cancel" formnovalidate>Cerrar</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN
+   ============================================================ */
+const STORAGE_KEY = 'leadMachine.v1';
+const ESTADOS = ['Nuevo', 'Contactado', 'Cita', 'Captado', 'Descartado', 'No contactar'];
+
+const DEFAULT_SETTINGS = {
+  agente: 'Rosa Rodríguez',
+  agencia: 'The Brokery',
+  msgVenta: 'Hola{nombre}, soy {agente}, agente inmobiliaria de {agencia}. He visto en {fuente} tu anuncio de {tipo} en {zona}. Trabajo con compradores que buscan justo en esa zona y me gustaría comentarte cómo podría ayudarte a vender más rápido y al mejor precio, sin compromiso. Si prefieres que no vuelva a escribirte, dímelo y no te molestaré más.',
+  msgAlquiler: 'Hola{nombre}, soy {agente}, agente inmobiliaria de {agencia}. He visto en {fuente} tu anuncio de alquiler de {tipo} en {zona}. Puedo ayudarte a encontrar inquilinos solventes y verificados, con contrato y garantías. ¿Te interesa que lo hablemos? Si prefieres que no vuelva a escribirte, dímelo y no te molestaré más.',
+  noContactar: ''
+};
+
+/* Señales de intención: cada coincidencia en el texto del anuncio suma puntos. */
+const SIGNALS = [
+  { label: 'Urgencia',        pts: 20, re: /\b(urge|urgente|urgencia|venta r[aá]pida|necesito vender|me urge)\b/i },
+  { label: 'Traslado',        pts: 15, re: /\b(traslado|me mudo|cambio de ciudad|nos vamos|por trabajo fuera)\b/i },
+  { label: 'Herencia',        pts: 15, re: /\b(herencia|heredad[oa]|herederos|proindiviso)\b/i },
+  { label: 'Separación',      pts: 15, re: /\b(divorcio|separaci[oó]n)\b/i },
+  { label: 'Precio rebajado', pts: 15, re: /\b(rebajad[oa]|bajada de precio|precio reducido|nuevo precio|ha bajado)\b/i },
+  { label: 'Negociable',      pts: 10, re: /\b(negociable|a negociar|escucho ofertas|acepto ofertas)\b/i },
+  { label: 'Oportunidad',     pts: 5,  re: /\b(oportunidad|ocasi[oó]n|por debajo de mercado)\b/i },
+  { label: 'Particular',      pts: 10, re: /\b(particular|propietario|due[ñn]o directo)\b/i }
+];
+const NO_AGENCIAS_RE = /(abstenerse|sin|no)\s+(agencias|inmobiliarias|intermediarios)/i;
+
+/* ============================================================
+   ESTADO Y PERSISTENCIA
+   ============================================================ */
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw){
+      const s = JSON.parse(raw);
+      return { leads: s.leads || [], settings: { ...DEFAULT_SETTINGS, ...(s.settings || {}) } };
+    }
+  }catch(e){}
+  return { leads: [], settings: { ...DEFAULT_SETTINGS } };
+}
+const state = loadState();
+function save(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch(e){ toast('No se pudo guardar en este navegador'); }
+}
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+const $ = sel => document.querySelector(sel);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtEur = n => n ? Number(n).toLocaleString('es-ES') + ' €' : '';
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const today = () => new Date().toISOString().slice(0, 10);
+
+function normPhone(p){
+  let d = String(p || '').replace(/\D/g, '');
+  if (d.startsWith('0034')) d = d.slice(4);
+  if (d.length === 11 && d.startsWith('34')) d = d.slice(2);
+  return d;
+}
+function blockedPhones(){
+  return new Set(state.settings.noContactar.split(/\n+/).map(normPhone).filter(Boolean));
+}
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove('show'), 2200);
+}
+function parseNum(s){
+  return Number(String(s).replace(/\./g, '').replace(',', '.')) || 0;
+}
+
+/* ============================================================
+   PUNTUACIÓN DE INTENCIÓN (0-100)
+   ============================================================ */
+function scoreLead(l){
+  const text = [l.descripcion, l.tipo, l.zona].join(' ');
+  const signals = [];
+  let score = 0;
+
+  SIGNALS.forEach(s => { if (s.re.test(text)){ score += s.pts; signals.push(s.label); } });
+
+  const precio = Number(l.precio), anterior = Number(l.precioAnterior);
+  if (anterior && precio && anterior > precio){
+    const pct = Math.round((1 - precio / anterior) * 100);
+    score += 15 + Math.min(pct, 15);
+    if (!signals.includes('Precio rebajado')) signals.push('Precio rebajado');
+    signals.push(`-${pct}%`);
+  }
+
+  if (l.publicado){
+    const days = Math.floor((Date.now() - new Date(l.publicado)) / 86400000);
+    if (days >= 0){
+      // Recién publicado: propietario activo. Muchos días: frustración, receptivo a ayuda.
+      if (days <= 7){ score += 10; signals.push('Recién publicado'); }
+      else if (days >= 120){ score += 25; signals.push(`${days} días anunciado`); }
+      else if (days >= 60){ score += 15; signals.push(`${days} días anunciado`); }
+    }
+  }
+
+  if (normPhone(l.telefono)) score += 10;
+
+  const noAgencias = NO_AGENCIAS_RE.test(text);
+  score = Math.min(100, score);
+  const temp = score >= 60 ? 'hot' : score >= 35 ? 'warm' : 'cold';
+  return { score, temp, signals, noAgencias };
+}
+const TEMP_LABEL = { hot: 'Caliente', warm: 'Templado', cold: 'Frío' };
+
+/* ============================================================
+   EXTRACCIÓN DE DATOS DESDE TEXTO PEGADO
+   ============================================================ */
+function extractFromText(raw){
+  const t = raw.replace(/ /g, ' ');
+  const out = { descripcion: t.trim().slice(0, 3000) };
+
+  const phone = t.match(/(?:\+?34[\s.-]?)?([6789]\d{2})[\s.-]?(\d{2,3})[\s.-]?(\d{2,3})[\s.-]?(\d{0,3})/);
+  if (phone){
+    const n = normPhone(phone[0]);
+    if (n.length === 9) out.telefono = n;
+  }
+
+  const prices = [...t.matchAll(/(\d{1,3}(?:[.\s]\d{3})+|\d{4,})\s?(?:€|eur)/gi)].map(m => parseNum(m[1].replace(/\s/g, '.')));
+  if (prices.length){
+    out.precio = prices[0];
+    // Los portales muestran el precio anterior junto al actual cuando hay bajada.
+    const higher = prices.slice(1, 4).find(p => p > out.precio && p < out.precio * 1.6);
+    if (higher) out.precioAnterior = higher;
+  }
+
+  const m2 = t.match(/(\d{2,4})\s?m(?:²|2|\s)/i);
+  if (m2) out.m2 = Number(m2[1]);
+
+  const hab = t.match(/(\d{1,2})\s?(?:hab\.?|habitaciones|dormitorios)/i);
+  if (hab) out.habitaciones = Number(hab[1]);
+
+  if (/alquil|arrend|\/mes|al mes/i.test(t)) out.operacion = 'alquiler';
+  else if (/venta|vendo|se vende/i.test(t)) out.operacion = 'venta';
+
+  const tipo = t.match(/\b(piso|chalet|[aá]tico|d[uú]plex|casa|estudio|apartamento|local|adosado|pareado)\b/i);
+  if (tipo) out.tipo = tipo[1].charAt(0).toUpperCase() + tipo[1].slice(1).toLowerCase();
+
+  const zona = t.match(/\ben\s+([A-ZÁÉÍÓÚÑ][\wáéíóúñ]+(?:\s+(?:de(?:l)?|la|las|los|[A-ZÁÉÍÓÚÑ][\wáéíóúñ]+))*)/);
+  if (zona) out.zona = zona[1];
+
+  const url = t.match(/https?:\/\/\S+/);
+  if (url) out.url = url[0];
+
+  const fuentes = { idealista: 'Idealista', fotocasa: 'Fotocasa', milanuncios: 'Milanuncios', wallapop: 'Wallapop', habitaclia: 'Habitaclia', pisos: 'Pisos.com', yaencontre: 'Yaencontré' };
+  for (const k in fuentes){ if (new RegExp(k, 'i').test(t)){ out.fuente = fuentes[k]; break; } }
+
+  const pub = t.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (pub) out.publicado = `${pub[3]}-${pub[2].padStart(2,'0')}-${pub[1].padStart(2,'0')}`;
+  else {
+    const hace = t.match(/hace\s+(\d+)\s+(d[ií]as?|semanas?|mes(?:es)?)/i);
+    if (hace){
+      const n = Number(hace[1]);
+      const mult = /sem/i.test(hace[2]) ? 7 : /mes/i.test(hace[2]) ? 30 : 1;
+      out.publicado = new Date(Date.now() - n * mult * 86400000).toISOString().slice(0, 10);
+    }
+  }
+  return out;
+}
+
+/* ============================================================
+   1 · BUSCAR — búsquedas de intención en portales
+   ============================================================ */
+function buildSearches(){
+  const zona = $('#qZona').value.trim();
+  if (!zona){ toast('Indica una zona'); return; }
+  const op = $('#qOperacion').value;
+  const tipo = $('#qTipo').value;
+  const senal = $('#qSenal').value;
+  const opWords = op === 'venta' ? '(vendo OR "se vende" OR venta)' : '(alquilo OR "se alquila" OR alquiler)';
+  const intent = senal ? `"${senal}"` : '(urge OR urgente OR rebajado OR negociable OR traslado OR herencia)';
+  const base = `"${zona}" ${tipo ? `"${tipo}"` : ''} ${opWords}`;
+
+  const portals = [
+    { name: 'Idealista · particulares', site: 'idealista.com', extra: '(particular OR "profesional: no")' },
+    { name: 'Fotocasa · particulares', site: 'fotocasa.es', extra: 'particular' },
+    { name: 'Milanuncios · particulares', site: 'milanuncios.com', extra: 'particular' },
+    { name: 'Wallapop inmobiliaria', site: 'es.wallapop.com', extra: '' },
+    { name: 'Habitaclia', site: 'habitaclia.com', extra: 'particular' },
+    { name: 'Pisos.com · particulares', site: 'pisos.com', extra: 'particular' }
+  ];
+  const g = q => 'https://www.google.com/search?tbs=qdr:m&q=' + encodeURIComponent(q.replace(/\s+/g, ' ').trim());
+
+  const items = portals.map(p => ({
+    title: p.name,
+    desc: 'Anuncios del último mes con señales de intención',
+    href: g(`site:${p.site} ${base} ${p.extra} ${intent}`)
+  }));
+  items.push(
+    { title: 'Facebook · grupos y Marketplace', desc: 'Particulares que publican fuera de portales', href: g(`site:facebook.com ${base} ${intent}`) },
+    { title: 'Cualquier web · "vendo mi casa"', desc: 'Propietarios que se anuncian por su cuenta', href: g(`"${zona}" ("vendo mi casa" OR "vendo mi piso" OR "alquilo mi piso" OR "sin intermediarios") ${tipo}`) }
+  );
+
+  $('#searchLinks').innerHTML = items.map(i =>
+    `<a href="${esc(i.href)}" target="_blank" rel="noopener"><b>${esc(i.title)}</b><small>${esc(i.desc)}</small></a>`
+  ).join('');
+}
+
+/* ============================================================
+   2 · CAPTAR — formulario y CSV
+   ============================================================ */
+const form = $('#leadForm');
+function formData(){
+  const o = {};
+  new FormData(form).forEach((v, k) => o[k] = typeof v === 'string' ? v.trim() : v);
+  return o;
+}
+function fillForm(data){
+  for (const k in data){ if (form.elements[k] && data[k] !== undefined) form.elements[k].value = data[k]; }
+  updatePreview();
+}
+function updatePreview(){
+  const r = scoreLead(formData());
+  $('#scorePreview').innerHTML = `Intención: <span class="badge ${r.temp}">${TEMP_LABEL[r.temp]} · ${r.score}</span>` +
+    (r.noAgencias ? ' <span class="badge warn">Pide no agencias</span>' : '');
+}
+
+function addLead(data, { silent } = {}){
+  const phone = normPhone(data.telefono);
+  if (phone && blockedPhones().has(phone)){
+    if (!silent) toast('Ese teléfono está en la lista «No contactar»');
+    return 'blocked';
+  }
+  const dup = state.leads.find(l =>
+    (phone && normPhone(l.telefono) === phone) || (data.url && l.url === data.url)
+  );
+  if (dup && dup.id !== data.id){
+    // Mismo propietario: actualiza precio para detectar bajadas.
+    if (data.precio && dup.precio && Number(data.precio) < Number(dup.precio)) dup.precioAnterior = dup.precio;
+    Object.keys(data).forEach(k => { if (data[k] && k !== 'id') dup[k] = data[k]; });
+    dup.actualizado = today();
+    if (!silent) toast('Lead existente actualizado');
+    return 'updated';
+  }
+  if (data.id){
+    const l = state.leads.find(x => x.id === data.id);
+    Object.assign(l, data, { actualizado: today() });
+    if (!silent) toast('Lead actualizado');
+    return 'updated';
+  }
+  state.leads.push({ ...data, id: uid(), estado: 'Nuevo', creado: today(), notas: [], seguimiento: '' });
+  if (!silent) toast('Lead guardado');
+  return 'added';
+}
+
+function parseCSV(text){
+  const sep = (text.split('\n')[0].match(/;/g) || []).length > (text.split('\n')[0].match(/,/g) || []).length ? ';' : ',';
+  const rows = [];
+  let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++){
+    const c = text[i];
+    if (q){
+      if (c === '"' && text[i + 1] === '"'){ cell += '"'; i++; }
+      else if (c === '"') q = false;
+      else cell += c;
+    } else if (c === '"') q = true;
+    else if (c === sep){ row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r'){
+      if (c === '\r' && text[i + 1] === '\n') i++;
+      row.push(cell); rows.push(row); row = []; cell = '';
+    } else cell += c;
+  }
+  if (cell || row.length){ row.push(cell); rows.push(row); }
+  const head = rows.shift().map(h => h.trim());
+  return rows.filter(r => r.some(c => c.trim())).map(r => Object.fromEntries(head.map((h, i) => [h, (r[i] || '').trim()])));
+}
+
+/* ============================================================
+   3 · MIS LEADS — listado, filtros y acciones
+   ============================================================ */
+function waLink(l){
+  const s = state.settings;
+  const tpl = l.operacion === 'alquiler' ? s.msgAlquiler : s.msgVenta;
+  const msg = tpl
+    .replace(/\{nombre\}/g, l.nombre ? ' ' + l.nombre : '')
+    .replace(/\{agente\}/g, s.agente)
+    .replace(/\{agencia\}/g, s.agencia)
+    .replace(/\{tipo\}/g, (l.tipo || 'tu vivienda').toLowerCase())
+    .replace(/\{zona\}/g, l.zona || 'tu zona')
+    .replace(/\{precio\}/g, fmtEur(l.precio))
+    .replace(/\{fuente\}/g, l.fuente || 'un portal inmobiliario');
+  return `https://wa.me/34${normPhone(l.telefono)}?text=${encodeURIComponent(msg)}`;
+}
+
+function renderStats(){
+  const scored = state.leads.map(l => ({ l, r: scoreLead(l) }));
+  const active = scored.filter(x => !['Descartado', 'No contactar'].includes(x.l.estado));
+  const due = active.filter(x => x.l.seguimiento && x.l.seguimiento <= today()).length;
+  const stats = [
+    ['Leads activos', active.length],
+    ['Calientes', active.filter(x => x.r.temp === 'hot').length],
+    ['Seguimientos hoy', due],
+    ['Citas', state.leads.filter(l => l.estado === 'Cita').length],
+    ['Captados', state.leads.filter(l => l.estado === 'Captado').length]
+  ];
+  $('#stats').innerHTML = stats.map(([k, v]) => `<div class="stat"><b>${v}</b><span>${k}</span></div>`).join('');
+}
+
+function renderLeads(){
+  renderStats();
+  const txt = $('#fTexto').value.toLowerCase();
+  const temp = $('#fTemp').value, est = $('#fEstado').value, op = $('#fOperacion').value, orden = $('#fOrden').value;
+
+  let list = state.leads.map(l => ({ l, r: scoreLead(l) })).filter(({ l, r }) =>
+    (!txt || [l.nombre, l.zona, l.telefono, l.tipo, l.descripcion].join(' ').toLowerCase().includes(txt)) &&
+    (!temp || r.temp === temp) && (!est || l.estado === est) && (!op || l.operacion === op)
+  );
+  list.sort((a, b) =>
+    orden === 'seguimiento' ? (a.l.seguimiento || '9999').localeCompare(b.l.seguimiento || '9999') :
+    orden === 'reciente' ? (b.l.creado || '').localeCompare(a.l.creado || '') :
+    b.r.score - a.r.score
+  );
+
+  if (!list.length){
+    $('#leadList').innerHTML = `<div class="empty">${state.leads.length ? 'Ningún lead coincide con los filtros.' : 'Aún no hay leads. Empieza por la pestaña «1 · Buscar».'}</div>`;
+    return;
+  }
+
+  $('#leadList').innerHTML = list.map(({ l, r }) => {
+    const due = l.seguimiento && l.seguimiento <= today();
+    const blocked = l.estado === 'No contactar';
+    const canWa = normPhone(l.telefono) && !blocked && !r.noAgencias;
+    return `
+    <article class="lead ${r.temp}">
+      <div class="lead-top">
+        <div>
+          <h3>${esc(l.tipo || 'Inmueble')} · ${esc(l.zona || 'Zona sin indicar')}</h3>
+          <div class="meta">
+            ${esc(l.operacion === 'alquiler' ? 'Alquiler' : 'Venta')} · ${fmtEur(l.precio)}
+            ${l.precioAnterior ? `<s>${fmtEur(l.precioAnterior)}</s>` : ''}
+            ${l.m2 ? ` · ${esc(l.m2)} m²` : ''}${l.habitaciones ? ` · ${esc(l.habitaciones)} hab.` : ''}
+            ${l.fuente ? ` · ${esc(l.fuente)}` : ''}
+          </div>
+          <div class="meta">${esc(l.nombre || '')} ${l.telefono ? '· ' + esc(l.telefono) : ''}</div>
+        </div>
+        <div>
+          <span class="badge ${r.temp}">${TEMP_LABEL[r.temp]} · ${r.score}</span>
+          <span class="badge">${esc(l.estado)}</span>
+          ${r.noAgencias ? '<span class="badge warn">Pide no agencias</span>' : ''}
+          ${due ? '<span class="badge hot">Seguimiento pendiente</span>' : ''}
+        </div>
+      </div>
+      ${r.signals.length ? `<div class="signals">Señales: ${r.signals.map(esc).join(' · ')}</div>` : ''}
+      ${l.notas && l.notas.length ? `<div class="signals">Última nota (${esc(l.notas[l.notas.length - 1].fecha)}): ${esc(l.notas[l.notas.length - 1].texto)}</div>` : ''}
+      <div class="lead-actions">
+        ${canWa ? `<a class="btn btn-wa btn-sm" href="${esc(waLink(l))}" target="_blank" rel="noopener" data-act="wa" data-id="${l.id}">WhatsApp</a>` : ''}
+        ${normPhone(l.telefono) && !blocked ? `<a class="btn btn-outline btn-sm" href="tel:+34${normPhone(l.telefono)}" data-act="call" data-id="${l.id}">Llamar</a>` : ''}
+        ${l.url ? `<a class="btn btn-outline btn-sm" href="${esc(l.url)}" target="_blank" rel="noopener">Anuncio</a>` : ''}
+        <button class="btn btn-outline btn-sm" data-act="note" data-id="${l.id}">Seguimiento</button>
+        <button class="btn btn-outline btn-sm" data-act="edit" data-id="${l.id}">Editar</button>
+        <select data-act="estado" data-id="${l.id}" aria-label="Estado">
+          ${ESTADOS.map(e => `<option ${e === l.estado ? 'selected' : ''}>${e}</option>`).join('')}
+        </select>
+        <button class="btn btn-outline btn-sm" data-act="del" data-id="${l.id}">Eliminar</button>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function setEstado(l, estado){
+  l.estado = estado;
+  if (estado === 'No contactar'){
+    // Derecho de oposición: el teléfono queda bloqueado para siempre y se borran sus datos.
+    const p = normPhone(l.telefono);
+    if (p && !blockedPhones().has(p)) state.settings.noContactar = (state.settings.noContactar + '\n' + p).trim();
+    state.leads = state.leads.filter(x => x !== l);
+    toast('Añadido a «No contactar» y datos eliminados');
+  }
+}
+
+let noteLeadId = null;
+function openNote(l){
+  noteLeadId = l.id;
+  $('#noteTitle').textContent = `Seguimiento · ${l.tipo || 'Inmueble'} ${l.zona ? '· ' + l.zona : ''}`;
+  const f = $('#noteForm');
+  f.elements.seguimiento.value = l.seguimiento || '';
+  f.elements.nota.value = '';
+  $('#noteHistory').innerHTML = (l.notas || []).slice().reverse().map(n => `<p><b>${esc(n.fecha)}</b> — ${esc(n.texto)}</p>`).join('') || 'Sin notas todavía.';
+  $('#noteDialog').showModal();
+}
+
+/* ============================================================
+   EXPORTACIÓN
+   ============================================================ */
+const CSV_COLS = ['nombre','telefono','operacion','tipo','zona','precio','precioAnterior','m2','habitaciones','publicado','fuente','url','estado','seguimiento','creado','descripcion'];
+function download(name, content, type){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], { type }));
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function exportCSV(){
+  const q = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const lines = [CSV_COLS.concat('intencion').join(';')].concat(
+    state.leads.map(l => CSV_COLS.map(c => q(l[c])).concat(scoreLead(l).score).join(';'))
+  );
+  download(`leads-${today()}.csv`, '﻿' + lines.join('\n'), 'text/csv;charset=utf-8');
+}
+
+/* ============================================================
+   EVENTOS
+   ============================================================ */
+document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b === btn));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + btn.dataset.tab));
+  if (btn.dataset.tab === 'leads') renderLeads();
+}));
+function goTab(name){ document.querySelector(`.tab[data-tab="${name}"]`).click(); }
+
+$('#btnGenerar').addEventListener('click', buildSearches);
+$('#qZona').addEventListener('keydown', e => { if (e.key === 'Enter') buildSearches(); });
+
+$('#btnExtraer').addEventListener('click', () => {
+  const raw = $('#rawText').value;
+  if (!raw.trim()){ toast('Pega primero el texto del anuncio'); return; }
+  form.reset();
+  fillForm(extractFromText(raw));
+  toast('Datos extraídos: revísalos antes de guardar');
+});
+form.addEventListener('input', updatePreview);
+form.addEventListener('reset', () => setTimeout(updatePreview));
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const data = formData();
+  if (!data.telefono && !data.url){ toast('Añade al menos teléfono o URL del anuncio'); return; }
+  if (addLead(data) === 'blocked') return;
+  save();
+  form.reset();
+  $('#rawText').value = '';
+});
+
+$('#csvFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  file.text().then(text => {
+    const counts = { added: 0, updated: 0, blocked: 0 };
+    parseCSV(text).forEach(row => {
+      ['precio', 'precioAnterior', 'm2', 'habitaciones'].forEach(k => { if (row[k]) row[k] = parseNum(row[k]); });
+      if (row.operacion) row.operacion = /alq/i.test(row.operacion) ? 'alquiler' : 'venta';
+      delete row.id;
+      counts[addLead(row, { silent: true })]++;
+    });
+    save();
+    toast(`${counts.added} nuevos · ${counts.updated} actualizados · ${counts.blocked} bloqueados`);
+    e.target.value = '';
+  });
+});
+
+['#fTexto', '#fTemp', '#fEstado', '#fOperacion', '#fOrden'].forEach(s => $(s).addEventListener('input', renderLeads));
+$('#fEstado').innerHTML += ESTADOS.filter(e => e !== 'No contactar').map(e => `<option>${e}</option>`).join('');
+
+$('#leadList').addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  const l = state.leads.find(x => x.id === el.dataset.id);
+  if (!l) return;
+  const act = el.dataset.act;
+  if (act === 'wa' || act === 'call'){
+    if (l.estado === 'Nuevo') l.estado = 'Contactado';
+    l.notas = l.notas || [];
+    l.notas.push({ fecha: today(), texto: act === 'wa' ? 'Primer contacto por WhatsApp' : 'Llamada' });
+    if (!l.seguimiento) l.seguimiento = new Date(Date.now() + 3 * 86400000).toISOString().slice(0, 10);
+    save();
+    setTimeout(renderLeads, 300);
+  } else if (act === 'note') openNote(l);
+  else if (act === 'edit'){
+    goTab('captar');
+    form.reset();
+    fillForm(l);
+    form.elements.id.value = l.id;
+    window.scrollTo(0, 0);
+  } else if (act === 'del'){
+    if (confirm('¿Eliminar este lead definitivamente?')){
+      state.leads = state.leads.filter(x => x !== l);
+      save(); renderLeads();
+    }
+  }
+});
+$('#leadList').addEventListener('change', e => {
+  const el = e.target.closest('[data-act="estado"]');
+  if (!el) return;
+  const l = state.leads.find(x => x.id === el.dataset.id);
+  if (el.value === 'No contactar' && !confirm('El teléfono se bloqueará y se borrarán los datos de este propietario. ¿Continuar?')){
+    el.value = l.estado; return;
+  }
+  setEstado(l, el.value);
+  save(); renderLeads();
+});
+
+$('#noteForm').addEventListener('submit', e => {
+  if (e.submitter && e.submitter.value !== 'save') return;
+  const l = state.leads.find(x => x.id === noteLeadId);
+  if (!l) return;
+  const f = e.target;
+  l.seguimiento = f.elements.seguimiento.value;
+  const txt = f.elements.nota.value.trim();
+  if (txt){ l.notas = l.notas || []; l.notas.push({ fecha: today(), texto: txt }); }
+  save(); renderLeads();
+});
+
+$('#btnExport').addEventListener('click', exportCSV);
+
+const sForm = $('#settingsForm');
+Object.keys(DEFAULT_SETTINGS).forEach(k => sForm.elements[k].value = state.settings[k]);
+sForm.addEventListener('submit', e => {
+  e.preventDefault();
+  Object.keys(DEFAULT_SETTINGS).forEach(k => state.settings[k] = sForm.elements[k].value);
+  // Aplica la lista de exclusión también a los leads ya guardados.
+  const blocked = blockedPhones();
+  const before = state.leads.length;
+  state.leads = state.leads.filter(l => !blocked.has(normPhone(l.telefono)));
+  save();
+  toast(before !== state.leads.length ? `Ajustes guardados · ${before - state.leads.length} leads excluidos` : 'Ajustes guardados');
+});
+
+$('#btnBackup').addEventListener('click', () => download(`leads-backup-${today()}.json`, JSON.stringify(state, null, 2), 'application/json'));
+$('#restoreFile').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  file.text().then(t => {
+    try{
+      const s = JSON.parse(t);
+      if (!Array.isArray(s.leads)) throw new Error();
+      state.leads = s.leads;
+      state.settings = { ...DEFAULT_SETTINGS, ...(s.settings || {}) };
+      Object.keys(DEFAULT_SETTINGS).forEach(k => sForm.elements[k].value = state.settings[k]);
+      save(); toast(`Copia restaurada · ${state.leads.length} leads`);
+    }catch(err){ toast('Archivo de copia no válido'); }
+    e.target.value = '';
+  });
+});
+$('#btnBorrarTodo').addEventListener('click', () => {
+  if (confirm('¿Borrar TODOS los leads? Esta acción no se puede deshacer.')){
+    state.leads = []; save(); renderLeads(); toast('Leads borrados');
+  }
+});
+
+updatePreview();
+</script>
+</body>
+</html>
