@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Herramienta interna: que no aparezca en Google. -->
 <meta name="robots" content="noindex, nofollow">
-<title>Radar de Particulares | Rosa Rodríguez</title>
+<title>Radar de Captación | Rosa Rodríguez</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23004225%22 font-family=%22Georgia,serif%22>R</text></svg>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 :root{
   --ev-black:#111111;
@@ -28,211 +29,356 @@ body{font-family:var(--font-sans);color:var(--ev-text);background:var(--ev-bg);l
 a{color:var(--ev-accent);}
 .wrap{max-width:1240px;margin:0 auto;padding:0 20px;}
 h1,h2,h3{font-family:var(--font-serif);font-weight:400;color:var(--ev-black);}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ev-accent);font-weight:700;}
 
-header{background:var(--ev-white);border-bottom:1px solid var(--ev-border);}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;flex-wrap:wrap;}
-.brand{display:flex;align-items:center;gap:12px;}
-.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid var(--ev-border);}
-.brand small{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ev-accent);font-weight:700;}
-.brand h1{font-size:22px;line-height:1.1;}
+/* ---------- Cabecera ---------- */
+header.bar{background:var(--ev-white);border-bottom:1px solid var(--ev-border);position:sticky;top:0;z-index:500;}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.brand img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:1px solid var(--ev-border);}
+.brand b{display:block;font-family:var(--font-serif);font-weight:400;font-size:18px;color:var(--ev-black);line-height:1.1;}
 .top-actions{display:flex;gap:8px;flex-wrap:wrap;}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:.4px;cursor:pointer;border:1px solid transparent;text-decoration:none;font-family:inherit;transition:background .2s,color .2s;}
+/* ---------- Hero ---------- */
+.hero{background:var(--ev-white);border-bottom:1px solid var(--ev-border);padding:44px 0 36px;}
+.hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:end;}
+.hero h1{font-size:clamp(30px,4.4vw,48px);line-height:1.1;margin:10px 0 18px;}
+.hero h1 em{font-style:normal;color:var(--ev-accent);}
+.zone-box{border:1px solid var(--ev-border);border-radius:var(--radius);padding:16px 18px;background:var(--ev-bg);}
+.zone-box .lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ev-gray);}
+.zone-box .zones{font-family:var(--font-serif);font-size:20px;color:var(--ev-black);margin:4px 0 10px;}
+.zone-box .tags{display:flex;gap:6px;flex-wrap:wrap;}
+.counter{text-align:right;}
+.counter b{display:block;font-family:var(--font-serif);font-weight:400;font-size:clamp(56px,8vw,88px);line-height:1;color:var(--ev-accent);}
+.counter span{font-size:14px;color:var(--ev-gray);}
+.counter .lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ev-black);font-weight:700;display:block;margin-bottom:6px;}
+.kpis{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:14px;}
+
+/* ---------- Botones / etiquetas ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:.3px;cursor:pointer;border:1px solid transparent;text-decoration:none;font-family:inherit;transition:background .2s,color .2s,border-color .2s;white-space:nowrap;}
 .btn-primary{background:var(--ev-black);color:#fff;}
 .btn-primary:hover{background:var(--ev-accent);}
 .btn-accent{background:var(--ev-accent);color:#fff;}
 .btn-accent:hover{background:var(--ev-black);}
 .btn-outline{background:#fff;border-color:var(--ev-border);color:var(--ev-black);}
 .btn-outline:hover{border-color:var(--ev-black);}
+.btn-outline.on{background:var(--ev-black);color:#fff;border-color:var(--ev-black);}
 .btn-wa{background:#25D366;color:#fff;}
 .btn-wa:hover{background:#1ebe57;}
-.btn-sm{padding:6px 10px;font-size:12px;}
+.btn-sm{padding:6px 11px;font-size:12px;}
 .btn-danger{background:#fff;border-color:#e8c4c1;color:var(--hot);}
+.btn[disabled]{opacity:.45;cursor:not-allowed;}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:3px 9px;border-radius:999px;background:#fff;border:1px solid var(--ev-border);color:var(--ev-text);white-space:nowrap;}
+.tag.dark{background:var(--ev-black);border-color:var(--ev-black);color:#fff;}
+.tag.green{background:var(--ev-accent-soft);border-color:#c8dccf;color:var(--ev-accent);}
+.tag.red{background:var(--hot-soft);border-color:#f2c7c2;color:var(--hot);}
+.tag.amber{background:var(--warm-soft);border-color:#f0dca4;color:var(--warm);}
+.tag.strong{font-weight:700;}
 
-main{padding:24px 0 60px;}
-.intro{color:var(--ev-gray);font-size:15px;margin-bottom:20px;max-width:780px;}
+/* ---------- Barra de búsqueda ---------- */
+.toolbar{padding:22px 0 8px;}
+.search{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--ev-border);border-radius:6px;font-size:14px;font-family:inherit;background:#fff;color:var(--ev-text);}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ev-accent);}
+label.f{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ev-gray);margin-bottom:4px;}
+.filters{display:none;background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:16px;margin-top:10px;grid-template-columns:repeat(4,1fr);gap:12px;}
+.filters.open{display:grid;}
+.filters .chk{display:flex;align-items:center;gap:8px;font-size:14px;padding-top:20px;}
+.filters .chk input{width:auto;}
+.results-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 14px;}
+.results-bar h2{font-size:22px;}
+.results-bar .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.results-bar .right select{width:auto;}
+.sort-lbl{font-size:13px;color:var(--ev-gray);}
 
-/* KPIs */
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px;}
-.kpi{background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:14px 16px;}
-.kpi b{display:block;font-family:var(--font-serif);font-size:28px;font-weight:400;color:var(--ev-black);line-height:1.1;}
-.kpi span{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ev-gray);}
-.kpi.hot b{color:var(--hot);}
-.kpi.ok b{color:var(--ev-accent);}
+/* ---------- Tarjetas ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.card{background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s;}
+.card:hover{box-shadow:0 8px 26px rgba(0,0,0,.07);transform:translateY(-2px);}
+.photo{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,#ece9e2,#ddd8cc);overflow:hidden;}
+.photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#8a857a;font-size:13px;}
+.photo .ph svg{width:34px;height:34px;opacity:.6;}
+.photo .tl{position:absolute;top:10px;left:10px;display:flex;gap:6px;flex-wrap:wrap;}
+.photo .tr{position:absolute;top:10px;right:10px;}
+.photo .bl{position:absolute;left:10px;bottom:10px;right:10px;display:flex;gap:6px;flex-wrap:wrap;}
+.photo .note{position:absolute;right:10px;bottom:10px;font-size:10.5px;background:rgba(0,0,0,.55);color:#fff;padding:2px 7px;border-radius:4px;}
+.card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.price-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+.price{font-family:var(--font-serif);font-size:24px;color:var(--ev-black);}
+.ppm2{font-size:13px;color:var(--ev-gray);white-space:nowrap;}
+.drop{font-size:12px;color:var(--hot);font-weight:600;}
+.card h3{font-size:16px;line-height:1.3;}
+.card .loc{font-size:13px;color:var(--ev-gray);}
+.facts{display:flex;gap:14px;font-size:13px;color:var(--ev-text);flex-wrap:wrap;}
+.facts span{display:flex;align-items:center;gap:4px;}
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--ev-border);padding-top:10px;margin-top:auto;font-size:12px;color:var(--ev-gray);flex-wrap:wrap;}
+.card-foot .who{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.next-due{font-size:12px;color:var(--hot);font-weight:600;}
 
-/* Panels */
-.panel{background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:18px;margin-bottom:20px;}
+.pager{display:flex;justify-content:center;align-items:center;gap:12px;margin:24px 0 8px;font-size:14px;color:var(--ev-gray);}
+.empty{grid-column:1/-1;text-align:center;color:var(--ev-gray);padding:50px 16px;border:1px dashed var(--ev-border);border-radius:var(--radius);background:#fff;}
+.empty .btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px;}
+
+#map{height:600px;border-radius:var(--radius);border:1px solid var(--ev-border);display:none;}
+#map.on{display:block;}
+.map-pop{font-family:var(--font-sans);min-width:180px;}
+.map-pop b{font-family:var(--font-serif);font-weight:400;font-size:17px;display:block;}
+
+/* ---------- Rastreo ---------- */
+.panel{background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:18px;margin-top:28px;}
 .panel h2{font-size:19px;margin-bottom:4px;}
-.panel .sub{color:var(--ev-gray);font-size:13px;margin-bottom:14px;}
-.search-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.panel .sub{color:var(--ev-gray);font-size:13px;margin-bottom:12px;}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
 
-.filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;}
-label.f{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ev-gray);margin-bottom:4px;}
-input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--ev-border);border-radius:6px;font-size:14px;font-family:inherit;background:#fcfcfb;color:var(--ev-text);}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ev-accent);}
-
-/* Pipeline tabs */
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
-.tab{padding:8px 14px;border-radius:999px;border:1px solid var(--ev-border);background:#fff;font-size:13px;cursor:pointer;font-family:inherit;color:var(--ev-text);}
-.tab.active{background:var(--ev-black);color:#fff;border-color:var(--ev-black);}
-.tab .n{opacity:.7;margin-left:4px;}
-
-/* Cards */
-.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;}
-.card{background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;gap:10px;}
-.card.hot{border-left:4px solid var(--hot);}
-.card.warm{border-left:4px solid var(--warm);}
-.card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
-.card h3{font-size:17px;line-height:1.25;}
-.card .zone{font-size:13px;color:var(--ev-gray);}
-.price{font-family:var(--font-serif);font-size:22px;color:var(--ev-black);white-space:nowrap;text-align:right;}
-.price small{display:block;font-family:var(--font-sans);font-size:12px;color:var(--ev-gray);}
-.drop{color:var(--hot);font-size:12px;font-family:var(--font-sans);font-weight:600;}
-.meta{display:flex;flex-wrap:wrap;gap:6px;}
-.pill{font-size:11.5px;padding:3px 8px;border-radius:999px;background:var(--ev-bg);border:1px solid var(--ev-border);color:var(--ev-text);}
-.pill.score-hot{background:var(--hot-soft);border-color:#f2c7c2;color:var(--hot);font-weight:700;}
-.pill.score-warm{background:var(--warm-soft);border-color:#f0dca4;color:var(--warm);font-weight:700;}
-.pill.score-cold{background:var(--ev-accent-soft);border-color:#c8dccf;color:var(--ev-accent);font-weight:700;}
-.pill.below{background:var(--ev-accent-soft);border-color:#c8dccf;color:var(--ev-accent);}
-.pill.above{background:var(--hot-soft);border-color:#f2c7c2;color:var(--hot);}
-.notes{font-size:13px;color:#555;background:var(--ev-bg);border-radius:6px;padding:8px 10px;white-space:pre-wrap;}
-.next{font-size:12.5px;color:var(--ev-black);}
-.next.late{color:var(--hot);font-weight:600;}
-.card-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:auto;}
-.card-actions select{width:auto;padding:6px 8px;font-size:12px;}
-.empty{text-align:center;color:var(--ev-gray);padding:40px 10px;border:1px dashed var(--ev-border);border-radius:var(--radius);background:#fff;}
-
-/* Modal */
-dialog{border:none;border-radius:12px;padding:0;width:min(720px,calc(100% - 24px));max-height:calc(100vh - 24px);box-shadow:0 20px 60px rgba(0,0,0,.25);}
+/* ---------- Diálogos ---------- */
+dialog{border:none;border-radius:12px;padding:0;width:min(760px,calc(100% - 24px));max-height:calc(100vh - 24px);box-shadow:0 20px 60px rgba(0,0,0,.25);margin:auto;}
 dialog::backdrop{background:rgba(17,17,17,.45);}
-.modal-head{padding:18px 20px;border-bottom:1px solid var(--ev-border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;}
+.modal-head{padding:16px 20px;border-bottom:1px solid var(--ev-border);display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:0;background:#fff;z-index:2;}
 .modal-head h2{font-size:20px;}
 .modal-body{padding:18px 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .modal-body .full{grid-column:1/-1;}
-.modal-foot{padding:14px 20px;border-top:1px solid var(--ev-border);display:flex;justify-content:flex-end;gap:8px;position:sticky;bottom:0;background:#fff;}
+.modal-body .chk{display:flex;align-items:center;gap:8px;font-size:14px;}
+.modal-body .chk input{width:auto;}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--ev-border);display:flex;justify-content:flex-end;gap:8px;position:sticky;bottom:0;background:#fff;flex-wrap:wrap;}
 .close{background:none;border:none;font-size:26px;cursor:pointer;color:var(--ev-gray);line-height:1;}
-.tpl-preview{font-size:14px;min-height:170px;}
 .hint{font-size:12px;color:var(--ev-gray);}
+.detail-photo{aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:linear-gradient(135deg,#ece9e2,#ddd8cc);position:relative;}
+.detail-photo img{width:100%;height:100%;object-fit:cover;}
+.dl{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.dl div{background:var(--ev-bg);border-radius:6px;padding:10px;}
+.dl small{display:block;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ev-gray);}
+.dl b{font-weight:600;color:var(--ev-black);}
+.notes{font-size:14px;background:var(--ev-bg);border-radius:6px;padding:10px 12px;white-space:pre-wrap;}
+.warn{background:var(--hot-soft);border:1px solid #f2c7c2;color:var(--hot);border-radius:6px;padding:10px 12px;font-size:13.5px;}
+.log{font-size:13px;color:var(--ev-gray);list-style:none;}
+.log li{padding:4px 0;border-bottom:1px solid var(--ev-border);}
 
-.legal{font-size:12px;color:var(--ev-gray);margin-top:28px;border-top:1px solid var(--ev-border);padding-top:14px;}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ev-black);color:#fff;padding:10px 18px;border-radius:6px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:50;}
+footer{border-top:1px solid var(--ev-border);background:#fff;margin-top:36px;padding:22px 0;font-size:12px;color:var(--ev-gray);}
+footer .brandline{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ev-black);font-weight:700;margin-bottom:6px;}
+#lock{display:none;position:fixed;inset:0;z-index:3000;background:var(--ev-bg);align-items:center;justify-content:center;padding:16px;}
+body.locked #lock{display:flex;}
+body.locked > :not(#lock):not(script){display:none !important;}
+.lock-card{background:#fff;border:1px solid var(--ev-border);border-radius:12px;padding:32px 28px;width:min(400px,100%);text-align:center;display:flex;flex-direction:column;gap:12px;}
+.lock-card img{width:72px;height:72px;border-radius:50%;object-fit:cover;margin:0 auto;border:1px solid var(--ev-border);}
+.lock-card h1{font-size:26px;}
+.lock-card p{font-size:14px;color:var(--ev-gray);}
+#lockErr{color:var(--hot);font-size:13px;min-height:18px;}
+.nav-tabs{display:flex;gap:4px;}
+.nav-tab{background:none;border:none;border-bottom:2px solid transparent;padding:8px 12px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;color:#333;font-family:inherit;}
+.nav-tab.on{border-color:var(--ev-accent);color:var(--ev-accent);font-weight:700;}
+.view{display:none;} .view.on{display:block;}
+.today-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 22px;}
+.today-kpis div{background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:16px 18px;}
+.today-kpis b{display:block;font-family:var(--font-serif);font-weight:400;font-size:40px;line-height:1;color:var(--ev-black);}
+.today-kpis .late b{color:var(--hot);} .today-kpis .due b{color:var(--warm);}
+.today-kpis span{font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ev-gray);}
+.task-group{margin-bottom:22px;}
+.task-group h3{font-size:18px;margin-bottom:10px;}
+.task{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:10px;margin-bottom:8px;}
+.task.late{border-left:4px solid var(--hot);} .task.due{border-left:4px solid var(--warm);}
+.task .thumb{width:72px;height:56px;border-radius:6px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,#ece9e2,#ddd8cc);}
+.task .thumb img{width:100%;height:100%;object-fit:cover;}
+.task .info{flex:1;min-width:0;}
+.task .info b{display:block;font-weight:600;color:var(--ev-black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.task .info small{color:var(--ev-gray);font-size:12.5px;}
+.task .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.call-box{background:var(--ev-bg);border-radius:8px;padding:12px;display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;}
+.ad-link{font-weight:600;}
+@media (max-width:620px){ .today-kpis b{font-size:30px;} .task{flex-wrap:wrap;} .task .acts{width:100%;justify-content:flex-start;} .call-box{grid-template-columns:1fr;} .nav-tab{padding:8px 6px;font-size:11.5px;} }
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ev-black);color:#fff;padding:10px 18px;border-radius:6px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:2000;}
 .toast.show{opacity:1;}
 
-@media (max-width:980px){
-  .kpis{grid-template-columns:repeat(3,1fr);}
+@media (max-width:1000px){
+  .grid{grid-template-columns:repeat(2,1fr);}
+  .hero-grid{grid-template-columns:1fr;}
+  .counter,.kpis{text-align:left;justify-content:flex-start;}
   .filters{grid-template-columns:1fr 1fr;}
-  .filters .grow{grid-column:1/-1;}
+  .search{grid-template-columns:1fr 1fr;}
+  .search .grow{grid-column:1/-1;}
 }
-@media (max-width:560px){
+@media (max-width:620px){
   .wrap{padding:0 16px;}
-  .kpis{grid-template-columns:repeat(2,1fr);}
-  .list{grid-template-columns:1fr;}
+  .grid{grid-template-columns:1fr;}
   .modal-body{grid-template-columns:1fr;}
-  .brand h1{font-size:19px;}
+  .dl{grid-template-columns:1fr 1fr;}
+  .top-actions .hide-m{display:none;}
+  #map{height:460px;}
 }
 </style>
 </head>
-<body>
+<body class="locked">
 
-<header>
+<div id="lock">
+  <form id="lockForm" class="lock-card">
+    <img src="rosa.png" alt="">
+    <span class="eyebrow">Rosa Rodríguez · Radar de captación</span>
+    <h1 id="lockTitle">Acceso privado</h1>
+    <p id="lockSub"></p>
+    <input type="password" id="lockPw" placeholder="Contraseña" required aria-label="Contraseña">
+    <div id="lockPw2Wrap" hidden><input type="password" id="lockPw2" placeholder="Repite la contraseña" autocomplete="new-password" aria-label="Repite la contraseña"></div>
+    <div id="lockErr" role="alert"></div>
+    <button class="btn btn-primary" id="lockBtn" type="submit">Entrar</button>
+  </form>
+</div>
+
+<header class="bar">
   <div class="wrap top">
-    <div class="brand">
+    <a class="brand" href="index.html">
       <img src="rosa.png" alt="Rosa Rodríguez">
-      <div>
-        <small>Rosa Rodríguez · Captación</small>
-        <h1>Radar de Particulares</h1>
-      </div>
-    </div>
+      <div><b>Rosa Rodríguez</b><span class="eyebrow" style="letter-spacing:2px;font-size:10px">Radar de captación</span></div>
+    </a>
+    <nav class="nav-tabs">
+      <button class="nav-tab on" data-view="today">Mi trabajo de hoy</button>
+      <button class="nav-tab" data-view="list">Inmuebles</button>
+    </nav>
     <div class="top-actions">
-      <button class="btn btn-accent" id="addBtn">+ Añadir particular</button>
-      <button class="btn btn-outline" id="exportBtn">Exportar CSV</button>
-      <button class="btn btn-outline" id="backupBtn">Copia de seguridad</button>
-      <label class="btn btn-outline" for="importFile" style="margin:0">Restaurar</label>
+      <button class="btn btn-accent" id="addBtn">+ Añadir inmueble</button>
+      <button class="btn btn-outline" id="lockOut" title="Bloquear el radar">🔒 Bloquear</button>
+      <button class="btn btn-outline hide-m" id="exportBtn">Exportar CSV</button>
+      <button class="btn btn-outline hide-m" id="backupBtn">Copia de seguridad</button>
+      <label class="btn btn-outline hide-m" for="importFile" style="margin:0">Restaurar</label>
       <input type="file" id="importFile" accept=".json,application/json" hidden>
     </div>
   </div>
 </header>
 
-<main class="wrap">
-  <p class="intro">Tu panel para detectar viviendas que venden propietarios sin agencia, priorizar a quién llamar primero y llevar el seguimiento hasta conseguir la exclusiva. Todo se guarda solo en este navegador.</p>
+<section class="view on" id="view-today">
+  <div class="hero"><div class="wrap">
+    <span class="eyebrow">Rosa Rodríguez · Inteligencia inmobiliaria</span>
+    <h1 style="font-size:clamp(28px,4vw,42px);margin:10px 0 6px">Mi trabajo de hoy</h1>
+    <p style="color:var(--ev-gray)">Empieza por las acciones vencidas y las primeras llamadas pendientes.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="today-kpis">
+      <div><b id="tMine">0</b><span>Mis viviendas</span></div>
+      <div class="late"><b id="tLate">0</b><span>Acciones vencidas</span></div>
+      <div class="due"><b id="tDue">0</b><span>Pendientes de hoy</span></div>
+    </div>
+    <input id="tq" placeholder="Buscar una vivienda…" aria-label="Buscar una vivienda" style="margin-bottom:20px">
+    <div id="todayList"></div>
+  </div>
+</section>
 
-  <section class="kpis" id="kpis"></section>
+<div class="view" id="view-list">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Rosa Rodríguez · Inteligencia inmobiliaria</span>
+      <h1>El siguiente paso de tu <em>captación</em> empieza aquí.</h1>
+      <div class="zone-box">
+        <div class="lbl">Tu zona de captación <button class="btn btn-outline btn-sm" id="editZones" style="margin-left:6px;padding:2px 8px">Editar</button></div>
+        <div class="zones" id="zonesTxt"></div>
+        <div class="tags"><span class="tag">Venta y alquiler</span><span class="tag dark">Solo propietarios</span></div>
+      </div>
+    </div>
+    <div class="counter">
+      <span class="lbl">Oportunidades de captación</span>
+      <b id="countBig">0</b>
+      <span>Propietarios particulares, reunidos en un único lugar.</span>
+      <div class="kpis" id="kpis"></div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="toolbar">
+    <div class="search">
+      <div class="grow"><input id="q" placeholder="Buscar por zona, inmueble o portal…" aria-label="Buscar"></div>
+      <select id="fZone" aria-label="Zona"></select>
+      <select id="fPortal" aria-label="Portal"></select>
+      <button class="btn btn-outline" id="filtersBtn">Filtros</button>
+    </div>
+    <div class="filters" id="filters">
+      <div><label class="f" for="fOp">Operación</label><select id="fOp"><option value="">Venta y alquiler</option><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select></div>
+      <div><label class="f" for="fType">Tipo</label><select id="fType"></select></div>
+      <div><label class="f" for="fStatus">Estado</label><select id="fStatus"></select></div>
+      <div><label class="f" for="fRooms">Habitaciones</label><select id="fRooms"><option value="">Cualquiera</option><option value="1">1+</option><option value="2">2+</option><option value="3">3+</option><option value="4">4+</option></select></div>
+      <div><label class="f" for="fMin">Precio mínimo (€)</label><input id="fMin" type="number" min="0" placeholder="Sin mínimo"></div>
+      <div><label class="f" for="fMax">Precio máximo (€)</label><input id="fMax" type="number" min="0" placeholder="Sin máximo"></div>
+      <label class="chk"><input type="checkbox" id="fHideNoAg"> Ocultar "no desea agencias"</label>
+      <label class="chk"><input type="checkbox" id="fDue"> Solo seguimientos pendientes</label>
+    </div>
+  </div>
+
+  <div class="results-bar">
+    <h2 id="resultsTitle">0 inmuebles de particulares</h2>
+    <div class="right">
+      <span class="sort-lbl">Ordenar por:</span>
+      <select id="fSort">
+        <option value="recent">Más recientes</option>
+        <option value="score">Prioridad de captación</option>
+        <option value="next">Próximo seguimiento</option>
+        <option value="priceAsc">Precio ↑</option>
+        <option value="priceDesc">Precio ↓</option>
+        <option value="ppm2">€/m² ↑</option>
+      </select>
+      <button class="btn btn-outline" id="mapBtn">Mapa</button>
+    </div>
+  </div>
+
+  <section class="grid" id="grid"></section>
+  <div id="map"></div>
+  <div class="pager" id="pager"></div>
 
   <section class="panel">
-    <h2>1. Rastrear anuncios de particulares</h2>
-    <p class="sub">Escribe una zona y abre la búsqueda en cada portal. Copia los anuncios interesantes y añádelos al radar.</p>
-    <div class="search-row">
-      <input id="zoneSearch" placeholder="Zona, barrio o ciudad (ej. Boadilla del Monte)" style="flex:1;min-width:220px">
-      <select id="opSearch" style="width:auto">
-        <option value="venta">Venta</option>
-        <option value="alquiler">Alquiler</option>
-      </select>
+    <h2>Rastrear nuevos anuncios de particulares</h2>
+    <p class="sub">Abre la búsqueda de particulares en cada portal para tu zona y añade al radar los anuncios que te interesen.</p>
+    <div class="search" style="grid-template-columns:2fr 1fr">
+      <input id="zoneSearch" placeholder="Zona (vacío = toda tu zona de captación)">
+      <select id="opSearch"><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select>
     </div>
     <div class="chips" id="portalLinks"></div>
   </section>
-
-  <section class="panel">
-    <h2>2. Tu cartera de particulares</h2>
-    <p class="sub">Los más calientes salen primero: llevan tiempo publicados, han bajado de precio o están por debajo del precio de la zona.</p>
-    <div class="tabs" id="tabs"></div>
-    <div class="filters">
-      <div class="grow"><label class="f" for="q">Buscar</label><input id="q" placeholder="Dirección, nombre, teléfono, notas…"></div>
-      <div><label class="f" for="fZone">Zona</label><select id="fZone"></select></div>
-      <div><label class="f" for="fType">Tipo</label><select id="fType"></select></div>
-      <div><label class="f" for="fPortal">Portal</label><select id="fPortal"></select></div>
-      <div><label class="f" for="fSort">Ordenar por</label>
-        <select id="fSort">
-          <option value="score">Prioridad</option>
-          <option value="next">Próxima acción</option>
-          <option value="recent">Más recientes</option>
-          <option value="priceAsc">Precio ↑</option>
-          <option value="priceDesc">Precio ↓</option>
-        </select>
-      </div>
-    </div>
-  </section>
-
-  <section class="list" id="list"></section>
-
-  <section class="panel" style="margin-top:20px">
-    <h2>Precio de referencia por zona</h2>
-    <p class="sub">Indica el €/m² medio de cada zona para que el radar marque qué anuncios están por encima o por debajo de mercado. Formato: <code>Zona = 3500</code>, una por línea.</p>
-    <textarea id="zonePrices" rows="4" placeholder="Boadilla del Monte = 3400&#10;Pozuelo de Alarcón = 4800&#10;Majadahonda = 3900"></textarea>
-    <div style="margin-top:8px"><button class="btn btn-primary btn-sm" id="saveZonePrices">Guardar precios de zona</button></div>
-  </section>
-
-  <p class="legal">
-    <strong>Uso responsable de los datos.</strong> Guarda solo los datos de contacto que el propietario ha publicado en su anuncio y úsalos únicamente para ofrecerle tus servicios sobre esa vivienda. Respeta los anuncios que indican "abstenerse agencias", identifícate siempre como agente inmobiliaria en el primer mensaje y borra la ficha si el propietario te pide no volver a contactarle (RGPD y LOPDGDD). Los datos se guardan solo en este navegador: haz copias de seguridad con regularidad.
-  </p>
 </main>
+</div>
 
-<!-- Modal: añadir / editar -->
+<footer>
+  <div class="wrap">
+    <div class="brandline">Rosa Rodríguez · Radar de captación</div>
+    <p><strong>Uso responsable de los datos.</strong> Guarda solo los datos que el propietario ha publicado en su anuncio y úsalos únicamente para ofrecerle tus servicios sobre esa vivienda. Respeta los anuncios marcados "no desea agencias", identifícate siempre como agente inmobiliaria y borra la ficha si el propietario pide no ser contactado (RGPD y LOPDGDD). Usa solo fotos que tengas derecho a mostrar. Los datos se guardan solo en este navegador: haz copias de seguridad con regularidad.</p>
+  </div>
+</footer>
+
+<!-- ===== Ficha ===== -->
+<dialog id="detailDlg">
+  <div class="modal-head"><h2 id="dTitle"></h2><button type="button" class="close" data-close aria-label="Cerrar">&times;</button></div>
+  <div class="modal-body" id="dBody"></div>
+  <div class="modal-foot" id="dFoot"></div>
+</dialog>
+
+<!-- ===== Añadir / editar ===== -->
 <dialog id="editDlg">
-  <form id="editForm" method="dialog">
-    <div class="modal-head"><h2 id="editTitle">Añadir particular</h2><button type="button" class="close" data-close>&times;</button></div>
+  <form id="editForm">
+    <div class="modal-head"><h2 id="editTitle">Añadir inmueble</h2><button type="button" class="close" data-close aria-label="Cerrar">&times;</button></div>
     <div class="modal-body">
-      <div class="full"><label class="f">Enlace del anuncio</label><input name="url" type="url" placeholder="https://…"></div>
-      <div class="full"><label class="f">Título o dirección *</label><input name="title" required placeholder="Ej. Piso 3 hab. con terraza, C/ Valle Inclán"></div>
-      <div><label class="f">Zona *</label><input name="zone" required list="zoneList" placeholder="Ej. Boadilla del Monte"></div>
+      <div class="full"><label class="f">Enlace del anuncio</label><input name="url" type="url" placeholder="https://www.idealista.com/inmueble/…"></div>
+      <div class="full"><label class="f">Título *</label><input name="title" required placeholder="Ej. Chalet pareado con parcela junto al Zoco"></div>
+      <div><label class="f">Municipio / zona *</label><input name="zone" required list="zoneList"></div>
+      <div><label class="f">Barrio o dirección</label><input name="area" placeholder="Ej. Punta Galea"></div>
       <div><label class="f">Portal</label>
-        <select name="portal"><option>Idealista</option><option>Fotocasa</option><option>Habitaclia</option><option>Milanuncios</option><option>Wallapop</option><option>Pisos.com</option><option>Cartel en la calle</option><option>Referido</option><option>Otro</option></select>
-      </div>
-      <div><label class="f">Tipo</label>
-        <select name="type"><option>Piso</option><option>Ático</option><option>Chalet</option><option>Adosado</option><option>Dúplex</option><option>Estudio</option><option>Local</option><option>Terreno</option><option>Otro</option></select>
-      </div>
+        <select name="portal"><option>Idealista</option><option>Fotocasa</option><option>Habitaclia</option><option>Milanuncios</option><option>Wallapop</option><option>Pisos.com</option><option>Cartel en la calle</option><option>Referido</option><option>Otro</option></select></div>
       <div><label class="f">Operación</label><select name="op"><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select></div>
-      <div><label class="f">Precio actual (€)</label><input name="price" type="number" min="0" step="1000"></div>
-      <div><label class="f">Precio inicial (€)</label><input name="priceInitial" type="number" min="0" step="1000" placeholder="Si ha bajado de precio"></div>
+      <div><label class="f">Tipo</label>
+        <select name="type"><option>Piso</option><option>Bajo</option><option>Ático</option><option>Dúplex</option><option>Chalet</option><option>Pareado</option><option>Adosado</option><option>Estudio</option><option>Local</option><option>Terreno</option><option>Otro</option></select></div>
+      <div><label class="f">Precio (€ o €/mes) *</label><input name="price" type="number" min="0" required></div>
+      <div><label class="f">Precio inicial (si ha bajado)</label><input name="priceInitial" type="number" min="0"></div>
       <div><label class="f">Superficie (m²)</label><input name="m2" type="number" min="0"></div>
       <div><label class="f">Habitaciones</label><input name="rooms" type="number" min="0"></div>
       <div><label class="f">Publicado el</label><input name="published" type="date"></div>
+      <div class="full"><label class="f">Foto (enlace a la imagen)</label><input name="photo" type="url" placeholder="Opcional: clic derecho en la foto → Copiar dirección de imagen">
+        <label class="chk" style="margin-top:6px"><input type="checkbox" name="photoAI"> Foto con edición IA indicada en el anuncio</label></div>
+      <div><label class="f">Verificación</label>
+        <select name="verified"><option value="si">Publicación comprobada</option><option value="no">Acceso no comprobable</option><option value="">Sin comprobar</option></select></div>
       <div><label class="f">Estado</label><select name="status"></select></div>
-      <div><label class="f">Nombre del propietario</label><input name="owner"></div>
+      <label class="chk full"><input type="checkbox" name="noAgencies"> El anunciante no desea agencias</label>
+      <div><label class="f">Propietario</label><input name="owner"></div>
       <div><label class="f">Teléfono</label><input name="phone" type="tel" placeholder="+34 600 000 000"></div>
-      <div><label class="f">Próxima acción (fecha)</label><input name="nextDate" type="date"></div>
-      <div><label class="f">¿Qué hay que hacer?</label><input name="nextAction" placeholder="Ej. Volver a llamar, enviar valoración…"></div>
-      <div class="full"><label class="f">Notas</label><textarea name="notes" rows="3" placeholder="Motivo de venta, urgencia, objeciones, si acepta agencias…"></textarea></div>
+      <div><label class="f">Asignado a</label><input name="assigned" placeholder="Sin asignar"></div>
+      <div><label class="f">Coordenadas (opcional)</label><input name="coords" placeholder="40.4929, -3.8737 (de Google Maps)"></div>
+      <div><label class="f">Próximo seguimiento</label><input name="nextDate" type="date"></div>
+      <div><label class="f">¿Qué hay que hacer?</label><input name="nextAction" placeholder="Ej. Volver a llamar"></div>
+      <div class="full"><label class="f">Notas</label><textarea name="notes" rows="3" placeholder="Motivo de venta, urgencia, objeciones…"></textarea></div>
     </div>
     <div class="modal-foot">
       <button type="button" class="btn btn-danger" id="deleteBtn" hidden>Eliminar</button>
@@ -244,13 +390,14 @@ dialog::backdrop{background:rgba(17,17,17,.45);}
 </dialog>
 <datalist id="zoneList"></datalist>
 
-<!-- Modal: mensaje WhatsApp -->
+<!-- ===== Mensaje WhatsApp ===== -->
 <dialog id="msgDlg">
-  <div class="modal-head"><h2>Mensaje al propietario</h2><button type="button" class="close" data-close>&times;</button></div>
+  <div class="modal-head"><h2>Mensaje al propietario</h2><button type="button" class="close" data-close aria-label="Cerrar">&times;</button></div>
   <div class="modal-body">
+    <div class="full warn" id="msgWarn" hidden>Este anunciante ha indicado que <strong>no desea agencias</strong>. Contáctale solo si tienes un comprador concreto o te ha dado permiso.</div>
     <div class="full"><label class="f">Plantilla</label><select id="tplSelect"></select></div>
-    <div class="full"><label class="f">Mensaje (puedes editarlo)</label><textarea id="tplText" class="tpl-preview"></textarea>
-      <p class="hint">Al enviar, la ficha pasa a "Contactado" si estaba en "Nuevo" y se programa un seguimiento a 3 días.</p></div>
+    <div class="full"><label class="f">Mensaje (puedes editarlo)</label><textarea id="tplText" rows="9"></textarea>
+      <p class="hint">Al abrir WhatsApp, la ficha pasa a "Contactado" si estaba "Pendiente" y se programa un seguimiento a 3 días.</p></div>
   </div>
   <div class="modal-foot">
     <button type="button" class="btn btn-outline" id="copyMsg">Copiar</button>
@@ -258,51 +405,58 @@ dialog::backdrop{background:rgba(17,17,17,.45);}
   </div>
 </dialog>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 /* ============================================================
    CONFIGURACIÓN
    ============================================================ */
-const AGENT = {
-  name: 'Rosa Rodríguez',
-  phone: '+34 698 222 520'
+const AGENT = { name: 'Rosa Rodríguez' };
+const PAGE_SIZE = 6;
+
+// Centro aproximado de cada municipio (para el mapa si la ficha no trae coordenadas).
+const ZONE_CENTERS = {
+  'majadahonda':[40.4735,-3.8718], 'las rozas':[40.4929,-3.8737], 'las rozas de madrid':[40.4929,-3.8737],
+  'pozuelo':[40.4350,-3.8136], 'pozuelo de alarcon':[40.4350,-3.8136], 'boadilla':[40.4050,-3.8779],
+  'boadilla del monte':[40.4050,-3.8779], 'villanueva de la canada':[40.4467,-3.9989], 'torrelodones':[40.5767,-3.9283],
+  'aravaca':[40.4580,-3.7830], 'villaviciosa de odon':[40.3580,-3.9000], 'madrid':[40.4168,-3.7038]
 };
 
 const STATUSES = [
-  { id:'nuevo',      label:'Nuevo' },
-  { id:'contactado', label:'Contactado' },
-  { id:'interesado', label:'Interesado' },
-  { id:'cita',       label:'Cita / valoración' },
-  { id:'exclusiva',  label:'Exclusiva firmada' },
-  { id:'descartado', label:'Descartado' }
+  { id:'nuevo',      label:'Pendiente',         cls:'amber' },
+  { id:'contactado', label:'Contactado',        cls:'' },
+  { id:'interesado', label:'Interesado',        cls:'green' },
+  { id:'cita',       label:'Cita / valoración', cls:'green' },
+  { id:'exclusiva',  label:'Exclusiva firmada', cls:'dark' },
+  { id:'descartado', label:'Descartado',        cls:'red' }
 ];
 
 const TEMPLATES = [
   { id:'primer', label:'Primer contacto', text:
-`Hola{{owner}}, soy {{agent}}, agente inmobiliaria. He visto tu anuncio de {{title}} en {{zone}}{{portal}}.
+`Hola{{owner}}, soy {{agent}}, agente inmobiliaria en {{zone}}. He visto tu anuncio "{{title}}"{{portal}}.
 
-Trabajo con compradores que buscan justo en esa zona y me gustaría saber si estarías abierto/a a que te enseñe cómo lo vendería yo: sin compromiso y sin coste por la valoración.
+Trabajo con compradores que buscan justo en esa zona y me gustaría contarte cómo lo comercializaría yo: sin compromiso y sin coste por la valoración.
 
 ¿Te viene bien que hablemos 5 minutos?` },
   { id:'valoracion', label:'Ofrecer valoración gratuita', text:
 `Hola{{owner}}, soy {{agent}}. Te escribo por tu {{type}} en {{zone}}.
 
-He preparado un estudio de los precios reales de venta en tu zona (no los de los portales). Si quieres, te lo envío gratis para que compruebes si tu precio de {{price}} está bien posicionado.
+He preparado un estudio de precios reales de cierre en tu zona (no los de los portales). Si quieres, te lo envío gratis para que compruebes si {{price}} está bien posicionado.
 
 ¿Te lo mando por aquí?` },
   { id:'tiempo', label:'Lleva tiempo publicado', text:
-`Hola{{owner}}, soy {{agent}}, agente inmobiliaria. Veo que tu anuncio de {{title}} lleva {{days}} días publicado.
+`Hola{{owner}}, soy {{agent}}, agente inmobiliaria. Veo que tu anuncio "{{title}}" lleva {{days}} días publicado.
 
-Es muy habitual: cuando un inmueble pasa varias semanas en los portales, los compradores empiezan a pensar que "tiene algo". Te puedo contar en 10 minutos qué haría yo para venderlo en menos tiempo.
+Cuando un inmueble pasa varias semanas en los portales, los compradores empiezan a pensar que "tiene algo". En 10 minutos te cuento qué haría yo para cerrar la operación antes.
 
 ¿Te interesa?` },
-  { id:'comprador', label:'Tengo un comprador', text:
+  { id:'comprador', label:'Tengo un comprador / inquilino', text:
 `Hola{{owner}}, soy {{agent}}. Tengo clientes buscando un {{type}} en {{zone}} con características muy parecidas al tuyo.
 
-¿Sigue disponible? Si te parece, podemos hablar para ver si encaja y organizar una visita.` },
+¿Sigue disponible? Si te parece, hablamos para ver si encaja y organizar una visita.` },
   { id:'seguimiento', label:'Seguimiento', text:
-`Hola{{owner}}, soy {{agent}} otra vez. Quería saber cómo va la venta de tu {{type}} en {{zone}}.
+`Hola{{owner}}, soy {{agent}} otra vez. ¿Cómo va tu {{type}} en {{zone}}?
 
 Si en algún momento quieres una segunda opinión sobre el precio o la estrategia, aquí me tienes. ¡Un saludo!` }
 ];
@@ -311,207 +465,414 @@ Si en algún momento quieres una segunda opinión sobre el precio o la estrategi
    ALMACENAMIENTO
    ============================================================ */
 const KEY = 'rosa-radar-particulares-v1';
-const ZKEY = 'rosa-radar-zonas-v1';
+const SKEY = 'rosa-radar-ajustes-v1';
 function load(k, def){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; }catch(e){ return def; } }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(items)); }catch(e){ toast('No se ha podido guardar en este navegador'); } }
-let items = load(KEY, []);
-let zonePrices = load(ZKEY, {});
-let activeTab = 'todos';
-let currentMsgId = null;
+function store(k, v){
+  if(k === KEY || k === SKEY) return persist(); // los datos de captación van siempre cifrados
+  try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){}
+}
+let items = [];
+let settings = { zones: ['Majadahonda','Las Rozas','Pozuelo','Boadilla'] };
+const save = () => persist();
+
+/* ============================================================
+   ACCESO PRIVADO
+   Todo (inmuebles, propietarios, teléfonos, notas) se guarda
+   cifrado con AES-256 usando tu contraseña. Sin ella no se puede
+   leer nada, ni siquiera desde este mismo navegador. La contraseña
+   no se guarda en ningún sitio: si la olvidas, los datos no se
+   pueden recuperar (salvo desde una copia de seguridad).
+   ============================================================ */
+const VKEY = 'rosa-radar-vault-v1';
+const AUTOLOCK_MIN = 30;
+let cryptoKey = null, vaultSalt = null, persistChain = Promise.resolve();
+function b64(buf){ const a = new Uint8Array(buf); let s = ''; for(let i = 0; i < a.length; i += 0x8000) s += String.fromCharCode.apply(null, a.subarray(i, i + 0x8000)); return btoa(s); }
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function deriveKey(pw, salt){
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name:'PBKDF2', salt, iterations:250000, hash:'SHA-256' }, base, { name:'AES-GCM', length:256 }, false, ['encrypt','decrypt']);
+}
+function persist(){
+  if(!cryptoKey) return;
+  const payload = new TextEncoder().encode(JSON.stringify({ items, settings }));
+  persistChain = persistChain.then(async () => {
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const ct = await crypto.subtle.encrypt({ name:'AES-GCM', iv }, cryptoKey, payload);
+    localStorage.setItem(VKEY, JSON.stringify({ v:1, salt:b64(vaultSalt), iv:b64(iv), data:b64(ct) }));
+  }).catch(() => toast('No se ha podido guardar en este navegador'));
+}
+async function unlock(pw){
+  let raw = null; try{ raw = localStorage.getItem(VKEY); }catch(e){}
+  if(raw){
+    const v = JSON.parse(raw);
+    vaultSalt = unb64(v.salt);
+    const k = await deriveKey(pw, vaultSalt);
+    try{
+      const pt = await crypto.subtle.decrypt({ name:'AES-GCM', iv:unb64(v.iv) }, k, unb64(v.data));
+      const d = JSON.parse(new TextDecoder().decode(pt));
+      items = d.items || []; settings = Object.assign(settings, d.settings || {});
+      cryptoKey = k;
+    }catch(e){ return false; }
+  } else {
+    vaultSalt = crypto.getRandomValues(new Uint8Array(16));
+    cryptoKey = await deriveKey(pw, vaultSalt);
+    // Si había datos sin cifrar de la versión anterior, se cifran y se borra la copia en claro.
+    items = load(KEY, []); settings = Object.assign(settings, load(SKEY, {}));
+    persist(); await persistChain;
+    try{ localStorage.removeItem(KEY); localStorage.removeItem(SKEY); }catch(e){}
+  }
+  return true;
+}
+function lockNow(){ cryptoKey = null; items = []; location.reload(); }
+function hasVault(){ try{ return !!localStorage.getItem(VKEY); }catch(e){ return false; } }
+let page = 1, mapMode = false, map = null, markers = null, currentMsgId = null, editingId = null;
 
 /* ============================================================
    UTILIDADES
    ============================================================ */
 const $ = s => document.querySelector(s);
-const fmtEur = n => n ? new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n) : '—';
+const eur = n => (n || n === 0) && n !== '' ? new Intl.NumberFormat('es-ES',{maximumFractionDigits:0}).format(n) + ' €' : '—';
 const today = () => new Date().toISOString().slice(0,10);
 const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x.toISOString().slice(0,10); };
 const daysSince = d => d ? Math.max(0, Math.floor((Date.now() - new Date(d).getTime())/86400000)) : null;
 const norm = s => (s||'').toString().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
 const esc = s => (s ?? '').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-const statusLabel = id => (STATUSES.find(s => s.id === id) || {}).label || id;
+const status = id => STATUSES.find(s => s.id === id) || STATUSES[0];
+const uniq = arr => [...new Set(arr.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+const safeUrl = u => /^https?:\/\//i.test(u||'') ? u : '';
+const fmtDateTime = ts => ts ? new Date(ts).toLocaleString('es-ES',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}).replace('.','') : '';
+function portalFromUrl(u){
+  const h = ((u||'').match(/^https?:\/\/([^/]+)/i)||[])[1] || '';
+  const map = { idealista:'Idealista', fotocasa:'Fotocasa', habitaclia:'Habitaclia', milanuncios:'Milanuncios', wallapop:'Wallapop', 'pisos.com':'Pisos.com' };
+  const k = Object.keys(map).find(k => h.includes(k));
+  return k ? map[k] : '';
+}
+const adLink = (it, cls) => safeUrl(it.url) ? `<a class="${cls}" href="${esc(it.url)}" target="_blank" rel="noopener">Ver en ${esc(portalFromUrl(it.url) || it.portal || 'el portal')} ↗</a>` : '';
+const isMine = it => !!norm(it.assigned) && norm(AGENT.name).startsWith(norm(it.assigned).split(' ')[0]);
+const priceTxt = it => eur(it.price) + (it.op === 'alquiler' ? '/mes' : '');
 function toast(t){ const el = $('#toast'); el.textContent = t; el.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(()=>el.classList.remove('show'), 2200); }
-function zoneRef(zone){ const z = norm(zone); for(const k in zonePrices){ if(norm(k) === z) return zonePrices[k]; } return null; }
 function waNumber(phone){
   let d = (phone||'').replace(/\D/g,'');
   if(d.startsWith('00')) d = d.slice(2);
-  if(d.length === 9) d = '34' + d; // número español sin prefijo
+  if(d.length === 9) d = '34' + d;
   return d;
 }
+function hash(s){ let h = 0; for(const c of s) h = (h*31 + c.charCodeAt(0)) | 0; return h; }
+function coordsOf(it){
+  const m = (it.coords||'').match(/(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/);
+  if(m) return [Number(m[1]), Number(m[2])];
+  const z = norm(it.zone);
+  const key = Object.keys(ZONE_CENTERS).find(k => z === k || z.includes(k));
+  if(!key) return null;
+  const h = hash(it.id); // pequeño desplazamiento estable para que no se solapen
+  return [ZONE_CENTERS[key][0] + ((h % 100)/100 - .5) * .02, ZONE_CENTERS[key][1] + (((h>>8) % 100)/100 - .5) * .025];
+}
 
-/* ============================================================
-   PUNTUACIÓN DE PRIORIDAD (0-100)
-   Cuanto más tiempo lleva publicado, más ha bajado de precio y más
-   barato está respecto a la zona, más receptivo suele estar el
-   propietario a trabajar con una agente.
-   ============================================================ */
+/* Prioridad de captación (0-100): tiempo publicado, bajadas de precio,
+   teléfono disponible y señales de urgencia en las notas. */
 function analyse(it){
   const days = daysSince(it.published);
   const ppm2 = it.price && it.m2 ? Math.round(it.price / it.m2) : null;
-  const ref = it.op === 'venta' ? zoneRef(it.zone) : null;
-  const vsZone = ppm2 && ref ? Math.round((ppm2 / ref - 1) * 100) : null;
   const dropPct = it.priceInitial && it.price && it.priceInitial > it.price ? Math.round((1 - it.price/it.priceInitial)*100) : 0;
   let score = 20;
-  if(days !== null) score += Math.min(35, days * 0.6);     // ~2 meses = máximo
-  score += Math.min(25, dropPct * 4);                        // cada 1% de bajada suma
-  if(vsZone !== null){ score += vsZone <= -10 ? 10 : vsZone >= 15 ? 8 : 4; } // muy caro también es oportunidad (necesita ayuda)
+  if(days !== null) score += Math.min(35, days * 0.6);
+  score += Math.min(25, dropPct * 4);
   if(it.phone) score += 10;
   if(/urgen|traslad|herencia|divorci|necesit|rapido|rápido/i.test(it.notes||'')) score += 10;
-  if(it.status === 'descartado' || it.status === 'exclusiva') score = 0;
-  score = Math.round(Math.min(100, score));
-  const level = score >= 65 ? 'hot' : score >= 45 ? 'warm' : 'cold';
-  return { days, ppm2, ref, vsZone, dropPct, score, level };
+  if(it.noAgencies) score -= 15;
+  if(['descartado','exclusiva'].includes(it.status)) score = 0;
+  score = Math.max(0, Math.round(Math.min(100, score)));
+  return { days, ppm2, dropPct, score, level: score >= 65 ? 'hot' : score >= 45 ? 'warm' : 'cold' };
+}
+
+/* ============================================================
+   FILTRADO
+   ============================================================ */
+function filtered(){
+  const q = norm($('#q').value), fz = $('#fZone').value, fp = $('#fPortal').value, fo = $('#fOp').value,
+        ft = $('#fType').value, fs = $('#fStatus').value, fr = Number($('#fRooms').value||0),
+        min = Number($('#fMin').value||0), max = Number($('#fMax').value||0),
+        hideNoAg = $('#fHideNoAg').checked, due = $('#fDue').checked;
+  const rows = items.filter(it =>
+    (!fz || it.zone === fz) && (!fp || it.portal === fp) && (!fo || it.op === fo) && (!ft || it.type === ft) &&
+    (!fs || it.status === fs) && (!fr || (it.rooms||0) >= fr) && (!min || it.price >= min) && (!max || it.price <= max) &&
+    (!hideNoAg || !it.noAgencies) && (!due || (it.nextDate && it.nextDate <= today())) &&
+    (!q || norm([it.title,it.zone,it.area,it.portal,it.type,it.owner,it.phone,it.notes].join(' ')).includes(q))
+  );
+  const sort = $('#fSort').value;
+  const cmp = {
+    recent: (a,b) => (b.created||0) - (a.created||0),
+    score: (a,b) => analyse(b).score - analyse(a).score,
+    next: (a,b) => (a.nextDate||'9999').localeCompare(b.nextDate||'9999'),
+    priceAsc: (a,b) => (a.price||Infinity) - (b.price||Infinity),
+    priceDesc: (a,b) => (b.price||0) - (a.price||0),
+    ppm2: (a,b) => (analyse(a).ppm2||Infinity) - (analyse(b).ppm2||Infinity)
+  }[sort];
+  return rows.sort(cmp);
 }
 
 /* ============================================================
    RENDER
    ============================================================ */
-function fillSelect(sel, values, allLabel){
+const PH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10.5 12 3l9 7.5V21H3z"/><path d="M9 21v-6h6v6"/></svg>';
+
+function fillSelect(sel, values, allLabel, labels){
   const cur = sel.value;
-  sel.innerHTML = `<option value="">${allLabel}</option>` + values.map(v => `<option>${esc(v)}</option>`).join('');
+  sel.innerHTML = `<option value="">${allLabel}</option>` + values.map(v => `<option value="${esc(v)}">${esc(labels ? labels(v) : v)}</option>`).join('');
   if(values.includes(cur)) sel.value = cur;
 }
-const uniq = arr => [...new Set(arr.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
 
-function renderKpis(){
+function renderHeader(){
+  $('#zonesTxt').textContent = settings.zones.join(' · ');
   const active = items.filter(i => !['descartado','exclusiva'].includes(i.status));
-  const hot = active.filter(i => analyse(i).level === 'hot').length;
+  $('#countBig').textContent = active.length;
   const due = active.filter(i => i.nextDate && i.nextDate <= today()).length;
-  const contacted = items.filter(i => i.status !== 'nuevo').length;
+  const hot = active.filter(i => analyse(i).level === 'hot').length;
   const excl = items.filter(i => i.status === 'exclusiva').length;
-  const conv = contacted ? Math.round(excl / contacted * 100) : 0;
-  const k = [
-    ['', active.length, 'Activos en radar'],
-    ['hot', hot, 'Calientes'],
-    ['hot', due, 'Seguimientos hoy'],
-    ['', items.filter(i=>i.status==='cita').length, 'Citas / valoraciones'],
-    ['ok', excl, 'Exclusivas'],
-    ['ok', conv + '%', 'Conversión']
-  ];
-  $('#kpis').innerHTML = k.map(([c,v,l]) => `<div class="kpi ${c}"><b>${v}</b><span>${l}</span></div>`).join('');
-}
-
-function renderTabs(){
-  const counts = { todos: items.length };
-  STATUSES.forEach(s => counts[s.id] = items.filter(i => i.status === s.id).length);
-  const tabs = [{id:'todos',label:'Todos'}, ...STATUSES];
-  $('#tabs').innerHTML = tabs.map(t => `<button class="tab ${activeTab===t.id?'active':''}" data-tab="${t.id}">${t.label}<span class="n">${counts[t.id]}</span></button>`).join('');
-}
-
-function renderFilters(){
-  fillSelect($('#fZone'), uniq(items.map(i=>i.zone)), 'Todas');
+  $('#kpis').innerHTML = `<span class="tag red strong">${hot} calientes</span><span class="tag amber strong">${due} seguimientos hoy</span><span class="tag green strong">${excl} exclusivas</span>`;
+  fillSelect($('#fZone'), uniq(items.map(i=>i.zone)), 'Todas las zonas');
+  fillSelect($('#fPortal'), uniq(items.map(i=>i.portal)), 'Todos los portales');
   fillSelect($('#fType'), uniq(items.map(i=>i.type)), 'Todos');
-  fillSelect($('#fPortal'), uniq(items.map(i=>i.portal)), 'Todos');
-  const zones = uniq([...items.map(i=>i.zone), ...Object.keys(zonePrices)]);
-  $('#zoneList').innerHTML = zones.map(z => `<option value="${esc(z)}">`).join('');
+  fillSelect($('#fStatus'), STATUSES.map(s=>s.id), 'Todos', id => status(id).label);
+  $('#zoneList').innerHTML = uniq([...items.map(i=>i.zone), ...settings.zones]).map(z => `<option value="${esc(z)}">`).join('');
+}
+
+function photoBlock(it, withBadges){
+  const src = safeUrl(it.photo);
+  const st = status(it.status);
+  return `${src ? `<img src="${esc(src)}" alt="${esc(it.title)}" loading="lazy" onerror="this.remove()">` : ''}
+    <div class="ph">${PH_SVG}${src ? '' : 'Foto pendiente'}</div>
+    ${withBadges ? `<div class="tl">${safeUrl(it.url) ? `<a class="tag dark" href="${esc(it.url)}" target="_blank" rel="noopener" title="Abrir el anuncio">${esc(it.portal||'Anuncio')} ↗</a>` : `<span class="tag dark">${esc(it.portal||'Otro')}</span>`}${it.op==='alquiler'?'<span class="tag">Alquiler</span>':''}</div>
+    <div class="tr"><span class="tag ${st.cls} strong">${st.label}</span></div>
+    <div class="bl">${it.noAgencies ? '<span class="tag red strong">El anunciante no desea agencias</span>' : ''}
+      ${it.verified==='si' ? '<span class="tag green">✓ Publicación comprobada</span>' : it.verified==='no' ? '<span class="tag">Acceso no comprobable</span>' : ''}</div>
+    ${src && it.photoAI ? '<span class="note" style="bottom:auto;top:44px">Foto del anuncio · edición IA indicada</span>' : ''}` : ''}`;
+}
+
+function cardHtml(it){
+  const a = analyse(it);
+  const late = it.nextDate && it.nextDate <= today() && !['descartado','exclusiva'].includes(it.status);
+  return `<article class="card">
+    <div class="photo">${photoBlock(it, true)}</div>
+    <div class="card-body">
+      <div class="price-row"><span class="price">${priceTxt(it)}</span><span class="ppm2">${a.ppm2 ? eur(a.ppm2) + '/m²' : '— €/m²'}</span></div>
+      ${a.dropPct ? `<div class="drop">▼ ${a.dropPct}% · antes ${priceTxt({...it, price: it.priceInitial})}</div>` : ''}
+      <h3>${esc(it.title)}</h3>
+      <div class="loc">${esc([it.area, it.zone].filter(Boolean).join(' · '))}</div>
+      <div class="facts"><span>🛏 ${it.rooms || '—'} hab.</span><span>📐 ${it.m2 || '—'} m²</span><span>👤 Particular</span></div>
+      ${late ? `<div class="next-due">⚠ Seguimiento: ${esc(it.nextAction || 'pendiente')}</div>` : ''}
+      <div class="card-foot">
+        <span class="who"><span class="tag">${esc(it.assigned || 'Sin asignar')}</span>${!['descartado','exclusiva'].includes(it.status) ? `<span class="tag ${a.level==='hot'?'red':a.level==='warm'?'amber':'green'}" title="Prioridad de captación">${a.score}</span>` : ''}<span>${fmtDateTime(it.created)}</span></span>
+        <span style="display:flex;gap:6px">${adLink(it, 'btn btn-outline btn-sm ad-link')}<button class="btn btn-primary btn-sm" data-open="${it.id}">Ver ficha</button></span>
+      </div>
+    </div>
+  </article>`;
 }
 
 function renderList(){
-  const q = norm($('#q').value), fz = $('#fZone').value, ft = $('#fType').value, fp = $('#fPortal').value, sort = $('#fSort').value;
-  let rows = items.map(it => ({ it, a: analyse(it) })).filter(({it}) =>
-    (activeTab === 'todos' || it.status === activeTab) &&
-    (!fz || it.zone === fz) && (!ft || it.type === ft) && (!fp || it.portal === fp) &&
-    (!q || norm([it.title,it.zone,it.owner,it.phone,it.notes,it.nextAction].join(' ')).includes(q))
-  );
-  const cmp = {
-    score: (x,y) => y.a.score - x.a.score,
-    next: (x,y) => (x.it.nextDate||'9999').localeCompare(y.it.nextDate||'9999'),
-    recent: (x,y) => (y.it.created||0) - (x.it.created||0),
-    priceAsc: (x,y) => (x.it.price||Infinity) - (y.it.price||Infinity),
-    priceDesc: (x,y) => (y.it.price||0) - (x.it.price||0)
-  }[sort];
-  rows.sort(cmp);
-
+  const rows = filtered();
+  $('#resultsTitle').textContent = `${rows.length} inmueble${rows.length===1?'':'s'} de particulares`;
+  if(mapMode){ renderMap(rows); $('#grid').innerHTML = ''; $('#pager').innerHTML = ''; return; }
+  const pages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  page = Math.min(page, pages);
+  const slice = rows.slice((page-1)*PAGE_SIZE, page*PAGE_SIZE);
   if(!rows.length){
-    $('#list').innerHTML = `<div class="empty" style="grid-column:1/-1">${items.length ? 'Ningún particular coincide con estos filtros.' : 'Todavía no hay particulares en tu radar.<br><br><button class="btn btn-accent" onclick="openEdit()">+ Añadir el primero</button>'}</div>`;
+    $('#grid').innerHTML = `<div class="empty">${items.length ? 'Ningún inmueble coincide con estos filtros.' :
+      `Todavía no hay inmuebles en tu radar.<div class="btns"><button class="btn btn-accent" data-add>+ Añadir el primero</button><button class="btn btn-outline" data-demo>Ver con ejemplos</button></div>`}</div>`;
+    $('#pager').innerHTML = '';
     return;
   }
+  $('#grid').innerHTML = slice.map(cardHtml).join('');
+  $('#pager').innerHTML = pages > 1 ? `<button class="btn btn-outline btn-sm" data-page="-1" ${page===1?'disabled':''}>Anterior</button>
+    <span>Página ${page} de ${pages}</span>
+    <button class="btn btn-outline btn-sm" data-page="1" ${page===pages?'disabled':''}>Siguiente</button>` : '';
+}
 
-  $('#list').innerHTML = rows.map(({it,a}) => {
-    const lvlTxt = { hot:'Caliente', warm:'Templado', cold:'Frío' }[a.level];
-    const pills = [
-      ['done','descartado','exclusiva'].includes(it.status) ? '' : `<span class="pill score-${a.level}">${lvlTxt} · ${a.score}</span>`,
-      `<span class="pill">${esc(statusLabel(it.status))}</span>`,
-      it.type ? `<span class="pill">${esc(it.type)}${it.op==='alquiler'?' · alquiler':''}</span>` : '',
-      it.m2 ? `<span class="pill">${it.m2} m²</span>` : '',
-      it.rooms ? `<span class="pill">${it.rooms} hab.</span>` : '',
-      it.portal ? `<span class="pill">${esc(it.portal)}</span>` : '',
-      a.days !== null ? `<span class="pill">${a.days} días publicado</span>` : '',
-      a.vsZone !== null ? `<span class="pill ${a.vsZone < 0 ? 'below':'above'}">${a.vsZone > 0 ? '+' : ''}${a.vsZone}% vs zona</span>` : ''
-    ].join('');
-    const late = it.nextDate && it.nextDate <= today();
-    const next = it.nextDate || it.nextAction ? `<div class="next ${late?'late':''}">${late?'⚠ ':'→ '}${it.nextDate ? new Date(it.nextDate+'T12:00').toLocaleDateString('es-ES',{day:'numeric',month:'short'}) + ': ' : ''}${esc(it.nextAction || 'Seguimiento')}</div>` : '';
-    const opts = STATUSES.map(s => `<option value="${s.id}" ${s.id===it.status?'selected':''}>${s.label}</option>`).join('');
-    return `<article class="card ${['descartado','exclusiva'].includes(it.status) ? '' : a.level}">
-      <div class="card-head">
-        <div><h3>${esc(it.title)}</h3><div class="zone">${esc(it.zone)}${it.owner ? ' · ' + esc(it.owner) : ''}</div></div>
-        <div class="price">${fmtEur(it.price)}${a.dropPct ? `<div class="drop">▼ ${a.dropPct}% (antes ${fmtEur(it.priceInitial)})</div>` : ''}${a.ppm2 ? `<small>${fmtEur(a.ppm2)}/m²</small>` : ''}</div>
-      </div>
-      <div class="meta">${pills}</div>
-      ${it.notes ? `<div class="notes">${esc(it.notes)}</div>` : ''}
-      ${next}
-      <div class="card-actions">
-        ${it.phone ? `<button class="btn btn-wa btn-sm" data-msg="${it.id}">WhatsApp</button><a class="btn btn-outline btn-sm" href="tel:${esc(it.phone.replace(/\s/g,''))}">Llamar</a>` : ''}
-        ${it.url ? `<a class="btn btn-outline btn-sm" href="${esc(it.url)}" target="_blank" rel="noopener">Ver anuncio</a>` : ''}
-        <button class="btn btn-outline btn-sm" data-edit="${it.id}">Editar</button>
-        <select data-status="${it.id}" aria-label="Cambiar estado">${opts}</select>
-      </div>
-    </article>`;
-  }).join('');
+function renderMap(rows){
+  if(typeof L === 'undefined'){ $('#map').innerHTML = '<p style="padding:20px">No se ha podido cargar el mapa (sin conexión).</p>'; return; }
+  if(!map){
+    map = L.map('map').setView([40.45,-3.86], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution:'&copy; OpenStreetMap' }).addTo(map);
+    markers = L.layerGroup().addTo(map);
+  }
+  setTimeout(() => map.invalidateSize(), 50);
+  markers.clearLayers();
+  const pts = [];
+  rows.forEach(it => {
+    const c = coordsOf(it); if(!c) return;
+    pts.push(c);
+    const color = it.noAgencies ? '#b3261e' : it.status === 'exclusiva' ? '#111111' : '#004225';
+    L.circleMarker(c, { radius: 9, color:'#fff', weight:2, fillColor: color, fillOpacity: .95 })
+      .bindPopup(`<div class="map-pop"><b>${priceTxt(it)}</b>${esc(it.title)}<br><small>${esc(it.zone)} · ${esc(status(it.status).label)}</small><br>${adLink(it,'ad-link')}<br><button class="btn btn-primary btn-sm" style="margin-top:8px" data-open="${it.id}">Ver ficha</button></div>`)
+      .addTo(markers);
+  });
+  if(pts.length) map.fitBounds(pts, { padding:[40,40], maxZoom: 14 });
 }
 
 function renderPortalLinks(){
-  const zone = $('#zoneSearch').value.trim();
+  const zone = $('#zoneSearch').value.trim() || settings.zones.join(' OR ');
   const op = $('#opSearch').value;
-  const z = zone || 'Madrid';
-  const g = (site, extra) => 'https://www.google.com/search?q=' + encodeURIComponent(`site:${site} ${op} ${z} ${extra}`);
+  const g = (site, extra) => 'https://www.google.com/search?q=' + encodeURIComponent(`site:${site} ${op} (${zone}) ${extra}`);
   const links = [
-    ['Idealista · particulares', g('idealista.com', '"particular"')],
-    ['Fotocasa · particulares', g('fotocasa.es', '"particular"')],
-    ['Milanuncios · particulares', g('milanuncios.com', 'piso "particular"')],
-    ['Wallapop · inmobiliaria', g('es.wallapop.com', 'piso')],
-    ['Pisos.com · particulares', g('pisos.com', '"particular"')],
-    ['"Sin agencias" en Google', 'https://www.google.com/search?q=' + encodeURIComponent(`${op} piso ${z} "particular" "sin intermediarios"`)]
+    ['Idealista', g('idealista.com', '"particular"')],
+    ['Fotocasa', g('fotocasa.es', '"particular"')],
+    ['Milanuncios', g('milanuncios.com', '"particular"')],
+    ['Wallapop', g('es.wallapop.com', 'piso OR chalet')],
+    ['Pisos.com', g('pisos.com', '"particular"')],
+    ['Habitaclia', g('habitaclia.com', '"particular"')]
   ];
-  $('#portalLinks').innerHTML = links.map(([l,u]) => `<a class="btn btn-outline btn-sm" href="${u}" target="_blank" rel="noopener">${l} ↗</a>`).join('');
+  $('#portalLinks').innerHTML = links.map(([l,u]) => `<a class="btn btn-outline btn-sm" href="${u}" target="_blank" rel="noopener">${l} · particulares ↗</a>`).join('');
 }
 
-function render(){ renderKpis(); renderTabs(); renderFilters(); renderList(); }
+function taskRow(it, kind, why){
+  const src = safeUrl(it.photo);
+  return `<div class="task ${kind}">
+    <div class="thumb">${src ? `<img src="${esc(src)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div>
+    <div class="info"><b>${esc(it.title)}</b><small>${priceTxt(it)} · ${esc(it.zone)} · ${esc(why)}</small></div>
+    <div class="acts">${adLink(it, 'btn btn-outline btn-sm ad-link')}
+      ${it.phone ? `<a class="btn btn-outline btn-sm" href="tel:${esc(it.phone.replace(/\s/g,''))}">Llamar</a>` : ''}
+      <button class="btn btn-primary btn-sm" data-open="${it.id}">Ver ficha</button></div>
+  </div>`;
+}
+function renderToday(){
+  const q = norm($('#tq').value), t = today();
+  const live = items.filter(i => !['descartado','exclusiva'].includes(i.status));
+  const match = i => !q || norm([i.title,i.zone,i.area,i.owner,i.phone,i.portal].join(' ')).includes(q);
+  const late = live.filter(i => i.nextDate && i.nextDate < t).sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
+  const due = live.filter(i => i.nextDate === t);
+  const first = live.filter(i => i.status === 'nuevo' && !i.calls && !i.noAgencies && !i.nextDate)
+    .sort((a,b) => analyse(b).score - analyse(a).score).slice(0, 8);
+  $('#tMine').textContent = items.filter(isMine).length;
+  $('#tLate').textContent = late.length;
+  $('#tDue').textContent = due.length;
+  const g = (title, rows, kind, why) => { const r = rows.filter(match); return r.length ? `<div class="task-group"><h3>${title}</h3>${r.map(i => taskRow(i, kind, why(i))).join('')}</div>` : ''; };
+  const html =
+    g('Acciones vencidas', late, 'late', i => `${i.nextAction || 'Seguimiento'} · vencida el ${new Date(i.nextDate+'T12:00').toLocaleDateString('es-ES',{day:'numeric',month:'short'})}`) +
+    g('Pendientes de hoy', due, 'due', i => i.nextAction || 'Seguimiento') +
+    g('Primeras llamadas pendientes', first, '', i => { const a = analyse(i); return `Prioridad ${a.score}${a.days !== null ? ' · ' + a.days + ' días publicado' : ''}`; });
+  $('#todayList').innerHTML = html || `<div class="empty">${q ? 'Ninguna vivienda coincide con la búsqueda.' :
+    `<strong style="color:var(--ev-black)">No tienes tareas pendientes para hoy.</strong><br><br>Abre Inmuebles, elige una vivienda libre y registra tu primera llamada para empezar.<div class="btns"><button class="btn btn-primary" data-view="list">Ir a Inmuebles</button></div>`}</div>`;
+}
+function showView(v){
+  document.querySelectorAll('.view').forEach(el => el.classList.toggle('on', el.id === 'view-' + v));
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.toggle('on', el.dataset.view === v));
+  if(v === 'list' && mapMode && map) setTimeout(() => map.invalidateSize(), 50);
+  try{ localStorage.setItem('rosa-radar-vista', v); }catch(e){}
+  window.scrollTo(0,0);
+}
+function render(){ renderHeader(); renderList(); renderToday(); }
 
 /* ============================================================
-   EDITAR / AÑADIR
+   FICHA
+   ============================================================ */
+const detailDlg = $('#detailDlg');
+function openDetail(id){
+  const it = items.find(i => i.id === id); if(!it) return;
+  const a = analyse(it);
+  $('#dTitle').textContent = it.title;
+  const opts = STATUSES.map(s => `<option value="${s.id}" ${s.id===it.status?'selected':''}>${s.label}</option>`).join('');
+  $('#dBody').innerHTML = `
+    <div class="full detail-photo photo">${photoBlock(it, true)}</div>
+    ${it.noAgencies ? '<div class="full warn">El anunciante ha indicado que <strong>no desea agencias</strong>.</div>' : ''}
+    <div class="full dl">
+      <div><small>Precio</small><b>${priceTxt(it)}</b></div>
+      <div><small>€/m²</small><b>${a.ppm2 ? eur(a.ppm2) : '—'}</b></div>
+      <div><small>Superficie</small><b>${it.m2 ? it.m2 + ' m²' : '—'}</b></div>
+      <div><small>Habitaciones</small><b>${it.rooms || '—'}</b></div>
+      <div><small>Zona</small><b>${esc([it.area, it.zone].filter(Boolean).join(', '))}</b></div>
+      <div><small>Publicado</small><b>${a.days !== null ? `hace ${a.days} días` : '—'}</b></div>
+      <div><small>Bajada de precio</small><b>${a.dropPct ? a.dropPct + '%' : 'No'}</b></div>
+      <div><small>Prioridad</small><b>${a.score}/100</b></div>
+      <div><small>Propietario</small><b>${esc(it.owner || '—')}</b></div>
+      <div><small>Teléfono</small><b>${esc(it.phone || '—')}</b></div>
+      <div><small>Asignado a</small><b>${esc(it.assigned || 'Sin asignar')}</b></div>
+      <div><small>Portal</small><b>${esc(it.portal || '—')}</b></div>
+    </div>
+    <div class="full"><label class="f">Registrar llamada</label>
+      <div class="call-box">
+        <select id="callRes"><option value="no">No contesta</option><option value="volver">Volver a llamar</option><option value="interesado">Interesado</option><option value="cita">Cita / valoración concertada</option><option value="noint">No interesado</option></select>
+        <input id="callNote" placeholder="Comentario (opcional)">
+        <button class="btn btn-accent" id="callBtn">Registrar</button>
+      </div>
+    </div>
+    <div><label class="f">Estado</label><select id="dStatus">${opts}</select></div>
+    <div><label class="f">Próximo seguimiento</label><input type="date" id="dNext" value="${esc(it.nextDate||'')}"></div>
+    <div class="full"><label class="f">Notas</label><textarea id="dNotes" rows="3">${esc(it.notes||'')}</textarea></div>
+    ${(it.log||[]).length ? `<div class="full"><label class="f">Historial</label><ul class="log">${it.log.slice().reverse().map(l => `<li>${fmtDateTime(l.t)} · ${esc(l.m)}</li>`).join('')}</ul></div>` : ''}`;
+  $('#dFoot').innerHTML = `
+    ${it.phone ? `<button class="btn btn-wa" data-msg="${it.id}">WhatsApp</button><a class="btn btn-outline" href="tel:${esc(it.phone.replace(/\s/g,''))}">Llamar</a>` : ''}
+    ${adLink(it, 'btn btn-outline ad-link')}
+    ${isMine(it) ? '' : '<button class="btn btn-outline" id="assignMe">Asignármela</button>'}
+    <button class="btn btn-outline" data-edit="${it.id}">Editar</button>
+    <span style="flex:1"></span>
+    <button class="btn btn-primary" id="dSave">Guardar cambios</button>`;
+  $('#dSave').onclick = () => {
+    const ns = $('#dStatus').value;
+    if(ns !== it.status) logIt(it, 'Estado: ' + status(ns).label);
+    it.status = ns; it.nextDate = $('#dNext').value; it.notes = $('#dNotes').value; it.updated = Date.now();
+    save(); render(); detailDlg.close(); toast('Ficha actualizada');
+  };
+  if($('#assignMe')) $('#assignMe').onclick = () => { it.assigned = AGENT.name; logIt(it, 'Asignada a ' + AGENT.name); save(); render(); openDetail(id); toast('Vivienda asignada'); };
+  $('#callBtn').onclick = () => {
+    const note = $('#callNote').value.trim();
+    const RES = {
+      no:        { txt:'No contesta',     st:null,         days:1, act:'Reintentar llamada' },
+      volver:    { txt:'Volver a llamar', st:'contactado', days:2, act:'Volver a llamar' },
+      interesado:{ txt:'Interesado',      st:'interesado', days:2, act:'Enviar valoración' },
+      cita:      { txt:'Cita concertada', st:'cita',       days:1, act:'Preparar la cita' },
+      noint:     { txt:'No interesado',   st:'descartado', days:0, act:'' }
+    }[$('#callRes').value];
+    if(RES.st) it.status = RES.st; else if(it.status === 'nuevo') it.status = 'contactado';
+    it.nextDate = RES.days ? addDays(today(), RES.days) : ''; it.nextAction = RES.act;
+    if(!it.assigned) it.assigned = AGENT.name;
+    it.calls = (it.calls||0) + 1;
+    logIt(it, 'Llamada: ' + RES.txt + (note ? ' — ' + note : ''));
+    save(); render(); openDetail(id); toast('Llamada registrada');
+  };
+  if(!detailDlg.open) detailDlg.showModal();
+}
+function logIt(it, m){ (it.log = it.log || []).push({ t: Date.now(), m }); }
+
+/* ============================================================
+   AÑADIR / EDITAR
    ============================================================ */
 const editDlg = $('#editDlg'), editForm = $('#editForm');
 editForm.status.innerHTML = STATUSES.map(s => `<option value="${s.id}">${s.label}</option>`).join('');
-let editingId = null;
-
+const CHECKS = ['noAgencies','photoAI'];
 function openEdit(id){
   editingId = id || null;
   editForm.reset();
   const it = items.find(i => i.id === id);
-  $('#editTitle').textContent = it ? 'Editar particular' : 'Añadir particular';
+  $('#editTitle').textContent = it ? 'Editar inmueble' : 'Añadir inmueble';
   $('#deleteBtn').hidden = !it;
-  if(it){ for(const el of editForm.elements){ if(el.name && it[el.name] !== undefined) el.value = it[el.name]; } }
-  else { editForm.published.value = today(); editForm.status.value = 'nuevo'; }
+  if(it){
+    for(const el of editForm.elements){
+      if(!el.name || it[el.name] === undefined) continue;
+      if(el.type === 'checkbox') el.checked = !!it[el.name]; else el.value = it[el.name];
+    }
+  } else { editForm.published.value = today(); editForm.status.value = 'nuevo'; editForm.verified.value = ''; }
+  if(detailDlg.open) detailDlg.close();
   editDlg.showModal();
 }
-window.openEdit = openEdit;
-
+editForm.url.addEventListener('input', () => { const p = portalFromUrl(editForm.url.value); if(p) editForm.portal.value = p; });
 editForm.addEventListener('submit', e => {
   e.preventDefault();
   const d = Object.fromEntries(new FormData(editForm));
+  CHECKS.forEach(k => d[k] = editForm[k].checked);
   ['price','priceInitial','m2','rooms'].forEach(k => d[k] = d[k] ? Number(d[k]) : '');
   if(editingId){
     const it = items.find(i => i.id === editingId);
+    if(d.status !== it.status) logIt(it, 'Estado: ' + status(d.status).label);
     Object.assign(it, d, { updated: Date.now() });
   } else {
     if(!d.priceInitial) d.priceInitial = d.price;
-    items.push({ id: uid(), created: Date.now(), ...d });
+    const it = { id: uid(), created: Date.now(), ...d };
+    logIt(it, 'Añadido al radar');
+    items.push(it);
   }
   save(); editDlg.close(); render(); toast('Guardado');
 });
-
 $('#deleteBtn').addEventListener('click', () => {
   if(!confirm('¿Eliminar esta ficha? No se puede deshacer.')) return;
   items = items.filter(i => i.id !== editingId);
@@ -519,25 +880,19 @@ $('#deleteBtn').addEventListener('click', () => {
 });
 
 /* ============================================================
-   MENSAJES WHATSAPP
+   WHATSAPP
    ============================================================ */
 const msgDlg = $('#msgDlg');
 $('#tplSelect').innerHTML = TEMPLATES.map(t => `<option value="${t.id}">${t.label}</option>`).join('');
-
 function fillTemplate(tplId, it){
   const a = analyse(it);
-  const tpl = TEMPLATES.find(t => t.id === tplId);
   const vars = {
     owner: it.owner ? ' ' + it.owner.split(' ')[0] : '',
-    agent: AGENT.name,
-    title: it.title || 'tu vivienda',
-    zone: it.zone || 'tu zona',
+    agent: AGENT.name, title: it.title || 'tu vivienda', zone: it.zone || 'tu zona',
     portal: it.portal && !['Otro','Referido','Cartel en la calle'].includes(it.portal) ? ' en ' + it.portal : '',
-    type: (it.type || 'vivienda').toLowerCase(),
-    price: fmtEur(it.price),
-    days: a.days ?? 'varios'
+    type: (it.type || 'vivienda').toLowerCase(), price: priceTxt(it), days: a.days ?? 'varios'
   };
-  return tpl.text.replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? '');
+  return TEMPLATES.find(t => t.id === tplId).text.replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? '');
 }
 function updateWaLink(){
   const it = items.find(i => i.id === currentMsgId);
@@ -545,11 +900,12 @@ function updateWaLink(){
 }
 function openMsg(id){
   currentMsgId = id;
-  const it = items.find(i => i.id === id);
-  const a = analyse(it);
-  $('#tplSelect').value = it.status === 'nuevo' ? (a.days >= 30 ? 'tiempo' : 'primer') : 'seguimiento';
+  const it = items.find(i => i.id === id), a = analyse(it);
+  $('#msgWarn').hidden = !it.noAgencies;
+  $('#tplSelect').value = it.noAgencies ? 'comprador' : it.status === 'nuevo' ? (a.days >= 30 ? 'tiempo' : 'primer') : 'seguimiento';
   $('#tplText').value = fillTemplate($('#tplSelect').value, it);
   updateWaLink();
+  if(detailDlg.open) detailDlg.close();
   msgDlg.showModal();
 }
 $('#tplSelect').addEventListener('change', () => { $('#tplText').value = fillTemplate($('#tplSelect').value, items.find(i => i.id === currentMsgId)); updateWaLink(); });
@@ -558,76 +914,127 @@ $('#copyMsg').addEventListener('click', async () => { try{ await navigator.clipb
 $('#sendWa').addEventListener('click', () => {
   const it = items.find(i => i.id === currentMsgId);
   if(it.status === 'nuevo') it.status = 'contactado';
-  it.lastContact = today();
   it.nextDate = addDays(today(), 3);
   it.nextAction = 'Seguimiento del WhatsApp';
+  logIt(it, 'WhatsApp enviado: ' + $('#tplSelect').selectedOptions[0].textContent);
   save(); render(); msgDlg.close();
 });
 
 /* ============================================================
+   EJEMPLOS (solo para ver cómo funciona; se pueden borrar)
+   ============================================================ */
+function loadDemo(){
+  const now = Date.now(), d = n => addDays(today(), -n);
+  const demo = [
+    { title:'Bajo con jardín (EJEMPLO)', zone:'Las Rozas de Madrid', area:'La Marazuela', op:'venta', type:'Bajo', price:745000, priceInitial:745000, rooms:2, m2:'', published:d(12), portal:'Idealista', noAgencies:true, verified:'si' },
+    { title:'Chalet reformado (EJEMPLO)', zone:'Las Rozas de Madrid', area:'El Pinar', op:'venta', type:'Chalet', price:785000, priceInitial:820000, rooms:3, m2:161, published:d(58), portal:'Idealista', url:'https://www.idealista.com/', verified:'si', nextDate:d(1), nextAction:'Volver a llamar', notes:'Traslado por trabajo' },
+    { title:'Piso reformado de dos dormitorios (EJEMPLO)', zone:'Boadilla del Monte', area:'Casco', op:'alquiler', type:'Piso', price:1275, priceInitial:1275, rooms:2, m2:70, published:d(3), portal:'Fotocasa', verified:'no' },
+    { title:'Chalet pareado con parcela (EJEMPLO)', zone:'Boadilla del Monte', area:'Zoco', op:'venta', type:'Pareado', price:625000, priceInitial:660000, rooms:4, m2:160, published:d(40), portal:'Idealista', verified:'si' },
+    { title:'Piso con terraza y garaje (EJEMPLO)', zone:'Majadahonda', area:'Centro', op:'venta', type:'Piso', price:465000, priceInitial:465000, rooms:3, m2:112, published:d(20), portal:'Milanuncios', verified:'' },
+    { title:'Ático con vistas (EJEMPLO)', zone:'Pozuelo de Alarcón', area:'Húmera', op:'venta', type:'Ático', price:890000, priceInitial:950000, rooms:3, m2:145, published:d(75), portal:'Idealista', verified:'si' },
+    { title:'Adosado junto al colegio (EJEMPLO)', zone:'Majadahonda', area:'Roza Martín', op:'alquiler', type:'Adosado', price:2400, priceInitial:2400, rooms:4, m2:210, published:d(9), portal:'Wallapop', verified:'' }
+  ];
+  items = demo.map((x,i) => ({ id: uid()+i, created: now - i*3600e3*7, status:'nuevo', assigned:'', owner:'', phone:'600000000', notes:'', ...x }));
+  save(); render(); toast('Ejemplos cargados: bórralos cuando quieras desde "Restaurar" o editando cada ficha');
+}
+
+/* ============================================================
    EVENTOS
    ============================================================ */
-document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-open],[data-edit],[data-msg],[data-page],[data-add],[data-demo],[data-close],[data-view]');
+  if(!t) return;
+  if(t.dataset.view) showView(t.dataset.view);
+  else if(t.dataset.open) openDetail(t.dataset.open);
+  else if(t.dataset.edit) openEdit(t.dataset.edit);
+  else if(t.dataset.msg) openMsg(t.dataset.msg);
+  else if(t.dataset.page){ page += Number(t.dataset.page); renderList(); window.scrollTo({ top: $('.results-bar').offsetTop - 70, behavior:'smooth' }); }
+  else if(t.hasAttribute('data-add')) openEdit();
+  else if(t.hasAttribute('data-demo')) loadDemo();
+  else if(t.hasAttribute('data-close')) t.closest('dialog').close();
+});
 $('#addBtn').addEventListener('click', () => openEdit());
-$('#tabs').addEventListener('click', e => { const t = e.target.closest('[data-tab]'); if(t){ activeTab = t.dataset.tab; renderTabs(); renderList(); } });
-['#q','#fZone','#fType','#fPortal','#fSort'].forEach(s => $(s).addEventListener('input', renderList));
-$('#list').addEventListener('click', e => {
-  const ed = e.target.closest('[data-edit]'); if(ed) return openEdit(ed.dataset.edit);
-  const m = e.target.closest('[data-msg]'); if(m) return openMsg(m.dataset.msg);
+$('#filtersBtn').addEventListener('click', () => { $('#filters').classList.toggle('open'); $('#filtersBtn').classList.toggle('on'); });
+$('#mapBtn').addEventListener('click', () => {
+  mapMode = !mapMode;
+  $('#map').classList.toggle('on', mapMode); $('#grid').style.display = mapMode ? 'none' : '';
+  $('#mapBtn').classList.toggle('on', mapMode); $('#mapBtn').textContent = mapMode ? 'Lista' : 'Mapa';
+  renderList();
 });
-$('#list').addEventListener('change', e => {
-  const s = e.target.closest('[data-status]'); if(!s) return;
-  const it = items.find(i => i.id === s.dataset.status);
-  it.status = s.value; it.updated = Date.now();
-  save(); render(); toast('Estado: ' + statusLabel(it.status));
-});
+['#q','#fZone','#fPortal','#fOp','#fType','#fStatus','#fRooms','#fMin','#fMax','#fHideNoAg','#fDue','#fSort']
+  .forEach(s => $(s).addEventListener('input', () => { page = 1; renderList(); }));
 $('#zoneSearch').addEventListener('input', renderPortalLinks);
 $('#opSearch').addEventListener('change', renderPortalLinks);
-
-/* Precios de zona */
-$('#zonePrices').value = Object.entries(zonePrices).map(([k,v]) => `${k} = ${v}`).join('\n');
-$('#saveZonePrices').addEventListener('click', () => {
-  zonePrices = {};
-  $('#zonePrices').value.split('\n').forEach(line => {
-    const m = line.match(/^\s*(.+?)\s*[=:]\s*([\d.,]+)\s*$/);
-    if(m) zonePrices[m[1]] = Number(m[2].replace(/\./g,'').replace(',','.'));
-  });
-  try{ localStorage.setItem(ZKEY, JSON.stringify(zonePrices)); }catch(e){}
-  render(); toast('Precios de zona guardados');
+$('#editZones').addEventListener('click', () => {
+  const v = prompt('Tus zonas de captación, separadas por comas:', settings.zones.join(', '));
+  if(v === null) return;
+  settings.zones = v.split(',').map(s => s.trim()).filter(Boolean);
+  store(SKEY, settings); render(); renderPortalLinks();
 });
 
-/* Exportar / copia de seguridad / restaurar */
+/* Exportar / copia / restaurar */
 function download(name, content, type){
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([content], { type }));
   a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 $('#exportBtn').addEventListener('click', () => {
-  const cols = ['title','zone','type','op','portal','price','priceInitial','m2','rooms','published','status','owner','phone','nextDate','nextAction','notes','url'];
-  const head = ['Título','Zona','Tipo','Operación','Portal','Precio','Precio inicial','m²','Hab.','Publicado','Estado','Propietario','Teléfono','Próxima fecha','Próxima acción','Notas','Enlace','Prioridad'];
+  const cols = ['title','zone','area','type','op','portal','price','priceInitial','m2','rooms','published','status','noAgencies','owner','phone','assigned','nextDate','nextAction','notes','url'];
+  const head = ['Título','Zona','Barrio','Tipo','Operación','Portal','Precio','Precio inicial','m²','Hab.','Publicado','Estado','No desea agencias','Propietario','Teléfono','Asignado','Próximo seguimiento','Próxima acción','Notas','Enlace','Prioridad'];
   const q = v => `"${(v ?? '').toString().replace(/"/g,'""')}"`;
-  const rows = items.map(i => [...cols.map(c => c === 'status' ? statusLabel(i[c]) : i[c]), analyse(i).score].map(q).join(';'));
-  download(`radar-particulares-${today()}.csv`, '﻿' + [head.map(q).join(';'), ...rows].join('\n'), 'text/csv;charset=utf-8');
+  const rows = items.map(i => [...cols.map(c => c === 'status' ? status(i[c]).label : c === 'noAgencies' ? (i[c] ? 'Sí' : 'No') : i[c]), analyse(i).score].map(q).join(';'));
+  download(`radar-captacion-${today()}.csv`, '﻿' + [head.map(q).join(';'), ...rows].join('\n'), 'text/csv;charset=utf-8');
 });
-$('#backupBtn').addEventListener('click', () => {
-  download(`radar-backup-${today()}.json`, JSON.stringify({ items, zonePrices }, null, 2), 'application/json');
-});
+$('#backupBtn').addEventListener('click', () => download(`radar-backup-${today()}.json`, JSON.stringify({ items, settings }, null, 2), 'application/json'));
 $('#importFile').addEventListener('change', async e => {
   const f = e.target.files[0]; if(!f) return;
   try{
     const data = JSON.parse(await f.text());
     if(!Array.isArray(data.items)) throw 0;
     if(!confirm(`Se restaurarán ${data.items.length} fichas y se sustituirán las actuales. ¿Continuar?`)) return;
-    items = data.items; zonePrices = data.zonePrices || {};
-    save(); try{ localStorage.setItem(ZKEY, JSON.stringify(zonePrices)); }catch(e){}
-    $('#zonePrices').value = Object.entries(zonePrices).map(([k,v]) => `${k} = ${v}`).join('\n');
-    render(); toast('Copia restaurada');
+    items = data.items; if(data.settings) settings = Object.assign(settings, data.settings);
+    save(); store(SKEY, settings); render(); toast('Copia restaurada');
   }catch(err){ toast('El archivo no es una copia válida'); }
   e.target.value = '';
 });
 
+$('#tq').addEventListener('input', renderToday);
 renderPortalLinks();
-render();
+
+/* ---------- Pantalla de acceso ---------- */
+(function initLock(){
+  const creating = !hasVault();
+  $('#lockTitle').textContent = creating ? 'Crea tu contraseña' : 'Acceso privado';
+  $('#lockSub').textContent = creating
+    ? 'Solo tú podrás abrir el radar. Tus datos se guardarán cifrados con esta contraseña. Si la olvidas no se pueden recuperar, así que guárdala bien.'
+    : 'Introduce tu contraseña para abrir el radar.';
+  $('#lockPw2Wrap').hidden = !creating;
+  $('#lockPw').autocomplete = creating ? 'new-password' : 'current-password';
+  setTimeout(() => $('#lockPw').focus(), 50);
+  $('#lockForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const pw = $('#lockPw').value, err = $('#lockErr');
+    err.textContent = '';
+    if(creating){
+      if(pw.length < 8){ err.textContent = 'Usa al menos 8 caracteres.'; return; }
+      if(pw !== $('#lockPw2').value){ err.textContent = 'Las contraseñas no coinciden.'; return; }
+    }
+    $('#lockBtn').disabled = true; $('#lockBtn').textContent = 'Abriendo…';
+    const ok = await unlock(pw).catch(() => false);
+    $('#lockBtn').disabled = false; $('#lockBtn').textContent = 'Entrar';
+    if(!ok){ err.textContent = 'Contraseña incorrecta.'; $('#lockPw').select(); return; }
+    $('#lockPw').value = $('#lockPw2').value = '';
+    document.body.classList.remove('locked');
+    render(); renderPortalLinks();
+    try{ const v = localStorage.getItem('rosa-radar-vista'); if(v) showView(v); }catch(e){}
+  });
+  // Se bloquea solo tras un rato sin usarlo.
+  let idle;
+  const resetIdle = () => { clearTimeout(idle); idle = setTimeout(() => { if(cryptoKey) lockNow(); }, AUTOLOCK_MIN * 60000); };
+  ['click','keydown','touchstart','scroll'].forEach(ev => document.addEventListener(ev, resetIdle, { passive:true }));
+  resetIdle();
+  $('#lockOut').addEventListener('click', lockNow);
+})();
 </script>
 </body>
 </html>
