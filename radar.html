@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Herramienta interna: que no aparezca en Google. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Radar de Particulares | Rosa Rodríguez</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23ffffff%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23004225%22 font-family=%22Georgia,serif%22>R</text></svg>">
+<style>
+:root{
+  --ev-black:#111111;
+  --ev-accent:#004225;
+  --ev-accent-soft:#e6efe9;
+  --ev-text:#3d3d3d;
+  --ev-white:#ffffff;
+  --ev-gray:#6b6b6b;
+  --ev-bg:#f7f6f4;
+  --ev-border:#e5e1d8;
+  --hot:#b3261e; --hot-soft:#fbe9e7;
+  --warm:#9a6700; --warm-soft:#fff4d6;
+  --radius:10px;
+  --font-serif:'Georgia','Times New Roman',serif;
+  --font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-sans);color:var(--ev-text);background:var(--ev-bg);line-height:1.5;-webkit-font-smoothing:antialiased;}
+a{color:var(--ev-accent);}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px;}
+h1,h2,h3{font-family:var(--font-serif);font-weight:400;color:var(--ev-black);}
+
+header{background:var(--ev-white);border-bottom:1px solid var(--ev-border);}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;flex-wrap:wrap;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid var(--ev-border);}
+.brand small{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ev-accent);font-weight:700;}
+.brand h1{font-size:22px;line-height:1.1;}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:4px;font-size:13px;font-weight:600;letter-spacing:.4px;cursor:pointer;border:1px solid transparent;text-decoration:none;font-family:inherit;transition:background .2s,color .2s;}
+.btn-primary{background:var(--ev-black);color:#fff;}
+.btn-primary:hover{background:var(--ev-accent);}
+.btn-accent{background:var(--ev-accent);color:#fff;}
+.btn-accent:hover{background:var(--ev-black);}
+.btn-outline{background:#fff;border-color:var(--ev-border);color:var(--ev-black);}
+.btn-outline:hover{border-color:var(--ev-black);}
+.btn-wa{background:#25D366;color:#fff;}
+.btn-wa:hover{background:#1ebe57;}
+.btn-sm{padding:6px 10px;font-size:12px;}
+.btn-danger{background:#fff;border-color:#e8c4c1;color:var(--hot);}
+
+main{padding:24px 0 60px;}
+.intro{color:var(--ev-gray);font-size:15px;margin-bottom:20px;max-width:780px;}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px;}
+.kpi{background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:14px 16px;}
+.kpi b{display:block;font-family:var(--font-serif);font-size:28px;font-weight:400;color:var(--ev-black);line-height:1.1;}
+.kpi span{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ev-gray);}
+.kpi.hot b{color:var(--hot);}
+.kpi.ok b{color:var(--ev-accent);}
+
+/* Panels */
+.panel{background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:18px;margin-bottom:20px;}
+.panel h2{font-size:19px;margin-bottom:4px;}
+.panel .sub{color:var(--ev-gray);font-size:13px;margin-bottom:14px;}
+.search-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:10px;}
+label.f{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ev-gray);margin-bottom:4px;}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--ev-border);border-radius:6px;font-size:14px;font-family:inherit;background:#fcfcfb;color:var(--ev-text);}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ev-accent);}
+
+/* Pipeline tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.tab{padding:8px 14px;border-radius:999px;border:1px solid var(--ev-border);background:#fff;font-size:13px;cursor:pointer;font-family:inherit;color:var(--ev-text);}
+.tab.active{background:var(--ev-black);color:#fff;border-color:var(--ev-black);}
+.tab .n{opacity:.7;margin-left:4px;}
+
+/* Cards */
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;}
+.card{background:#fff;border:1px solid var(--ev-border);border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;gap:10px;}
+.card.hot{border-left:4px solid var(--hot);}
+.card.warm{border-left:4px solid var(--warm);}
+.card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+.card h3{font-size:17px;line-height:1.25;}
+.card .zone{font-size:13px;color:var(--ev-gray);}
+.price{font-family:var(--font-serif);font-size:22px;color:var(--ev-black);white-space:nowrap;text-align:right;}
+.price small{display:block;font-family:var(--font-sans);font-size:12px;color:var(--ev-gray);}
+.drop{color:var(--hot);font-size:12px;font-family:var(--font-sans);font-weight:600;}
+.meta{display:flex;flex-wrap:wrap;gap:6px;}
+.pill{font-size:11.5px;padding:3px 8px;border-radius:999px;background:var(--ev-bg);border:1px solid var(--ev-border);color:var(--ev-text);}
+.pill.score-hot{background:var(--hot-soft);border-color:#f2c7c2;color:var(--hot);font-weight:700;}
+.pill.score-warm{background:var(--warm-soft);border-color:#f0dca4;color:var(--warm);font-weight:700;}
+.pill.score-cold{background:var(--ev-accent-soft);border-color:#c8dccf;color:var(--ev-accent);font-weight:700;}
+.pill.below{background:var(--ev-accent-soft);border-color:#c8dccf;color:var(--ev-accent);}
+.pill.above{background:var(--hot-soft);border-color:#f2c7c2;color:var(--hot);}
+.notes{font-size:13px;color:#555;background:var(--ev-bg);border-radius:6px;padding:8px 10px;white-space:pre-wrap;}
+.next{font-size:12.5px;color:var(--ev-black);}
+.next.late{color:var(--hot);font-weight:600;}
+.card-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:auto;}
+.card-actions select{width:auto;padding:6px 8px;font-size:12px;}
+.empty{text-align:center;color:var(--ev-gray);padding:40px 10px;border:1px dashed var(--ev-border);border-radius:var(--radius);background:#fff;}
+
+/* Modal */
+dialog{border:none;border-radius:12px;padding:0;width:min(720px,calc(100% - 24px));max-height:calc(100vh - 24px);box-shadow:0 20px 60px rgba(0,0,0,.25);}
+dialog::backdrop{background:rgba(17,17,17,.45);}
+.modal-head{padding:18px 20px;border-bottom:1px solid var(--ev-border);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:1;}
+.modal-head h2{font-size:20px;}
+.modal-body{padding:18px 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.modal-body .full{grid-column:1/-1;}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--ev-border);display:flex;justify-content:flex-end;gap:8px;position:sticky;bottom:0;background:#fff;}
+.close{background:none;border:none;font-size:26px;cursor:pointer;color:var(--ev-gray);line-height:1;}
+.tpl-preview{font-size:14px;min-height:170px;}
+.hint{font-size:12px;color:var(--ev-gray);}
+
+.legal{font-size:12px;color:var(--ev-gray);margin-top:28px;border-top:1px solid var(--ev-border);padding-top:14px;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ev-black);color:#fff;padding:10px 18px;border-radius:6px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:50;}
+.toast.show{opacity:1;}
+
+@media (max-width:980px){
+  .kpis{grid-template-columns:repeat(3,1fr);}
+  .filters{grid-template-columns:1fr 1fr;}
+  .filters .grow{grid-column:1/-1;}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px;}
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .list{grid-template-columns:1fr;}
+  .modal-body{grid-template-columns:1fr;}
+  .brand h1{font-size:19px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap top">
+    <div class="brand">
+      <img src="rosa.png" alt="Rosa Rodríguez">
+      <div>
+        <small>Rosa Rodríguez · Captación</small>
+        <h1>Radar de Particulares</h1>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn btn-accent" id="addBtn">+ Añadir particular</button>
+      <button class="btn btn-outline" id="exportBtn">Exportar CSV</button>
+      <button class="btn btn-outline" id="backupBtn">Copia de seguridad</button>
+      <label class="btn btn-outline" for="importFile" style="margin:0">Restaurar</label>
+      <input type="file" id="importFile" accept=".json,application/json" hidden>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="intro">Tu panel para detectar viviendas que venden propietarios sin agencia, priorizar a quién llamar primero y llevar el seguimiento hasta conseguir la exclusiva. Todo se guarda solo en este navegador.</p>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="panel">
+    <h2>1. Rastrear anuncios de particulares</h2>
+    <p class="sub">Escribe una zona y abre la búsqueda en cada portal. Copia los anuncios interesantes y añádelos al radar.</p>
+    <div class="search-row">
+      <input id="zoneSearch" placeholder="Zona, barrio o ciudad (ej. Boadilla del Monte)" style="flex:1;min-width:220px">
+      <select id="opSearch" style="width:auto">
+        <option value="venta">Venta</option>
+        <option value="alquiler">Alquiler</option>
+      </select>
+    </div>
+    <div class="chips" id="portalLinks"></div>
+  </section>
+
+  <section class="panel">
+    <h2>2. Tu cartera de particulares</h2>
+    <p class="sub">Los más calientes salen primero: llevan tiempo publicados, han bajado de precio o están por debajo del precio de la zona.</p>
+    <div class="tabs" id="tabs"></div>
+    <div class="filters">
+      <div class="grow"><label class="f" for="q">Buscar</label><input id="q" placeholder="Dirección, nombre, teléfono, notas…"></div>
+      <div><label class="f" for="fZone">Zona</label><select id="fZone"></select></div>
+      <div><label class="f" for="fType">Tipo</label><select id="fType"></select></div>
+      <div><label class="f" for="fPortal">Portal</label><select id="fPortal"></select></div>
+      <div><label class="f" for="fSort">Ordenar por</label>
+        <select id="fSort">
+          <option value="score">Prioridad</option>
+          <option value="next">Próxima acción</option>
+          <option value="recent">Más recientes</option>
+          <option value="priceAsc">Precio ↑</option>
+          <option value="priceDesc">Precio ↓</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <section class="list" id="list"></section>
+
+  <section class="panel" style="margin-top:20px">
+    <h2>Precio de referencia por zona</h2>
+    <p class="sub">Indica el €/m² medio de cada zona para que el radar marque qué anuncios están por encima o por debajo de mercado. Formato: <code>Zona = 3500</code>, una por línea.</p>
+    <textarea id="zonePrices" rows="4" placeholder="Boadilla del Monte = 3400&#10;Pozuelo de Alarcón = 4800&#10;Majadahonda = 3900"></textarea>
+    <div style="margin-top:8px"><button class="btn btn-primary btn-sm" id="saveZonePrices">Guardar precios de zona</button></div>
+  </section>
+
+  <p class="legal">
+    <strong>Uso responsable de los datos.</strong> Guarda solo los datos de contacto que el propietario ha publicado en su anuncio y úsalos únicamente para ofrecerle tus servicios sobre esa vivienda. Respeta los anuncios que indican "abstenerse agencias", identifícate siempre como agente inmobiliaria en el primer mensaje y borra la ficha si el propietario te pide no volver a contactarle (RGPD y LOPDGDD). Los datos se guardan solo en este navegador: haz copias de seguridad con regularidad.
+  </p>
+</main>
+
+<!-- Modal: añadir / editar -->
+<dialog id="editDlg">
+  <form id="editForm" method="dialog">
+    <div class="modal-head"><h2 id="editTitle">Añadir particular</h2><button type="button" class="close" data-close>&times;</button></div>
+    <div class="modal-body">
+      <div class="full"><label class="f">Enlace del anuncio</label><input name="url" type="url" placeholder="https://…"></div>
+      <div class="full"><label class="f">Título o dirección *</label><input name="title" required placeholder="Ej. Piso 3 hab. con terraza, C/ Valle Inclán"></div>
+      <div><label class="f">Zona *</label><input name="zone" required list="zoneList" placeholder="Ej. Boadilla del Monte"></div>
+      <div><label class="f">Portal</label>
+        <select name="portal"><option>Idealista</option><option>Fotocasa</option><option>Habitaclia</option><option>Milanuncios</option><option>Wallapop</option><option>Pisos.com</option><option>Cartel en la calle</option><option>Referido</option><option>Otro</option></select>
+      </div>
+      <div><label class="f">Tipo</label>
+        <select name="type"><option>Piso</option><option>Ático</option><option>Chalet</option><option>Adosado</option><option>Dúplex</option><option>Estudio</option><option>Local</option><option>Terreno</option><option>Otro</option></select>
+      </div>
+      <div><label class="f">Operación</label><select name="op"><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select></div>
+      <div><label class="f">Precio actual (€)</label><input name="price" type="number" min="0" step="1000"></div>
+      <div><label class="f">Precio inicial (€)</label><input name="priceInitial" type="number" min="0" step="1000" placeholder="Si ha bajado de precio"></div>
+      <div><label class="f">Superficie (m²)</label><input name="m2" type="number" min="0"></div>
+      <div><label class="f">Habitaciones</label><input name="rooms" type="number" min="0"></div>
+      <div><label class="f">Publicado el</label><input name="published" type="date"></div>
+      <div><label class="f">Estado</label><select name="status"></select></div>
+      <div><label class="f">Nombre del propietario</label><input name="owner"></div>
+      <div><label class="f">Teléfono</label><input name="phone" type="tel" placeholder="+34 600 000 000"></div>
+      <div><label class="f">Próxima acción (fecha)</label><input name="nextDate" type="date"></div>
+      <div><label class="f">¿Qué hay que hacer?</label><input name="nextAction" placeholder="Ej. Volver a llamar, enviar valoración…"></div>
+      <div class="full"><label class="f">Notas</label><textarea name="notes" rows="3" placeholder="Motivo de venta, urgencia, objeciones, si acepta agencias…"></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-danger" id="deleteBtn" hidden>Eliminar</button>
+      <span style="flex:1"></span>
+      <button type="button" class="btn btn-outline" data-close>Cancelar</button>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+</dialog>
+<datalist id="zoneList"></datalist>
+
+<!-- Modal: mensaje WhatsApp -->
+<dialog id="msgDlg">
+  <div class="modal-head"><h2>Mensaje al propietario</h2><button type="button" class="close" data-close>&times;</button></div>
+  <div class="modal-body">
+    <div class="full"><label class="f">Plantilla</label><select id="tplSelect"></select></div>
+    <div class="full"><label class="f">Mensaje (puedes editarlo)</label><textarea id="tplText" class="tpl-preview"></textarea>
+      <p class="hint">Al enviar, la ficha pasa a "Contactado" si estaba en "Nuevo" y se programa un seguimiento a 3 días.</p></div>
+  </div>
+  <div class="modal-foot">
+    <button type="button" class="btn btn-outline" id="copyMsg">Copiar</button>
+    <a class="btn btn-wa" id="sendWa" target="_blank" rel="noopener">Abrir WhatsApp</a>
+  </div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   CONFIGURACIÓN
+   ============================================================ */
+const AGENT = {
+  name: 'Rosa Rodríguez',
+  phone: '+34 698 222 520'
+};
+
+const STATUSES = [
+  { id:'nuevo',      label:'Nuevo' },
+  { id:'contactado', label:'Contactado' },
+  { id:'interesado', label:'Interesado' },
+  { id:'cita',       label:'Cita / valoración' },
+  { id:'exclusiva',  label:'Exclusiva firmada' },
+  { id:'descartado', label:'Descartado' }
+];
+
+const TEMPLATES = [
+  { id:'primer', label:'Primer contacto', text:
+`Hola{{owner}}, soy {{agent}}, agente inmobiliaria. He visto tu anuncio de {{title}} en {{zone}}{{portal}}.
+
+Trabajo con compradores que buscan justo en esa zona y me gustaría saber si estarías abierto/a a que te enseñe cómo lo vendería yo: sin compromiso y sin coste por la valoración.
+
+¿Te viene bien que hablemos 5 minutos?` },
+  { id:'valoracion', label:'Ofrecer valoración gratuita', text:
+`Hola{{owner}}, soy {{agent}}. Te escribo por tu {{type}} en {{zone}}.
+
+He preparado un estudio de los precios reales de venta en tu zona (no los de los portales). Si quieres, te lo envío gratis para que compruebes si tu precio de {{price}} está bien posicionado.
+
+¿Te lo mando por aquí?` },
+  { id:'tiempo', label:'Lleva tiempo publicado', text:
+`Hola{{owner}}, soy {{agent}}, agente inmobiliaria. Veo que tu anuncio de {{title}} lleva {{days}} días publicado.
+
+Es muy habitual: cuando un inmueble pasa varias semanas en los portales, los compradores empiezan a pensar que "tiene algo". Te puedo contar en 10 minutos qué haría yo para venderlo en menos tiempo.
+
+¿Te interesa?` },
+  { id:'comprador', label:'Tengo un comprador', text:
+`Hola{{owner}}, soy {{agent}}. Tengo clientes buscando un {{type}} en {{zone}} con características muy parecidas al tuyo.
+
+¿Sigue disponible? Si te parece, podemos hablar para ver si encaja y organizar una visita.` },
+  { id:'seguimiento', label:'Seguimiento', text:
+`Hola{{owner}}, soy {{agent}} otra vez. Quería saber cómo va la venta de tu {{type}} en {{zone}}.
+
+Si en algún momento quieres una segunda opinión sobre el precio o la estrategia, aquí me tienes. ¡Un saludo!` }
+];
+
+/* ============================================================
+   ALMACENAMIENTO
+   ============================================================ */
+const KEY = 'rosa-radar-particulares-v1';
+const ZKEY = 'rosa-radar-zonas-v1';
+function load(k, def){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; }catch(e){ return def; } }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(items)); }catch(e){ toast('No se ha podido guardar en este navegador'); } }
+let items = load(KEY, []);
+let zonePrices = load(ZKEY, {});
+let activeTab = 'todos';
+let currentMsgId = null;
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const fmtEur = n => n ? new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n) : '—';
+const today = () => new Date().toISOString().slice(0,10);
+const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x.toISOString().slice(0,10); };
+const daysSince = d => d ? Math.max(0, Math.floor((Date.now() - new Date(d).getTime())/86400000)) : null;
+const norm = s => (s||'').toString().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
+const esc = s => (s ?? '').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const statusLabel = id => (STATUSES.find(s => s.id === id) || {}).label || id;
+function toast(t){ const el = $('#toast'); el.textContent = t; el.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(()=>el.classList.remove('show'), 2200); }
+function zoneRef(zone){ const z = norm(zone); for(const k in zonePrices){ if(norm(k) === z) return zonePrices[k]; } return null; }
+function waNumber(phone){
+  let d = (phone||'').replace(/\D/g,'');
+  if(d.startsWith('00')) d = d.slice(2);
+  if(d.length === 9) d = '34' + d; // número español sin prefijo
+  return d;
+}
+
+/* ============================================================
+   PUNTUACIÓN DE PRIORIDAD (0-100)
+   Cuanto más tiempo lleva publicado, más ha bajado de precio y más
+   barato está respecto a la zona, más receptivo suele estar el
+   propietario a trabajar con una agente.
+   ============================================================ */
+function analyse(it){
+  const days = daysSince(it.published);
+  const ppm2 = it.price && it.m2 ? Math.round(it.price / it.m2) : null;
+  const ref = it.op === 'venta' ? zoneRef(it.zone) : null;
+  const vsZone = ppm2 && ref ? Math.round((ppm2 / ref - 1) * 100) : null;
+  const dropPct = it.priceInitial && it.price && it.priceInitial > it.price ? Math.round((1 - it.price/it.priceInitial)*100) : 0;
+  let score = 20;
+  if(days !== null) score += Math.min(35, days * 0.6);     // ~2 meses = máximo
+  score += Math.min(25, dropPct * 4);                        // cada 1% de bajada suma
+  if(vsZone !== null){ score += vsZone <= -10 ? 10 : vsZone >= 15 ? 8 : 4; } // muy caro también es oportunidad (necesita ayuda)
+  if(it.phone) score += 10;
+  if(/urgen|traslad|herencia|divorci|necesit|rapido|rápido/i.test(it.notes||'')) score += 10;
+  if(it.status === 'descartado' || it.status === 'exclusiva') score = 0;
+  score = Math.round(Math.min(100, score));
+  const level = score >= 65 ? 'hot' : score >= 45 ? 'warm' : 'cold';
+  return { days, ppm2, ref, vsZone, dropPct, score, level };
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function fillSelect(sel, values, allLabel){
+  const cur = sel.value;
+  sel.innerHTML = `<option value="">${allLabel}</option>` + values.map(v => `<option>${esc(v)}</option>`).join('');
+  if(values.includes(cur)) sel.value = cur;
+}
+const uniq = arr => [...new Set(arr.filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+
+function renderKpis(){
+  const active = items.filter(i => !['descartado','exclusiva'].includes(i.status));
+  const hot = active.filter(i => analyse(i).level === 'hot').length;
+  const due = active.filter(i => i.nextDate && i.nextDate <= today()).length;
+  const contacted = items.filter(i => i.status !== 'nuevo').length;
+  const excl = items.filter(i => i.status === 'exclusiva').length;
+  const conv = contacted ? Math.round(excl / contacted * 100) : 0;
+  const k = [
+    ['', active.length, 'Activos en radar'],
+    ['hot', hot, 'Calientes'],
+    ['hot', due, 'Seguimientos hoy'],
+    ['', items.filter(i=>i.status==='cita').length, 'Citas / valoraciones'],
+    ['ok', excl, 'Exclusivas'],
+    ['ok', conv + '%', 'Conversión']
+  ];
+  $('#kpis').innerHTML = k.map(([c,v,l]) => `<div class="kpi ${c}"><b>${v}</b><span>${l}</span></div>`).join('');
+}
+
+function renderTabs(){
+  const counts = { todos: items.length };
+  STATUSES.forEach(s => counts[s.id] = items.filter(i => i.status === s.id).length);
+  const tabs = [{id:'todos',label:'Todos'}, ...STATUSES];
+  $('#tabs').innerHTML = tabs.map(t => `<button class="tab ${activeTab===t.id?'active':''}" data-tab="${t.id}">${t.label}<span class="n">${counts[t.id]}</span></button>`).join('');
+}
+
+function renderFilters(){
+  fillSelect($('#fZone'), uniq(items.map(i=>i.zone)), 'Todas');
+  fillSelect($('#fType'), uniq(items.map(i=>i.type)), 'Todos');
+  fillSelect($('#fPortal'), uniq(items.map(i=>i.portal)), 'Todos');
+  const zones = uniq([...items.map(i=>i.zone), ...Object.keys(zonePrices)]);
+  $('#zoneList').innerHTML = zones.map(z => `<option value="${esc(z)}">`).join('');
+}
+
+function renderList(){
+  const q = norm($('#q').value), fz = $('#fZone').value, ft = $('#fType').value, fp = $('#fPortal').value, sort = $('#fSort').value;
+  let rows = items.map(it => ({ it, a: analyse(it) })).filter(({it}) =>
+    (activeTab === 'todos' || it.status === activeTab) &&
+    (!fz || it.zone === fz) && (!ft || it.type === ft) && (!fp || it.portal === fp) &&
+    (!q || norm([it.title,it.zone,it.owner,it.phone,it.notes,it.nextAction].join(' ')).includes(q))
+  );
+  const cmp = {
+    score: (x,y) => y.a.score - x.a.score,
+    next: (x,y) => (x.it.nextDate||'9999').localeCompare(y.it.nextDate||'9999'),
+    recent: (x,y) => (y.it.created||0) - (x.it.created||0),
+    priceAsc: (x,y) => (x.it.price||Infinity) - (y.it.price||Infinity),
+    priceDesc: (x,y) => (y.it.price||0) - (x.it.price||0)
+  }[sort];
+  rows.sort(cmp);
+
+  if(!rows.length){
+    $('#list').innerHTML = `<div class="empty" style="grid-column:1/-1">${items.length ? 'Ningún particular coincide con estos filtros.' : 'Todavía no hay particulares en tu radar.<br><br><button class="btn btn-accent" onclick="openEdit()">+ Añadir el primero</button>'}</div>`;
+    return;
+  }
+
+  $('#list').innerHTML = rows.map(({it,a}) => {
+    const lvlTxt = { hot:'Caliente', warm:'Templado', cold:'Frío' }[a.level];
+    const pills = [
+      ['done','descartado','exclusiva'].includes(it.status) ? '' : `<span class="pill score-${a.level}">${lvlTxt} · ${a.score}</span>`,
+      `<span class="pill">${esc(statusLabel(it.status))}</span>`,
+      it.type ? `<span class="pill">${esc(it.type)}${it.op==='alquiler'?' · alquiler':''}</span>` : '',
+      it.m2 ? `<span class="pill">${it.m2} m²</span>` : '',
+      it.rooms ? `<span class="pill">${it.rooms} hab.</span>` : '',
+      it.portal ? `<span class="pill">${esc(it.portal)}</span>` : '',
+      a.days !== null ? `<span class="pill">${a.days} días publicado</span>` : '',
+      a.vsZone !== null ? `<span class="pill ${a.vsZone < 0 ? 'below':'above'}">${a.vsZone > 0 ? '+' : ''}${a.vsZone}% vs zona</span>` : ''
+    ].join('');
+    const late = it.nextDate && it.nextDate <= today();
+    const next = it.nextDate || it.nextAction ? `<div class="next ${late?'late':''}">${late?'⚠ ':'→ '}${it.nextDate ? new Date(it.nextDate+'T12:00').toLocaleDateString('es-ES',{day:'numeric',month:'short'}) + ': ' : ''}${esc(it.nextAction || 'Seguimiento')}</div>` : '';
+    const opts = STATUSES.map(s => `<option value="${s.id}" ${s.id===it.status?'selected':''}>${s.label}</option>`).join('');
+    return `<article class="card ${['descartado','exclusiva'].includes(it.status) ? '' : a.level}">
+      <div class="card-head">
+        <div><h3>${esc(it.title)}</h3><div class="zone">${esc(it.zone)}${it.owner ? ' · ' + esc(it.owner) : ''}</div></div>
+        <div class="price">${fmtEur(it.price)}${a.dropPct ? `<div class="drop">▼ ${a.dropPct}% (antes ${fmtEur(it.priceInitial)})</div>` : ''}${a.ppm2 ? `<small>${fmtEur(a.ppm2)}/m²</small>` : ''}</div>
+      </div>
+      <div class="meta">${pills}</div>
+      ${it.notes ? `<div class="notes">${esc(it.notes)}</div>` : ''}
+      ${next}
+      <div class="card-actions">
+        ${it.phone ? `<button class="btn btn-wa btn-sm" data-msg="${it.id}">WhatsApp</button><a class="btn btn-outline btn-sm" href="tel:${esc(it.phone.replace(/\s/g,''))}">Llamar</a>` : ''}
+        ${it.url ? `<a class="btn btn-outline btn-sm" href="${esc(it.url)}" target="_blank" rel="noopener">Ver anuncio</a>` : ''}
+        <button class="btn btn-outline btn-sm" data-edit="${it.id}">Editar</button>
+        <select data-status="${it.id}" aria-label="Cambiar estado">${opts}</select>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+function renderPortalLinks(){
+  const zone = $('#zoneSearch').value.trim();
+  const op = $('#opSearch').value;
+  const z = zone || 'Madrid';
+  const g = (site, extra) => 'https://www.google.com/search?q=' + encodeURIComponent(`site:${site} ${op} ${z} ${extra}`);
+  const links = [
+    ['Idealista · particulares', g('idealista.com', '"particular"')],
+    ['Fotocasa · particulares', g('fotocasa.es', '"particular"')],
+    ['Milanuncios · particulares', g('milanuncios.com', 'piso "particular"')],
+    ['Wallapop · inmobiliaria', g('es.wallapop.com', 'piso')],
+    ['Pisos.com · particulares', g('pisos.com', '"particular"')],
+    ['"Sin agencias" en Google', 'https://www.google.com/search?q=' + encodeURIComponent(`${op} piso ${z} "particular" "sin intermediarios"`)]
+  ];
+  $('#portalLinks').innerHTML = links.map(([l,u]) => `<a class="btn btn-outline btn-sm" href="${u}" target="_blank" rel="noopener">${l} ↗</a>`).join('');
+}
+
+function render(){ renderKpis(); renderTabs(); renderFilters(); renderList(); }
+
+/* ============================================================
+   EDITAR / AÑADIR
+   ============================================================ */
+const editDlg = $('#editDlg'), editForm = $('#editForm');
+editForm.status.innerHTML = STATUSES.map(s => `<option value="${s.id}">${s.label}</option>`).join('');
+let editingId = null;
+
+function openEdit(id){
+  editingId = id || null;
+  editForm.reset();
+  const it = items.find(i => i.id === id);
+  $('#editTitle').textContent = it ? 'Editar particular' : 'Añadir particular';
+  $('#deleteBtn').hidden = !it;
+  if(it){ for(const el of editForm.elements){ if(el.name && it[el.name] !== undefined) el.value = it[el.name]; } }
+  else { editForm.published.value = today(); editForm.status.value = 'nuevo'; }
+  editDlg.showModal();
+}
+window.openEdit = openEdit;
+
+editForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(editForm));
+  ['price','priceInitial','m2','rooms'].forEach(k => d[k] = d[k] ? Number(d[k]) : '');
+  if(editingId){
+    const it = items.find(i => i.id === editingId);
+    Object.assign(it, d, { updated: Date.now() });
+  } else {
+    if(!d.priceInitial) d.priceInitial = d.price;
+    items.push({ id: uid(), created: Date.now(), ...d });
+  }
+  save(); editDlg.close(); render(); toast('Guardado');
+});
+
+$('#deleteBtn').addEventListener('click', () => {
+  if(!confirm('¿Eliminar esta ficha? No se puede deshacer.')) return;
+  items = items.filter(i => i.id !== editingId);
+  save(); editDlg.close(); render(); toast('Ficha eliminada');
+});
+
+/* ============================================================
+   MENSAJES WHATSAPP
+   ============================================================ */
+const msgDlg = $('#msgDlg');
+$('#tplSelect').innerHTML = TEMPLATES.map(t => `<option value="${t.id}">${t.label}</option>`).join('');
+
+function fillTemplate(tplId, it){
+  const a = analyse(it);
+  const tpl = TEMPLATES.find(t => t.id === tplId);
+  const vars = {
+    owner: it.owner ? ' ' + it.owner.split(' ')[0] : '',
+    agent: AGENT.name,
+    title: it.title || 'tu vivienda',
+    zone: it.zone || 'tu zona',
+    portal: it.portal && !['Otro','Referido','Cartel en la calle'].includes(it.portal) ? ' en ' + it.portal : '',
+    type: (it.type || 'vivienda').toLowerCase(),
+    price: fmtEur(it.price),
+    days: a.days ?? 'varios'
+  };
+  return tpl.text.replace(/\{\{(\w+)\}\}/g, (_, k) => vars[k] ?? '');
+}
+function updateWaLink(){
+  const it = items.find(i => i.id === currentMsgId);
+  $('#sendWa').href = `https://wa.me/${waNumber(it.phone)}?text=${encodeURIComponent($('#tplText').value)}`;
+}
+function openMsg(id){
+  currentMsgId = id;
+  const it = items.find(i => i.id === id);
+  const a = analyse(it);
+  $('#tplSelect').value = it.status === 'nuevo' ? (a.days >= 30 ? 'tiempo' : 'primer') : 'seguimiento';
+  $('#tplText').value = fillTemplate($('#tplSelect').value, it);
+  updateWaLink();
+  msgDlg.showModal();
+}
+$('#tplSelect').addEventListener('change', () => { $('#tplText').value = fillTemplate($('#tplSelect').value, items.find(i => i.id === currentMsgId)); updateWaLink(); });
+$('#tplText').addEventListener('input', updateWaLink);
+$('#copyMsg').addEventListener('click', async () => { try{ await navigator.clipboard.writeText($('#tplText').value); toast('Mensaje copiado'); }catch(e){ toast('No se pudo copiar'); } });
+$('#sendWa').addEventListener('click', () => {
+  const it = items.find(i => i.id === currentMsgId);
+  if(it.status === 'nuevo') it.status = 'contactado';
+  it.lastContact = today();
+  it.nextDate = addDays(today(), 3);
+  it.nextAction = 'Seguimiento del WhatsApp';
+  save(); render(); msgDlg.close();
+});
+
+/* ============================================================
+   EVENTOS
+   ============================================================ */
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
+$('#addBtn').addEventListener('click', () => openEdit());
+$('#tabs').addEventListener('click', e => { const t = e.target.closest('[data-tab]'); if(t){ activeTab = t.dataset.tab; renderTabs(); renderList(); } });
+['#q','#fZone','#fType','#fPortal','#fSort'].forEach(s => $(s).addEventListener('input', renderList));
+$('#list').addEventListener('click', e => {
+  const ed = e.target.closest('[data-edit]'); if(ed) return openEdit(ed.dataset.edit);
+  const m = e.target.closest('[data-msg]'); if(m) return openMsg(m.dataset.msg);
+});
+$('#list').addEventListener('change', e => {
+  const s = e.target.closest('[data-status]'); if(!s) return;
+  const it = items.find(i => i.id === s.dataset.status);
+  it.status = s.value; it.updated = Date.now();
+  save(); render(); toast('Estado: ' + statusLabel(it.status));
+});
+$('#zoneSearch').addEventListener('input', renderPortalLinks);
+$('#opSearch').addEventListener('change', renderPortalLinks);
+
+/* Precios de zona */
+$('#zonePrices').value = Object.entries(zonePrices).map(([k,v]) => `${k} = ${v}`).join('\n');
+$('#saveZonePrices').addEventListener('click', () => {
+  zonePrices = {};
+  $('#zonePrices').value.split('\n').forEach(line => {
+    const m = line.match(/^\s*(.+?)\s*[=:]\s*([\d.,]+)\s*$/);
+    if(m) zonePrices[m[1]] = Number(m[2].replace(/\./g,'').replace(',','.'));
+  });
+  try{ localStorage.setItem(ZKEY, JSON.stringify(zonePrices)); }catch(e){}
+  render(); toast('Precios de zona guardados');
+});
+
+/* Exportar / copia de seguridad / restaurar */
+function download(name, content, type){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], { type }));
+  a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+$('#exportBtn').addEventListener('click', () => {
+  const cols = ['title','zone','type','op','portal','price','priceInitial','m2','rooms','published','status','owner','phone','nextDate','nextAction','notes','url'];
+  const head = ['Título','Zona','Tipo','Operación','Portal','Precio','Precio inicial','m²','Hab.','Publicado','Estado','Propietario','Teléfono','Próxima fecha','Próxima acción','Notas','Enlace','Prioridad'];
+  const q = v => `"${(v ?? '').toString().replace(/"/g,'""')}"`;
+  const rows = items.map(i => [...cols.map(c => c === 'status' ? statusLabel(i[c]) : i[c]), analyse(i).score].map(q).join(';'));
+  download(`radar-particulares-${today()}.csv`, '﻿' + [head.map(q).join(';'), ...rows].join('\n'), 'text/csv;charset=utf-8');
+});
+$('#backupBtn').addEventListener('click', () => {
+  download(`radar-backup-${today()}.json`, JSON.stringify({ items, zonePrices }, null, 2), 'application/json');
+});
+$('#importFile').addEventListener('change', async e => {
+  const f = e.target.files[0]; if(!f) return;
+  try{
+    const data = JSON.parse(await f.text());
+    if(!Array.isArray(data.items)) throw 0;
+    if(!confirm(`Se restaurarán ${data.items.length} fichas y se sustituirán las actuales. ¿Continuar?`)) return;
+    items = data.items; zonePrices = data.zonePrices || {};
+    save(); try{ localStorage.setItem(ZKEY, JSON.stringify(zonePrices)); }catch(e){}
+    $('#zonePrices').value = Object.entries(zonePrices).map(([k,v]) => `${k} = ${v}`).join('\n');
+    render(); toast('Copia restaurada');
+  }catch(err){ toast('El archivo no es una copia válida'); }
+  e.target.value = '';
+});
+
+renderPortalLinks();
+render();
+</script>
+</body>
+</html>
